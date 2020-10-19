@@ -45,7 +45,60 @@ class Information{
     //Add InfoCustomer to Customer(node)
     void AddBankClerk(string ClerkID,string Password);
     //Add InfoBankClerk to BankClerk(node)
-    void RemoveRegisterAccountCustomer(string FullName);
+    void RemoveRegisterAccountCustomer(string FullName){
+      Customer *temp = Head;
+      Customer *ptemp = Head;
+      int i = 1;
+      if(CustomerAmount >= 1){
+        for(i=1;i<CustomerAmount;i++){
+          if(temp->Name == FullName){
+            cout << "THIS IS CUSTOMER : " << temp->Name << "WAS REMOVED" << endl;
+            break;
+          }
+          temp = temp->link;
+        }
+        if(i>CustomerAmount){
+          i = 0;
+        }
+        else if(i==1){
+          ptemp = temp->link;
+          head = ptemp;
+          delete temp;
+          CustomerAmount--;
+        }
+        else if(i>1){
+          if(i==CustomerAmount){
+            for(int j=1;j<CustomerAmount;j++){
+              ptemp = ptemp-> link;
+            }
+            Tail = ptemp;
+            Tail -> link = NULL;
+            CustomerAmount--;
+            delete temp;
+          }
+          else if(i>1 && i<CustomerAmount){
+            for(int j=1;j<CustomerAmount;j++){
+              if(j<i-1){
+                ptemp = ptemp -> link;
+              }
+              ptemp = ptemp -> link;
+              CustomerAmount--;
+              delete temp;
+            }
+          }
+          if(i==0){
+            cout << "CAN NOT FIND THIS's CUSTOMER" << endl;
+          }
+        } 
+      }
+      else if(CustomerAmount <=1){
+          Head = NULL;
+					Tail = NULL;
+					delete temp;
+					delete ptemp;
+					CustomerAmount--;	
+        }
+    }
     //Remove Customer's Account at File "RegisterAccountCustomer.dat"
     void SaveRegisterCustomer();
     //Save InfoCustomer to File "RegisterAccountCustomer.dat"
