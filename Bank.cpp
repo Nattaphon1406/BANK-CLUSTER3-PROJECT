@@ -12,7 +12,7 @@ class Person{
     string Name,CitizenID,BirthDate,PhoneNumber;
     Person();
     ~Person();
-    void Info(string Name,string CitizenID,string BirthDate,string PhoneNumber);
+    //void Info(string Name,string CitizenID,string BirthDate,string PhoneNumber);
     //Save Information
 };
 class Information{
@@ -20,28 +20,131 @@ class Information{
     class Customer : public Person{
       public:
         Customer *link;
-        string TypeAccount,money;
-        Customer(string Name,string CitizenID,string BirthDate,string PhoneNumber,string TypeAccount,string money);
+        string TypeAccount,Money;
+        Customer(string name,string citizenID,string birthDate,string phoneNumber,string typeAccount,string money){
+          Name = name;
+          CitizenID = citizenID;
+          BirthDate = birthDate;
+          PhoneNumber = phoneNumber;
+          TypeAccount = typeAccount;
+          Money = money;
+        }
     };
-    class BankClerk{
+    class BankClerk : public Person{
       public:
         BankClerk *link;
         string ClerkID,Password;
-        BankClerk(string Name,string CitizenID,string BirthDate,string PhoneNumber,string ClerkID,string Password);
+        BankClerk(string name,string citizenID,string birthDate,string phoneNumber,string clerkID,string password){
+          Name = name;
+          CitizenID = citizenID;
+          BirthDate = birthDate;
+          PhoneNumber = phoneNumber;
+          ClerkID = clerkID;
+          Password = password;
+        }
     };
     Customer *HeadCustomer,*TailCustomer;
     BankClerk *HeadBankClerk,*TailBankClerk;
     int CustomerAmount,BankClerkAmonut;
   public:
-    Information();
-    ~Information();
-    void LoadFileRegisterCustomer();
+    Information(){
+      HeadCustomer = NULL;
+      HeadBankClerk = NULL;
+      TailCustomer = NULL;
+      TailBankClerk = NULL;
+      CustomerAmount = 0;
+      BankClerkAmonut = 0;
+    }
+    ~Information(){
+      for(int i = 0; i < CustomerAmount; i++){
+        Customer * tmp = HeadCustomer;
+        HeadCustomer = HeadCustomer->link;
+        delete tmp;
+        tmp = NULL;
+      }
+      for(int i = 0; i < BankClerkAmonut; i++){
+        BankClerk * ptmp = HeadBankClerk;
+        HeadBankClerk = HeadBankClerk->link;
+        delete ptmp;
+        ptmp = NULL;
+      }
+      HeadCustomer = NULL;
+      HeadBankClerk = NULL;
+      TailCustomer = NULL;
+      TailBankClerk = NULL;
+      CustomerAmount = 0;
+      BankClerkAmonut = 0;
+    }
+    void LoadFileRegisterCustomer(){
+      string Name,CitizenID,BirthDate,PhoneNumber,TypeAccount,Money,Line;
+      ifstream Read;
+      CustomerAmount = 0;
+      HeadCustomer = NULL;
+      TailCustomer = NULL;
+      Read.open("RegisterAccountCustomer.dat");
+      if(Read.fail()){
+        cout << "Can not Read File 'RegisterAccountCustomer.dat' " << endl;
+      }
+      else{
+          while(getline(Read,Line)){
+              Name = Line.substr(0,Line.find(','));
+              Line.erase(0,Line.find(',')+1);
+              CitizenID = Line.substr(0,Line.find(','));
+              Line.erase(0,Line.find(',')+1);
+              BirthDate = Line.substr(0,Line.find(','));
+              Line.erase(0,Line.find(',')+1);
+              PhoneNumber = Line.substr(0,Line.find(','));
+              Line.erase(0,Line.find(',')+1);
+              TypeAccount = Line.substr(0,Line.find(','));
+              BirthDate = Line.erase(0,Line.find(',')+1);
+              AddCustomer(Name,CitizenID,BirthDate,PhoneNumber,TypeAccount,Money);
+          }
+          Read.close();
+      }
+    }
     //LoadInfo Of Customer From File "RegisterAccountCustomer.dat"
-    void LoadFileCustomer();
+    void LoadFileCustomer(){
+      string Name,CitizenID,BirthDate,PhoneNumber,TypeAccount,Money,Line;
+      ifstream Read;
+      CustomerAmount = 0;
+      HeadCustomer = NULL;
+      TailCustomer = NULL;
+      Read.open("AccountCustomer.dat");
+      if(Read.fail()){
+        cout << "Can not Read File 'AccountCustomer.dat' " << endl;
+      }
+      else{
+          while(getline(Read,Line)){
+              Name = Line.substr(0,Line.find(','));
+              Line.erase(0,Line.find(',')+1);
+              CitizenID = Line.substr(0,Line.find(','));
+              Line.erase(0,Line.find(',')+1);
+              BirthDate = Line.substr(0,Line.find(','));
+              Line.erase(0,Line.find(',')+1);
+              PhoneNumber = Line.substr(0,Line.find(','));
+              Line.erase(0,Line.find(',')+1);
+              TypeAccount = Line.substr(0,Line.find(','));
+              BirthDate = Line.erase(0,Line.find(',')+1);
+              AddCustomer(Name,CitizenID,BirthDate,PhoneNumber,TypeAccount,Money);
+          }
+          Read.close();
+      }
+    }
     //LoadInfo Of Customer From File "AccountCustomer.dat"
     void LoadFileBankClerk();
     //LoadInfo Of BankClerk From File "BankClerk.dat"
-    void AddCustomer(string TypeAccount);
+    void AddCustomer(string name,string citizenID,string birthDate,string phoneNumber,string typeAccount,string money){
+      Customer *newCustomer = new Customer(name,citizenID,birthDate,phoneNumber,typeAccount,money);
+            if(HeadCustomer == NULL){
+                HeadCustomer = newCustomer;
+                TailCustomer = newCustomer;
+            }
+            else{
+                TailCustomer->link = newCustomer;
+                TailCustomer = newCustomer;
+            }
+            CustomerAmount++;
+    }
     //Add InfoCustomer to Customer(node)
     void AddBankClerk(string ClerkID,string Password);
     //Add InfoBankClerk to BankClerk(node)
@@ -100,7 +203,16 @@ class Information{
         }
     }
     //Remove Customer's Account at File "RegisterAccountCustomer.dat"
-    void SaveRegisterCustomer();
+    void SaveRegisterCustomer(){
+      string Name,CitizenID,BirthDate,PhoneNumber,TypeAccount,Money,Line;
+      ofstream Read("RegisterAccountCustomer.dat");
+        if(Read){
+            for(Customer *i = HeadCustomer; i != NULL; i = i->link){
+                Read << i->Name << "," << i->CitizenID << "," << i->BirthDate << "," << i->BirthDate << "," << i->PhoneNumber << endl;
+            }
+        }
+      Read.close();
+    }
     //Save InfoCustomer to File "RegisterAccountCustomer.dat"
     void SaveCustomerInfoToFile();
     //Save InfoCustomer to File "AccountCustomer.dat"
@@ -117,7 +229,7 @@ class Information{
     void GenerateAccountNumber();
     //GenerateAccountNumber | AccountNumber = GenerateAccountNumber
 };*/
-class BankAccount : public Information{
+class BankAccount{
   private:
     /*class DepositAccount : public BankAccount{
       private:
@@ -139,8 +251,7 @@ class BankAccount : public Information{
     //SavingAccount *Saving;
   public:
     BankAccount(){
-      Customer *D;
-      D = HeadCustomer;
+      
     }
     ~BankAccount();
     void GenerateAccountNumber(){
@@ -201,6 +312,8 @@ void CustomerMenu(){
   cout << "4.Back" << endl;
   cout << "******************************" << endl;
 }
+int main(){
 
+}
 
 
