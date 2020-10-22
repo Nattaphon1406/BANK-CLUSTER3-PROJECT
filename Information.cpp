@@ -238,6 +238,21 @@ void Information :: SaveInfoCustomerToFile(){
         }
       Write.close();
 }
+void Information :: SaveInfoRegisterToFileBankAccount(int Number){
+      LoadFileRegisterCustomer();
+      Info_Customer *Data_Customer;
+      Data_Customer = HeadInfo_Customer;
+      ofstream Write("BankAccount.dat",ios::app);
+        if(Write){
+            for(int i = 0; i < Number; i++){
+                  if(i+1 == Number){
+                        Write << Data_Customer->getName() << "," << "A" << "," << Data_Customer->getMoney() << "," << "B" << "," << "C" << endl;
+                  }
+                  Data_Customer = Data_Customer->link;
+            }
+        }
+      Write.close();
+}
 void Information :: SaveInfoBankClerkToFile(){
       ofstream Write("BankClerk.dat");
         if(Write){
@@ -247,38 +262,11 @@ void Information :: SaveInfoBankClerkToFile(){
         }
       Write.close();
 }
-void Information :: GenerateAccountNumber(){
-      Info_Customer *generate = HeadInfo_Customer;
-      string firstAccountNumber,strYear;
-      string tempCitizenID,tempbirthyear,tempbirthday,tempbirthmonth,temptype;
-      int year;
-      stringstream tempYear;
-           
-      while(generate!=NULL){ 
-            //////// make year //////////
-                  time_t now = time(0);
-                  tm *ltm = localtime(&now);
-                  year = 1900 + ltm->tm_year;
-                  tempYear << year;
-                  tempYear >> strYear;
-            /////////////////////////////
-            temptype = generate->getTypeAccount();
-            tempbirthyear = strYear.substr(2,2);
-            tempCitizenID = generate->getCitizenID().substr(11,2);
-            tempbirthday = generate->getBirthDate().substr(0,2);
-            tempbirthmonth = generate->getBirthDate().substr(generate->getBirthDate().find("-")+1,2);
-
-            firstAccountNumber =  temptype + tempbirthyear + tempCitizenID + tempbirthday + tempbirthmonth;
-            cout << firstAccountNumber << endl;
-            //year = 0;
-            generate = generate ->link;
-      }
-      
-}
 void Information :: ShowRegistercustomer(){
+      LoadFileRegisterCustomer();
       int count = 1;
       for(Info_Customer *i = HeadInfo_Customer; i != NULL; i = i->link){
-            cout << count << "." << "\t" << i->getName() << endl;
+            cout << count++ << "." << "\t" << i->getName() << endl;
             //cout << i->getName() << "," << i->getCitizenID() << "," << i->getBirthDate() << "," << i->getPhoneNumber() << "," << i->getTypeAccount() << "," << i->getMoney() << endl;
             //cout << i->getName() << "," << i->getCitizenID() << "," << i->getBirthDate() << "," << i->getPhoneNumber() << "," << i->getClerkID() << "," << i->getPassword() << endl;
             //cout << i->getName() << "," << i->getAccountNumber() << "," << i->getMoney() << "," << i->getUsername() << "," << i->getPassword() << endl;
