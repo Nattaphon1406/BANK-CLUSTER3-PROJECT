@@ -143,6 +143,7 @@ void UI::MenageRegister(int Number){
     cout << "Enter: " << endl;
     cin >> count;
     if(count == 1){
+        Info_Customer.GenerateAccountNumber();
         Info_Customer.SaveInfoCustomerToFile();
     }
     else if(count == 2){

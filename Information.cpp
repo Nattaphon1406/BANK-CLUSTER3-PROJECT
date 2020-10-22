@@ -247,6 +247,34 @@ void Information :: SaveInfoBankClerkToFile(){
         }
       Write.close();
 }
+void Information :: GenerateAccountNumber(){
+      Info_Customer *generate = HeadInfo_Customer;
+      string firstAccountNumber,strYear;
+      string tempCitizenID,tempbirthyear,tempbirthday,tempbirthmonth,temptype;
+      int year;
+      stringstream tempYear;
+           
+      while(generate!=NULL){ 
+            //////// make year //////////
+                  time_t now = time(0);
+                  tm *ltm = localtime(&now);
+                  year = 1900 + ltm->tm_year;
+                  tempYear << year;
+                  tempYear >> strYear;
+            /////////////////////////////
+            temptype = generate->getTypeAccount();
+            tempbirthyear = strYear.substr(2,2);
+            tempCitizenID = generate->getCitizenID().substr(11,2);
+            tempbirthday = generate->getBirthDate().substr(0,2);
+            tempbirthmonth = generate->getBirthDate().substr(generate->getBirthDate().find("-")+1,2);
+
+            firstAccountNumber =  temptype + tempbirthyear + tempCitizenID + tempbirthday + tempbirthmonth;
+            cout << firstAccountNumber << endl;
+            //year = 0;
+            generate = generate ->link;
+      }
+      
+}
 void Information :: ShowRegistercustomer(){
       int count = 1;
       for(Info_Customer *i = HeadInfo_Customer; i != NULL; i = i->link){

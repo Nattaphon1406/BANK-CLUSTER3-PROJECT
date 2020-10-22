@@ -4,6 +4,8 @@
 #include "Customer.h"
 #include "BankClerk.h"
 #include "BankAccount.h"
+#include <ctime>
+#include <sstream>
 class Information{
   private:
     class Info_Customer : public Customer{
@@ -53,6 +55,8 @@ class Information{
     //Save InfoInfo to File "BankAccount.dat"
     void SaveInfoBankClerkToFile();
     //Save InfoData_BankClerk to File "Data_BankClerk.dat"
+    void GenerateAccountNumber();
+    //Generate Account Number
     void ShowRegistercustomer();
     void ShowBankclerk();
     void ShowBankAccount();

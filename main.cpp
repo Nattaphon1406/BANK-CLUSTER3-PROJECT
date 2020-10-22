@@ -27,6 +27,9 @@ int main(){
     else if(Choice == 2){
         Obj_Info->LoadFileRegisterCustomer();
         Obj_UI.printmenuRegister_customer();
+        Obj_Info->GenerateAccountNumber();
     }
-    return 0;
+    else if(Choice == 3){
+        return 0;
+    } 
 }
