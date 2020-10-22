@@ -9,7 +9,6 @@ using namespace std;
 int main(){
     string Number;
     int Choice;
-    Information *Obj_Info = new Information();
     UI Obj_UI;
     MoneyExchange Obj_MoneyExchange;
     do{
@@ -28,7 +27,7 @@ int main(){
 
                 }
                 else if(Choice == 3){ //Transfer
-                    
+                    Obj_UI.transfer_firstPage();
                 }
                 else if(Choice == 4){ //Pay Bill
                     
@@ -90,7 +89,6 @@ int main(){
             }while(Choice != 8); // check menu Clerk
         }
         else if(Choice == 2){
-            Obj_Info->LoadFileRegisterCustomer();
             Obj_UI.printmenuRegister_customer();
         }
     }while(Choice != 3); // check menu login

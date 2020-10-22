@@ -8,9 +8,9 @@
 using namespace std;
 class BankAccount : public Information{
     private:
-        BankAccount *Obj_BanKAcount;
+        BankAccount *Obj_BankAccount;
     public:
-        void Check();
+        bool CheckTransfer_account(string accountNumber);
 
     
 };

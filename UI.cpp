@@ -169,3 +169,27 @@ void UI::print_PaymentType(){
 	cout << "3. Return to choose new Currency or Exit" << endl;
 	cout << "---------------------------- " << endl;
 }
+void UI::transfer_firstPage(){
+    Obj_BankAccount.LoadFileBankAccount();
+    string Recipient_account;
+    back:
+    cout << "=========Transfer=========" << endl;
+	cout << "Transferor account : ";
+	cin >> accountNumber;
+    if(Obj_BankAccount.CheckTransfer_account(accountNumber)){
+        goto next;
+    }
+    else{
+        goto back;
+    }
+    next:
+	do{
+		cout << "Recipient account : ";
+		cin >> Recipient_account;
+	}while(Recipient_account.length() != 10);
+	do{
+		cout << "Amount : ";
+		cin >> money;
+	}while(money > 50000);
+	cout << "===========================" << endl;
+}

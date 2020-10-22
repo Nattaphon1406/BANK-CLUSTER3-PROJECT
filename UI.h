@@ -2,10 +2,13 @@
 #define UI_H
 #include <iostream>
 #include <sstream>
-#include "Information.h"
+#include "Customer.h"
+#include "BankClerk.h"
+#include "BankAccount.h"
 using namespace std;
 class UI{
     private:
+        BankAccount Obj_BankAccount;
         string username,password,accountNumber,name,citizenID,birthDate,phoneNumber,typeAccount;
         int money;
     public:
@@ -22,5 +25,6 @@ class UI{
         void MenageRegister(int Number);
         void print_CurrencyType();
         void print_PaymentType();
+        void transfer_firstPage();
 };
 #endif
