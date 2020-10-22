@@ -123,6 +123,7 @@ void UI::print_menuCustomer(){
 }
 void UI::printInfoFromFileRegister(){
     Information Info_Customer;
+    Info_Customer.LoadFileRegisterCustomer();
     cout << "============ RegisterCustomerFile ============" << endl;
     cout << "No." << "\t" << "Name" << endl;
     cout << "==============================================" << endl;
@@ -131,14 +132,18 @@ void UI::printInfoFromFileRegister(){
 }
 void UI::MenageRegister(int Number){
     Information Info_Customer;
-    Info_Customer.LoadFileRegisterCustomer();
+    BankClerk Data_BankClerk;
     int count;
+    Info_Customer.LoadFileRegisterCustomer();
     cout << "1.ConfirmRegister" << endl;
     cout << "2.RemoveRegister" << endl;
     cout << "Enter: " << endl;
     cin >> count;
     if(count == 1){
         Info_Customer.SaveInfoRegisterToFileBankAccount(Number);
+        Info_Customer.RemoveInfoRegisterCustomer(Number); 
+        Info_Customer.SaveInfoRegisterCustomerToFile();
+        
     }
     else if(count == 2){
         Info_Customer.RemoveInfoRegisterCustomer(Number); 

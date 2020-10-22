@@ -9,5 +9,6 @@ using namespace std;
 class BankClerk : public Information{
     private:
         BankClerk *Obj_BankClerk;
+    public:
 };
 #endif

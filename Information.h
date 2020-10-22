@@ -56,11 +56,13 @@ class Information{
     //Save Info to File "RegisterBankAccount.dat"
     void SaveInfoCustomerToFile();
     //Save Info to File "BankAccount.dat"
-    void SaveInfoRegisterToFileBankAccount(int Number);
+    void SaveInfoRegisterToFileBankAccount(int number);
+    string GenerateAccountNumber(int number);
+    string GenerateUsername(int number);
+    string GeneratePassword(int number);
     //Move Info RegisterCustomer to BankAccount.dat
     void SaveInfoBankClerkToFile();
-    //Save InfoData_BankClerk to File "Data_BankClerk.dat"
-    string GenerateAccountNumber();
+    //Save InfoData_BankClerk to File "Data_BankClerk.dat";
     void ShowRegistercustomer();
     void ShowBankclerk();
     void ShowBankAccount();

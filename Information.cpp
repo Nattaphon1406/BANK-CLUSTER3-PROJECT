@@ -182,9 +182,9 @@ void Information :: AddInfoBankAccount(string name,string accountNumber,string m
 void Information :: RemoveInfoRegisterCustomer(int Number){
       Info_Customer *temp,*ptemp;
       temp = HeadInfo_Customer;
-      for(int i = 1; i < Count_Customer; i++){
-            if(i == Number){
-                  if(i==1){
+      for(int i = 0; i < Count_Customer; i++){
+            if(i == Number-1){
+                  if(i==0){
                         HeadInfo_Customer = temp->link;
                   }
                   else{
@@ -218,9 +218,9 @@ void Information :: RemoveInfoBankAccount(string AccountNumber){
 void Information :: RemoveInfoBankClerk(int Number){
       Info_BankClerk *temp,*ptemp;
       temp = HeadInfo_BankClerk;
-      for(int i = 1; i < Count_BankClerk; i++){
-            if(i == Number){
-                  if(i==1){
+      for(int i = 0; i < Count_BankClerk; i++){
+            if(i == Number-1){
+                  if(i==0){
                         HeadInfo_BankClerk = temp->link;
                   }
                   else{
@@ -232,30 +232,6 @@ void Information :: RemoveInfoBankClerk(int Number){
             ptemp = temp;
 	      temp = temp->link; 
       }
-}
-string Information :: GenerateAccountNumber(){
-      Info_Customer *generate = HeadInfo_Customer;
-      string firstAccountNumber,strYear;
-      string tempCitizenID,tempbirthyear,tempbirthday,tempbirthmonth,temptype;
-      int year;
-      stringstream tempYear;
-      
-            //////// make year //////////
-                  time_t now = time(0);
-                  tm *ltm = localtime(&now);
-                  year = 1900 + ltm->tm_year;
-                  tempYear << year;
-                  tempYear >> strYear;
-            /////////////////////////////
-            temptype = generate->TypeAccount;
-            tempbirthyear = strYear.substr(2,2);
-            tempCitizenID = generate->CitizenID.substr(11,2);
-            tempbirthday = generate->BirthDate.substr(0,2);
-            tempbirthmonth = generate->BirthDate.substr(generate->BirthDate.find("-")+1,2);
-
-            firstAccountNumber =  temptype + tempbirthyear + tempCitizenID + tempbirthday + tempbirthmonth;
-            return firstAccountNumber;
-      
 }
 void Information :: SaveInfoRegisterCustomerToFile(){
       ofstream Write("RegisterAccountCustomer.dat");
@@ -275,15 +251,64 @@ void Information :: SaveInfoCustomerToFile(){
         }
       Write.close();
 }
-void Information :: SaveInfoRegisterToFileBankAccount(int Number){
-      LoadFileRegisterCustomer();
+string Information :: GenerateAccountNumber(int number){
+      Info_Customer *generate = HeadInfo_Customer;
+      string firstAccountNumber,strYear;
+      string tempCitizenID,tempbirthyear,tempbirthday,tempbirthmonth,temptype;
+      int year;
+      stringstream tempYear;
+      time_t now = time(0);
+      tm *ltm = localtime(&now);
+      for(int i = 0; i < number; i++){
+            if(i+1 == number){
+                  //////// make year //////////
+                        year = 1900 + ltm->tm_year;
+                        tempYear << year;
+                        tempYear >> strYear;
+                  /////////////////////////////
+                  temptype = generate->TypeAccount;
+                  tempbirthyear = strYear.substr(2,2);
+                  tempCitizenID = generate->CitizenID.substr(11,2);
+                  tempbirthday = generate->BirthDate.substr(0,2);
+                  tempbirthmonth = generate->BirthDate.substr(generate->BirthDate.find("-")+1,2);
+                  firstAccountNumber =  temptype + tempbirthyear + tempCitizenID + tempbirthday + tempbirthmonth;
+            }
+            generate = generate->link;
+      }
+      return firstAccountNumber;
+}
+string Information :: GenerateUsername(int number){
+      Info_Customer *username;
+      username = HeadInfo_Customer;
+      string generatedUsername;
+      string tempName,tempCitizenId;
+      for(int i = 0; i < number; i++){
+            if(i+1 == number){
+                  tempName = username->Name.substr(0,username->Name.find(" "));
+                  tempCitizenId = username->CitizenID.substr(4,3);
+                  generatedUsername = tempName + tempCitizenId;
+            }
+            username = username->link;
+      }
+      return generatedUsername;
+}
+string Information :: GeneratePassword(int number){
+      string username,password;
+      username = GenerateUsername(number);
+      password = "";
+      for(int j =  username.length()-1; j >= 0; j--){
+            password += username[j];
+      }
+      return password;
+}
+void Information :: SaveInfoRegisterToFileBankAccount(int number){
       Info_Customer *Data_Customer;
       Data_Customer = HeadInfo_Customer;
       ofstream Write("BankAccount.dat",ios::app);
         if(Write){
-            for(int i = 0; i < Number; i++){
-                  if(i+1 == Number){
-                        Write << Data_Customer->Name << "," << "A" << "," << Data_Customer->Money << "," << "B" << "," << "C" << endl;
+            for(int i = 0; i < number; i++){
+                  if(i+1 == number){
+                        Write << Data_Customer->Name << "," << GenerateAccountNumber(number) << "," << Data_Customer->Money << "," << GenerateUsername(number) << "," << GeneratePassword(number) << endl;
                   }
                   Data_Customer = Data_Customer->link;
             }
@@ -300,7 +325,6 @@ void Information :: SaveInfoBankClerkToFile(){
       Write.close();
 }
 void Information :: ShowRegistercustomer(){
-      LoadFileRegisterCustomer();
       int count = 1;
       for(Info_Customer *i = HeadInfo_Customer; i != NULL; i = i->link){
             cout << count++ << "." << "\t" << i->Name << endl;
