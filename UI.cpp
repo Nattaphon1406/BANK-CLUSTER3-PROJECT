@@ -56,6 +56,7 @@ void UI::printmenuRegister_customer(){
     cout << "TypeAccount: ";
     cin >> typeAccount;
     Info_Customer.LoadFileRegisterCustomer();
+    Info_Customer.ShowRegistercustomer();
     if(typeAccount == "1"){
         EnterMoneyDepositAccount:
         cout << "Money: ";
@@ -66,7 +67,9 @@ void UI::printmenuRegister_customer(){
         ss << money;
         ss >> Money;
         ss.clear();
+        Info_Customer.ShowRegistercustomer();
         Info_Customer.AddInfoRegisterCustomer(name,citizenID,birthDate,phoneNumber,"10",Money);
+        Info_Customer.ShowRegistercustomer();
     }
     else{
         EnterMoneySavingAccount:
@@ -78,8 +81,11 @@ void UI::printmenuRegister_customer(){
         ss << money;
         ss >> Money;
         ss.clear();
+        Info_Customer.ShowRegistercustomer();
         Info_Customer.AddInfoRegisterCustomer(name,citizenID,birthDate,phoneNumber,"20",Money);
+        Info_Customer.ShowRegistercustomer();
     }
+    Info_Customer.ShowRegistercustomer();
     Info_Customer.SaveInfoRegisterCustomerToFile();
     cout << "===============================" << endl;
 }
@@ -111,6 +117,7 @@ void UI::print_menuClerk(){
     cout << "5. Money Exchange" << endl;
     cout << "6. Statement" << endl;
     cout << "7. MenageRegister" << endl;
+    cout << "8. Return to Login" << endl;
     cout << "==============================================" << endl;
     
 }
@@ -123,7 +130,6 @@ void UI::print_menuCustomer(){
 }
 void UI::printInfoFromFileRegister(){
     Information Info_Customer;
-    Info_Customer.LoadFileRegisterCustomer();
     cout << "============ RegisterCustomerFile ============" << endl;
     cout << "No." << "\t" << "Name" << endl;
     cout << "==============================================" << endl;
@@ -132,27 +138,34 @@ void UI::printInfoFromFileRegister(){
 }
 void UI::MenageRegister(int Number){
     Information Info_Customer;
-    BankClerk Data_BankClerk;
     int count;
-    Info_Customer.LoadFileRegisterCustomer();
     cout << "1.ConfirmRegister" << endl;
     cout << "2.RemoveRegister" << endl;
     cout << "Enter: " << endl;
     cin >> count;
     if(count == 1){
-        Info_Customer.SaveInfoRegisterToFileBankAccount(Number);
-        Info_Customer.RemoveInfoRegisterCustomer(Number); 
-        Info_Customer.SaveInfoRegisterCustomerToFile();
-        
+        Info_Customer.SaveInfoCustomerToFile();
     }
     else if(count == 2){
         Info_Customer.RemoveInfoRegisterCustomer(Number); 
-        Info_Customer.SaveInfoRegisterCustomerToFile();
     }
 }
-/*void UI::print_menuDeposit(){
-    cout << "==================== Deposition ==================== " << endl;
-    cout << "Enter Account number: ";
-    cin >> accountNumber;
-        //check account number though BankAccount
-}*/
+void UI::print_CurrencyType(){
+    cout << "========= Money Exchange ========= " << endl;
+	cout << "------- Foreign Currency -------" << endl;
+	cout << "1. JPY(Yen)" << endl;
+	cout << "2. USD(Dollar)" << endl;
+	cout << "3. CNY(Yuan)" << endl;
+	cout << "4. KRW(Won)" << endl;
+	cout << "5. GBR(Pound)" << endl;
+	cout << "6. EUR(Euro)" << endl;
+	cout << "7. EXIT " << endl;
+	cout << "---------------------------- " << endl;
+}
+void UI::print_PaymentType(){
+    cout << "------- Payment Type ------- " << endl;
+	cout << "1. Cash " << endl;
+	cout << "2. Bank Account " << endl;
+	cout << "3. Return to choose new Currency or Exit" << endl;
+	cout << "---------------------------- " << endl;
+}
