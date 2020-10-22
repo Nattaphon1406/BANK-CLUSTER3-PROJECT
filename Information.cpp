@@ -1,39 +1,59 @@
 #include "Information.h"
-Information :: Info :: Info(Customer Data){
-      customer = Data;
+Information :: Info_Customer :: Info_Customer(string name,string citizenID,string birthDate,string phoneNumber,string typeAccount,string money){
+      SetInfoCustomer(name,citizenID,birthDate,phoneNumber,typeAccount,money);
       link = NULL;
 }
-Information :: Info :: Info(BankAccount Data){
-      bankaccount = Data;
+Information :: Info_BankClerk :: Info_BankClerk(string name,string citizenID,string birthDate,string phoneNumber,string clerkID,string password){
+      SetInfoBankClerk(name,citizenID,birthDate,phoneNumber,clerkID,password);
       link = NULL;
 }
-Information :: Info :: Info(BankClerk Data){
-      bankclerk = Data;
+Information :: Info_BankAccount :: Info_BankAccount(string name,string accountNumber,string money,string username,string password){
+      SetInfoBankAccount(name,accountNumber,money,username,password);
       link = NULL;
 }
 Information :: Information(){
-      HeadInfo = NULL;
-      TailInfo = NULL;
-      CountAmount = 0;
+      HeadInfo_Customer = NULL;
+      TailInfo_Customer = NULL;
+      HeadInfo_BankClerk = NULL;
+      TailInfo_BankClerk = NULL;
+      HeadInfo_BankAccount = NULL;
+      TailInfo_BankAccount = NULL;
+      Count_Customer = 0;
+      Count_BankClerk = 0;
+      Count_BankAccount = 0;
 }
 Information :: ~Information(){
-      Info *Value = HeadInfo;  
-      for(int i=1;i<CountAmount;i++){
-            Value = HeadInfo;
-            HeadInfo = HeadInfo->link;
-            delete Value;
-            Value = NULL;
-      }    
-      HeadInfo = NULL;
-      TailInfo = NULL;
+      for(int i=0;i<Count_Customer;i++){
+            Info_Customer *Data_Customer = HeadInfo_Customer;
+            HeadInfo_Customer = HeadInfo_Customer->link;
+            delete Data_Customer;
+            Data_Customer = NULL;
+      }
+      for(int i=0;i<Count_BankClerk;i++){
+            Info_BankClerk *Data_BankClerk = HeadInfo_BankClerk;
+            HeadInfo_BankClerk = HeadInfo_BankClerk->link;
+            delete Data_BankClerk;
+            Data_BankClerk = NULL;
+      }
+      for(int i=0;i<Count_BankAccount;i++){
+            Info_BankAccount *Data_BankAccount = HeadInfo_BankAccount;
+            HeadInfo_BankAccount = HeadInfo_BankAccount->link;
+            delete Data_BankAccount;
+            Data_BankAccount = NULL;
+      }
+      HeadInfo_Customer = NULL;
+      TailInfo_Customer = NULL;
+      HeadInfo_BankClerk = NULL;
+      TailInfo_BankClerk = NULL;
+      HeadInfo_BankAccount = NULL;
+      TailInfo_BankAccount = NULL;
 }
 void Information :: LoadFileRegisterCustomer(){
       string Name,CitizenID,BirthDate,PhoneNumber,TypeAccount,Money,Line;
       ifstream Write;
-      Customer Data;
-      CountAmount = 0;
-      HeadInfo = NULL;
-      TailInfo = NULL;
+      Count_Customer = 0;
+      HeadInfo_Customer = NULL;
+      TailInfo_Customer = NULL;
       Write.open("RegisterAccountCustomer.dat");
       if(Write.fail()){
         cout << "Can not Write File 'RegisterAccountCustomer.dat' " << endl;
@@ -50,8 +70,7 @@ void Information :: LoadFileRegisterCustomer(){
               Line.erase(0,Line.find(',')+1);
               TypeAccount = Line.substr(0,Line.find(','));
               Money = Line.erase(0,Line.find(',')+1);
-              Data.SetInfoCustomer(Name,CitizenID,BirthDate,PhoneNumber,TypeAccount,Money);
-              AddInfoRegisterCustomer(Data);
+              AddInfoRegisterCustomer(Name,CitizenID,BirthDate,PhoneNumber,TypeAccount,Money);
           }
           Write.close();
       }
@@ -59,10 +78,9 @@ void Information :: LoadFileRegisterCustomer(){
 void Information :: LoadFileBankAccount(){
       string Name,AccountNumber,Money,Username,Password,Line;
       ifstream Write;
-      BankAccount Data;
-      CountAmount = 0;
-      HeadInfo = NULL;
-      TailInfo = NULL;
+      Count_BankAccount = 0;
+      HeadInfo_BankAccount = NULL;
+      TailInfo_BankAccount = NULL;
       Write.open("BankAccount.dat");
       if(Write.fail()){
         cout << "Can not Write File 'BankAccount.dat' " << endl;
@@ -78,8 +96,7 @@ void Information :: LoadFileBankAccount(){
               Username = Line.substr(0,Line.find(','));
               Line.erase(0,Line.find(',')+1);
               Password = Line.erase(0,Line.find(',')+1);
-              Data.SetInfoBankAccount(Name,AccountNumber,Money,Username,Password);
-              AddInfoBankAccount(Data);
+              AddInfoBankAccount(Name,AccountNumber,Money,Username,Password);
           }
           Write.close();
       }
@@ -87,13 +104,12 @@ void Information :: LoadFileBankAccount(){
 void Information :: LoadFileBankClerk(){
       string Name,CitizenID,BirthDate,PhoneNumber,ClerkID,Password,Line;
       ifstream Write;
-      BankClerk Data;
-      CountAmount = 0;
-      HeadInfo = NULL;
-      TailInfo = NULL;
-      Write.open("BankAccount.dat");
+      Count_Customer = 0;
+      HeadInfo_Customer = NULL;
+      TailInfo_Customer = NULL;
+      Write.open("BankClerk.dat");
       if(Write.fail()){
-        cout << "Can not Write File 'BankAccount.dat' " << endl;
+        cout << "Can not Write File 'BankClerk.dat' " << endl;
       }
       else{
           while(getline(Write,Line)){
@@ -108,60 +124,59 @@ void Information :: LoadFileBankClerk(){
               ClerkID = Line.substr(0,Line.find(','));
               Line.erase(0,Line.find(',')+1);
               Password = Line.erase(0,Line.find(',')+1);
-              Data.SetInfoBankClerk(Name,CitizenID,BirthDate,PhoneNumber,ClerkID,Password);
-              AddInfoBankClerk(Data);
+              AddInfoBankClerk(Name,CitizenID,BirthDate,PhoneNumber,ClerkID,Password);
           }
           Write.close();
       }
 }
-void Information :: AddInfoRegisterCustomer(Customer Data){
-      Info *newCustomer = new Info(Data);
-            if(HeadInfo == NULL){
-                HeadInfo = newCustomer;
-                TailInfo = newCustomer;
+void Information :: AddInfoRegisterCustomer(string name,string citizenID,string birthDate,string phoneNumber,string typeAccount,string money){
+      Info_Customer *newCustomer = new Info_Customer(name,citizenID,birthDate,phoneNumber,typeAccount,money);
+            if(HeadInfo_Customer == NULL){
+                HeadInfo_Customer = newCustomer;
+                TailInfo_Customer = newCustomer;
             }
             else{
-                TailInfo->link = newCustomer;
-                TailInfo = newCustomer;
+                TailInfo_Customer->link = newCustomer;
+                TailInfo_Customer = newCustomer;
             }
-            CountAmount++;
+            Count_Customer++;
 }
-void Information :: AddInfoBankAccount(BankAccount Data){
-      Info *newBankAccount = new Info(Data);
-            if(HeadInfo == NULL){
-                HeadInfo = newBankAccount;
-                TailInfo = newBankAccount;
+void Information :: AddInfoBankClerk(string name,string citizenID,string birthDate,string phoneNumber,string clerkID,string password){
+      Info_BankClerk *newBankAccount = new Info_BankClerk(name,citizenID,birthDate,phoneNumber,clerkID,password);
+            if(HeadInfo_BankClerk == NULL){
+                HeadInfo_BankClerk = newBankAccount;
+                TailInfo_BankClerk = newBankAccount;
             }
             else{
-                TailInfo->link = newBankAccount;
-                TailInfo = newBankAccount;
+                TailInfo_BankClerk->link = newBankAccount;
+                TailInfo_BankClerk = newBankAccount;
             }
-            CountAmount++;
+            Count_BankClerk++;
 }
-void Information :: AddInfoBankClerk(BankClerk Data){
-      Info *newBankClerk = new Info(Data);
-            if(HeadInfo == NULL){
-                HeadInfo = newBankClerk;
-                TailInfo = newBankClerk;
+void Information :: AddInfoBankAccount(string name,string accountNumber,string money,string username,string password){
+      Info_BankAccount *newBankClerk = new Info_BankAccount(name,accountNumber,money,username,password);
+            if(HeadInfo_BankAccount == NULL){
+                HeadInfo_BankAccount = newBankClerk;
+                TailInfo_BankAccount = newBankClerk;
             }
             else{
-                TailInfo->link = newBankClerk;
-                TailInfo = newBankClerk;
+                TailInfo_BankAccount->link = newBankClerk;
+                TailInfo_BankAccount = newBankClerk;
             }
-            CountAmount++;
+            Count_BankAccount++;
 }
 void Information :: RemoveInfoRegisterCustomer(int Number){
-      Info *temp,*ptemp;
-      temp = HeadInfo;
-      for(int i = 1; i < CountAmount; i++){
+      Info_Customer *temp,*ptemp;
+      temp = HeadInfo_Customer;
+      for(int i = 1; i < Count_Customer; i++){
             if(i == Number){
                   if(i==1){
-                        HeadInfo = temp->link;
+                        HeadInfo_Customer = temp->link;
                   }
                   else{
                         ptemp->link = temp->link;
                   }
-                  CountAmount--;
+                  Count_Customer--;
                   delete temp;
             }
             ptemp = temp;
@@ -169,35 +184,36 @@ void Information :: RemoveInfoRegisterCustomer(int Number){
       }
 }
 void Information :: RemoveInfoBankAccount(string AccountNumber){
-      Info *temp,*ptemp;
-      temp = HeadInfo;
-      for(Info *i = HeadInfo; i != NULL; i = i->link){
-            if(i->bankaccount.getAccountNumber() == AccountNumber){
-                  if(i==HeadInfo){
-                        HeadInfo = temp->link;
+      Info_BankAccount *temp,*ptemp;
+      temp = HeadInfo_BankAccount;
+      for(Info_BankAccount *i = HeadInfo_BankAccount; i != NULL; i = i->link){
+            if(i->getAccountNumber() == AccountNumber){
+                  if(i == HeadInfo_BankAccount){
+                        HeadInfo_BankAccount = temp->link;
                   }
                   else{
                         ptemp->link = temp->link;
                   }
-                  CountAmount--;
+                  Count_BankAccount--;
                   delete temp;
             }
             ptemp = temp;
 	      temp = temp->link; 
       }
+      SaveInfoCustomerToFile();
 }
 void Information :: RemoveInfoBankClerk(int Number){
-      Info *temp,*ptemp;
-      temp = HeadInfo;
-      for(int i = 1; i < CountAmount; i++){
+      Info_BankClerk *temp,*ptemp;
+      temp = HeadInfo_BankClerk;
+      for(int i = 1; i < Count_BankClerk; i++){
             if(i == Number){
                   if(i==1){
-                        HeadInfo = temp->link;
+                        HeadInfo_BankClerk = temp->link;
                   }
                   else{
                         ptemp->link = temp->link;
                   }
-                  CountAmount--;
+                  Count_BankClerk--;
                   delete temp;
             }
             ptemp = temp;
@@ -207,8 +223,8 @@ void Information :: RemoveInfoBankClerk(int Number){
 void Information :: SaveInfoRegisterCustomerToFile(){
       ofstream Write("RegisterAccountCustomer.dat");
         if(Write){
-            for(Info *i = HeadInfo; i != NULL; i = i->link){
-                Write << i->customer.getName() << "," << i->customer.getCitizenID() << "," << i->customer.getBirthDate() << "," << i->customer.getPhoneNumber() << "," << i->customer.getTypeAccount() << "," << i->customer.getMoney() << endl;
+            for(Info_Customer *i = HeadInfo_Customer; i != NULL; i = i->link){
+                Write << i->getName() << "," << i->getCitizenID() << "," << i->getBirthDate() << "," << i->getPhoneNumber() << "," << i->getTypeAccount() << "," << i->getMoney() << endl;
             }
         }
       Write.close();
@@ -216,8 +232,8 @@ void Information :: SaveInfoRegisterCustomerToFile(){
 void Information :: SaveInfoCustomerToFile(){
       ofstream Write("BankAccount.dat");
         if(Write){
-            for(Info *i = HeadInfo; i != NULL; i = i->link){
-                Write << i->bankaccount.getName() << "," << i->bankaccount.getAccountNumber() << "," << i->bankaccount.getMoney() << "," << i->bankaccount.getUsername() << "," << i->bankaccount.getPassword() << endl;
+            for(Info_BankAccount *i = HeadInfo_BankAccount; i != NULL; i = i->link){
+                Write << i->getName() << "," << i->getAccountNumber() << "," << i->getMoney() << "," << i->getUsername() << "," << i->getPassword() << endl;
             }
         }
       Write.close();
@@ -225,16 +241,28 @@ void Information :: SaveInfoCustomerToFile(){
 void Information :: SaveInfoBankClerkToFile(){
       ofstream Write("BankClerk.dat");
         if(Write){
-            for(Info *i = HeadInfo; i != NULL; i = i->link){
-                Write << i->bankclerk.getName() << "," << i->bankclerk.getCitizenID() << "," << i->bankclerk.getBirthDate() << "," << i->bankclerk.getPhoneNumber() << "," << i->bankclerk.getClerkID() << "," << i->bankclerk.getPassword() << endl;
+            for(Info_BankClerk *i = HeadInfo_BankClerk; i != NULL; i = i->link){
+                Write << i->getName() << "," << i->getCitizenID() << "," << i->getBirthDate() << "," << i->getPhoneNumber() << "," << i->getClerkID() << "," << i->getPassword() << endl;
             }
         }
       Write.close();
 }
-void Information :: Show(){
-      for(Info *i = HeadInfo; i != NULL; i = i->link){
-            cout << i->customer.getName() << "," << i->customer.getCitizenID() << "," << i->customer.getBirthDate() << "," << i->customer.getPhoneNumber() << "," << i->customer.getTypeAccount() << "," << i->customer.getMoney() << endl;
-            //cout << i->bankclerk.getName() << "," << i->bankclerk.getCitizenID() << "," << i->bankclerk.getBirthDate() << "," << i->bankclerk.getPhoneNumber() << "," << i->bankclerk.getClerkID() << "," << i->bankclerk.getPassword() << endl;
-            //cout << i->bankaccount.getName() << "," << i->bankaccount.getAccountNumber() << "," << i->bankaccount.getMoney() << "," << i->bankaccount.getUsername() << "," << i->bankaccount.getPassword() << endl;
+void Information :: ShowRegistercustomer(){
+      int count = 1;
+      for(Info_Customer *i = HeadInfo_Customer; i != NULL; i = i->link){
+            cout << count << "." << "\t" << i->getName() << endl;
+            //cout << i->getName() << "," << i->getCitizenID() << "," << i->getBirthDate() << "," << i->getPhoneNumber() << "," << i->getTypeAccount() << "," << i->getMoney() << endl;
+            //cout << i->getName() << "," << i->getCitizenID() << "," << i->getBirthDate() << "," << i->getPhoneNumber() << "," << i->getClerkID() << "," << i->getPassword() << endl;
+            //cout << i->getName() << "," << i->getAccountNumber() << "," << i->getMoney() << "," << i->getUsername() << "," << i->getPassword() << endl;
+      }
+}
+void Information :: ShowBankclerk(){
+      for(Info_BankClerk *i = HeadInfo_BankClerk; i != NULL; i = i->link){
+            cout << i->getName() << "," << i->getCitizenID() << "," << i->getBirthDate() << "," << i->getPhoneNumber() << "," << i->getClerkID() << "," << i->getPassword() << endl;
+      }
+}
+void Information :: ShowBankAccount(){
+      for(Info_BankAccount *i = HeadInfo_BankAccount; i != NULL; i = i->link){
+            cout << i->getName() << "," << i->getAccountNumber() << "," << i->getMoney() << "," << i->getUsername() << "," << i->getPassword() << endl;
       }
 }

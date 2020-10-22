@@ -6,19 +6,26 @@
 #include "BankAccount.h"
 class Information{
   private:
-    class Info{
+    class Info_Customer : public Customer{
       public:
-        Info *link;
-        Customer customer;
-        BankAccount bankaccount;
-        BankClerk bankclerk;
-        Info(Customer Data);
-        Info(BankAccount Data);
-        Info(BankClerk Data);
+        Info_Customer *link;
+        Info_Customer(string name,string citizenID,string birthDate,string phoneNumber,string typeAccount,string money);
+    };
+    class Info_BankClerk: public BankClerk{
+      public:
+        Info_BankClerk *link;
+        Info_BankClerk(string name,string citizenID,string birthDate,string phoneNumber,string clerkID,string password);
+    };
+    class Info_BankAccount : public BankAccount{
+      public:
+        Info_BankAccount *link;
+        Info_BankAccount(string name,string accountNumber,string money,string username,string password);
         //Call Funtion Info From class Person
     };
-    Info *HeadInfo,*TailInfo;
-    int CountAmount;
+    Info_Customer *HeadInfo_Customer,*TailInfo_Customer;
+    Info_BankClerk *HeadInfo_BankClerk,*TailInfo_BankClerk;
+    Info_BankAccount *HeadInfo_BankAccount,*TailInfo_BankAccount;
+    int Count_Customer,Count_BankClerk,Count_BankAccount;
   public:
     Information();
     ~Information();
@@ -28,11 +35,11 @@ class Information{
     //LoadInfo Of BankAccount From File "BankAccount.dat"
     void LoadFileBankClerk();
     //LoadInfo Of BankClerk From File "BankClerk.dat"
-    void AddInfoRegisterCustomer(Customer Data);
+    void AddInfoRegisterCustomer(string name,string citizenID,string birthDate,string phoneNumber,string typeAccount,string money);
     //Add InfoInfo to Info(Customer Data)
-    void AddInfoBankAccount(BankAccount Data);
+    void AddInfoBankAccount(string name,string accountNumber,string money,string username,string password);
     //Add InfoInfo to Info(BankAccount Data)
-    void AddInfoBankClerk(BankClerk Data);
+    void AddInfoBankClerk(string name,string citizenID,string birthDate,string phoneNumber,string clerkID,string password);
     //Add InfoInfo to Info(BankClerk Data)
     void RemoveInfoRegisterCustomer(int Number);
     //Remove Info's Account at File "RegisterCustomer.dat"
@@ -46,6 +53,8 @@ class Information{
     //Save InfoInfo to File "BankAccount.dat"
     void SaveInfoBankClerkToFile();
     //Save InfoData_BankClerk to File "Data_BankClerk.dat"
-    void Show();
+    void ShowRegistercustomer();
+    void ShowBankclerk();
+    void ShowBankAccount();
 };
 #endif
