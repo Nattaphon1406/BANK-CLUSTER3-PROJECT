@@ -4,7 +4,7 @@
 #include <string>
 using namespace std;
 class BankClerk{
-    private:
+    protected:
         string Name,CitizenID,BirthDate,PhoneNumber,ClerkID,Password;
     public:
         BankClerk();
