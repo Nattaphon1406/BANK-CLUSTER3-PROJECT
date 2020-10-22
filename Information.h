@@ -4,6 +4,8 @@
 #include "Customer.h"
 #include "BankClerk.h"
 #include "BankAccount.h"
+#include <ctime>
+#include <sstream>
 class Information{
   private:
     class Info_Customer : public Customer{
@@ -36,11 +38,11 @@ class Information{
     void LoadFileBankClerk();
     //LoadInfo Of BankClerk From File "BankClerk.dat"
     void AddInfoRegisterCustomer(string name,string citizenID,string birthDate,string phoneNumber,string typeAccount,string money);
-    //Add Info to Info(Customer Data)
+    //Add InfoInfo to Info(Customer Data)
     void AddInfoBankAccount(string name,string accountNumber,string money,string username,string password);
-    //Add Info to Info(BankAccount Data)
+    //Add InfoInfo to Info(BankAccount Data)
     void AddInfoBankClerk(string name,string citizenID,string birthDate,string phoneNumber,string clerkID,string password);
-    //Add Info to Info(BankClerk Data)
+    //Add InfoInfo to Info(BankClerk Data)
     void RemoveInfoRegisterCustomer(int Number);
     //Remove Info's Account at File "RegisterCustomer.dat"
     void RemoveInfoBankAccount(string AccountNumber);
@@ -48,13 +50,13 @@ class Information{
     void RemoveInfoBankClerk(int Number);
     //Remove Info's Account at File "RegisterBankClerk.dat"
     void SaveInfoRegisterCustomerToFile();
-    //Save Info to File "RegisterBankAccount.dat"
+    //Save InfoInfo to File "RegisterBankAccount.dat"
     void SaveInfoCustomerToFile();
-    //Save Info to File "BankAccount.dat"
-    void SaveInfoRegisterToFileBankAccount(int Number);
-    //Move Info RegisterCustomer to BankAccount.dat
+    //Save InfoInfo to File "BankAccount.dat"
     void SaveInfoBankClerkToFile();
     //Save InfoData_BankClerk to File "Data_BankClerk.dat"
+    string GenerateAccountNumber();
+    //Generate Account Number
     void ShowRegistercustomer();
     void ShowBankclerk();
     void ShowBankAccount();

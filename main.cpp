@@ -10,7 +10,6 @@ int main(){
     int Choice;
     Information *Obj_Info = new Information();
     UI Obj_UI;
-    MainMenu:
     Obj_UI.print_MainMenu();
     cin >> Choice;
     if(Choice == 1){
@@ -24,12 +23,13 @@ int main(){
             cin >> Choice;
             Obj_UI.MenageRegister(Choice);
         }
-        goto MainMenu;
     }
     else if(Choice == 2){
         Obj_Info->LoadFileRegisterCustomer();
         Obj_UI.printmenuRegister_customer();
-        goto MainMenu;
+        Obj_Info->GenerateAccountNumber();
     }
-    return 0;
+    else if(Choice == 3){
+        return 0;
+    } 
 }

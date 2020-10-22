@@ -56,6 +56,7 @@ void UI::printmenuRegister_customer(){
     cout << "TypeAccount: ";
     cin >> typeAccount;
     Info_Customer.LoadFileRegisterCustomer();
+    Info_Customer.ShowRegistercustomer();
     if(typeAccount == "1"){
         EnterMoneyDepositAccount:
         cout << "Money: ";
@@ -66,7 +67,9 @@ void UI::printmenuRegister_customer(){
         ss << money;
         ss >> Money;
         ss.clear();
+        Info_Customer.ShowRegistercustomer();
         Info_Customer.AddInfoRegisterCustomer(name,citizenID,birthDate,phoneNumber,"10",Money);
+        Info_Customer.ShowRegistercustomer();
     }
     else{
         EnterMoneySavingAccount:
@@ -78,8 +81,11 @@ void UI::printmenuRegister_customer(){
         ss << money;
         ss >> Money;
         ss.clear();
+        Info_Customer.ShowRegistercustomer();
         Info_Customer.AddInfoRegisterCustomer(name,citizenID,birthDate,phoneNumber,"20",Money);
+        Info_Customer.ShowRegistercustomer();
     }
+    Info_Customer.ShowRegistercustomer();
     Info_Customer.SaveInfoRegisterCustomerToFile();
     cout << "===============================" << endl;
 }
@@ -137,6 +143,7 @@ void UI::MenageRegister(int Number){
     cout << "Enter: " << endl;
     cin >> count;
     if(count == 1){
+        Info_Customer.GenerateAccountNumber();
         Info_Customer.SaveInfoCustomerToFile();
     }
     else if(count == 2){
