@@ -1,4 +1,5 @@
 #include "Customer.h"
+<<<<<<< Updated upstream
 Customer :: Customer(){
     Name = "";
     CitizenID = "";
@@ -34,3 +35,14 @@ string Customer :: getMoney(){
     return Money;
 }
         //Save Info Of Customer
+=======
+bool Customer :: login(string username,string password){
+    LoadFileBankAccount();
+    for(HeadInfo_BankAccount = HeadInfo_BankAccount; HeadInfo_BankAccount != NULL; HeadInfo_BankAccount = HeadInfo_BankAccount->link){
+        if((HeadInfo_BankAccount->Username == username ) && (HeadInfo_BankAccount->Password == password)){
+            return true;
+        }
+    }
+    return false;
+}
+>>>>>>> Stashed changes

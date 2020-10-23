@@ -1,4 +1,5 @@
 #include "BankClerk.h"
+<<<<<<< Updated upstream
 BankClerk :: BankClerk(){
     Name = "";
     CitizenID = "";
@@ -34,3 +35,14 @@ string BankClerk :: getPassword(){
     return Password;
 }
         //Save Info Of BankClerk
+=======
+bool BankClerk :: login(string username,string password){
+    LoadFileBankClerk();
+    for(HeadInfo_BankClerk = HeadInfo_BankClerk; HeadInfo_BankClerk != NULL; HeadInfo_BankClerk = HeadInfo_BankClerk->link){
+        if((HeadInfo_BankClerk->ClerkID == username ) && (HeadInfo_BankClerk->Password == password)){
+            return true;
+        }
+    }
+    return false;
+}
+>>>>>>> Stashed changes
