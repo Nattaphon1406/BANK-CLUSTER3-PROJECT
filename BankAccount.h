@@ -2,18 +2,16 @@
 #define BANKACCOUNT_H
 #include <iostream>
 #include <string>
+#include "Information.h"
+#include "Customer.h"
+#include "BankClerk.h"
 using namespace std;
-class BankAccount{
+class BankAccount : public Information{
     private:
-        string Name,AccountNumber,Money,Username,Password;
+        BankAccount *Obj_BankAccount;
     public:
-        BankAccount();
-        void SetInfoBankAccount(string name,string accountNumber,string money,string username,string password);
-        string getName();
-        string getAccountNumber();
-        string getMoney();
-        string getUsername();
-        string getPassword();
-        //Save Info Of BankAccount
+        bool CheckTransfer_account(string accountNumber);
+
+    
 };
 #endif

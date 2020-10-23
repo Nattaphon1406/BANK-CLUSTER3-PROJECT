@@ -1,15 +1,5 @@
 #include <iostream>
 #include "Information.h"
-<<<<<<< Updated upstream
-#include "Customer.h"
-#include "BankClerk.h"
-#include "BankAccount.h"
-using namespace std;
-int main(){
-    Information *Obj_Info = new Information();
-    Obj_Info->LoadFileRegisterCustomer();
-    Obj_Info->Show();
-=======
 #include "UI.h"
 #include "MoneyExchange.h"
 using namespace std;
@@ -106,6 +96,5 @@ int main(){
         }
     }while(Choice != 3); // check menu login
 
->>>>>>> Stashed changes
     return 0;
 }
