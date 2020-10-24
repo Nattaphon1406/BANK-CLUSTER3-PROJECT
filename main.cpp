@@ -18,7 +18,7 @@ int main(){
                 goto MainMenu;
             }
             else if(Obj_UI.Checklogin() == 2){
-                do{
+                    ClerkMemu:
                     Obj_UI.print_menuClerk();
                     cin >> Choice;
                     if(Choice == 1){ //Deposition
@@ -85,7 +85,14 @@ int main(){
                         cin >> Choice;
                         Obj_UI.MenageRegister(Choice);
                     }
-                }while(Choice != 8); // check menu Clerk
+                    else if(Choice == 8){
+                        goto MainMenu;
+                    }
+                    goto ClerkMemu;
+            }
+            else{
+                cout << "!!!!!Invalid Username or Password!!!!" << endl;
+                goto MainMenu;
             }
         }
         else if(Choice == 2){
