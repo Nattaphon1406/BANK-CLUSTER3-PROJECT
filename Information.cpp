@@ -326,7 +326,6 @@ void Information :: SaveInfoBankClerkToFile(){
       Write.close();
 }
 void Information :: ShowRegistercustomer(){
-      LoadFileRegisterCustomer();
       int count = 1;
       for(Info_Customer *i = HeadInfo_Customer; i != NULL; i = i->link){
             cout << count++ << "." << "\t" << i->Name << endl;

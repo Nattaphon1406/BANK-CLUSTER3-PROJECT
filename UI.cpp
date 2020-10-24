@@ -27,14 +27,6 @@ void UI::print_MainMenu(){
     cout << "===============================" << endl;
     cout << "Enter: "; 
 }
-void UI::print_Login(){
-    cout << "============ Login ============" << endl;
-    cout << "Username: ";
-    cin >> username;
-    cout << "Password: ";
-    cin >> password;
-    cout << "===============================" << endl;
-}
 void UI::print_Register(){
     cout << "=========== Register ==========" << endl;
     cout << "1. Register Customer" << endl;
@@ -42,6 +34,14 @@ void UI::print_Register(){
     cout << "3. Back" << endl;
     cout << "===============================" << endl;
     cout << "Enter: ";
+}
+void UI::print_Login(){
+    cout << "============ Menu ============" << endl;
+    cout << "Username: ";
+    cin >> username;
+    cout << "Password: ";
+    cin >> password;
+    cout << "===============================" << endl;
 }
 int UI::Checklogin(){
     if(Obj_Customer.login(username,password)){
@@ -54,71 +54,41 @@ int UI::Checklogin(){
     return 3;
 }
 void UI::printmenuRegister_Customer(){
-    Information Info_Customer;
-    stringstream ss;
-    string Money;
     cout << "====== Register Customer ======" << endl;
     cout << "Name: ";
-    cin.ignore();
-    getline(cin,name);
+    Obj_Customer.AddName();
     cout << "CitizenID: ";
-    cin >> citizenID;
+    Obj_Customer.AddCitizenID();
     cout << "BirthDate: ";
-    cin >> birthDate;
+    Obj_Customer.AddBirthDate();
     cout << "Tel: ";
-    cin >> phoneNumber;
+    Obj_Customer.AddPhoneNumber();
     cout << "========= TypeAccount =========" << endl;
     cout << "1. DepositAccount [  500 Bath]" << endl;
     cout << "2. SavingAccount  [20000 Bath]" << endl;
+    cout << "===============================" << endl;
     cout << "TypeAccount: ";
-    cin >> typeAccount;
-    Info_Customer.LoadFileRegisterCustomer();
-    if(typeAccount == "1"){
-        EnterMoneyDepositAccount:
-        cout << "Money: ";
-        cin >> money;
-        if(money < 500){
-            goto EnterMoneyDepositAccount;
-        }
-        ss << money;
-        ss >> Money;
-        ss.clear();
-        Info_Customer.AddInfoRegisterCustomer(name,citizenID,birthDate,phoneNumber,"10",Money);
+    Obj_Customer.AddTypeAccount();
+    if(Obj_Customer.AddMoney()){
+        Obj_Customer.Registercustomer();
     }
-    else{
-        EnterMoneySavingAccount:
-        cout << "Money: ";
-        cin >> money;
-        if(money < 20000){
-            goto EnterMoneySavingAccount;
-        }
-        ss << money;
-        ss >> Money;
-        ss.clear();
-        Info_Customer.AddInfoRegisterCustomer(name,citizenID,birthDate,phoneNumber,"20",Money);
-    }
-    Info_Customer.SaveInfoRegisterCustomerToFile();
     cout << "===============================" << endl;
 }
 void UI::printmenuRegister_BankClerk(){
-    Information Info_BankClerk;
     cout << "====== Register BankClerk =====" << endl;
     cout << "Name: ";
-    cin.ignore();
-    getline(cin,name);
+    Obj_BankClerk.AddName();
     cout << "CitizenID: ";
-    cin >> citizenID;
+    Obj_BankClerk.AddCitizenID();
     cout << "BirthDate: ";
-    cin >> birthDate;
+    Obj_BankClerk.AddBirthDate();
     cout << "Tel: ";
-    cin >> phoneNumber;
+    Obj_BankClerk.AddPhoneNumber();
     cout << "Username: ";
-    cin >> username;
+    Obj_BankClerk.AddClerkID();
     cout << "Password: ";
-    cin >> password;
-    Info_BankClerk.LoadFileBankClerk();
-    Info_BankClerk.AddInfoBankClerk(name,citizenID,birthDate,phoneNumber,username,password);
-    Info_BankClerk.SaveInfoBankClerkToFile();
+    Obj_BankClerk.AddPassword();
+    Obj_BankClerk.Registercustomer();
     cout << "===============================" << endl;
 }
 void UI::print_menuClerk(){
@@ -144,31 +114,19 @@ void UI::print_menuCustomer(){
     cout << "Enter: ";
 }
 void UI::printInfoFromFileRegister(){
-    Information Info_Customer;
+    Obj_Customer.LoadFileRegisterCustomer();
     cout << "============ RegisterCustomerFile ============" << endl;
     cout << "No." << "\t" << "Name" << endl;
     cout << "==============================================" << endl;
-    Info_Customer.ShowRegistercustomer();
+    Obj_Customer.ShowRegistercustomer();
     cout << "==============================================" << endl;
     cout << "Enter: ";
 }
 void UI::MenageRegister(int Number){
-    Information Info_Customer;
-    Info_Customer.LoadFileRegisterCustomer();
-    int count;
     cout << "1.ConfirmRegister" << endl;
     cout << "2.RemoveRegister" << endl;
-    cout << "Enter: " << endl;
-    cin >> count;
-    if(count == 1){
-        Info_Customer.SaveInfoRegisterToFileBankAccount(Number);
-        Info_Customer.RemoveInfoRegisterCustomer(Number);
-        Info_Customer.SaveInfoRegisterCustomerToFile();
-    }
-    else if(count == 2){
-        Info_Customer.RemoveInfoRegisterCustomer(Number); 
-        Info_Customer.SaveInfoRegisterCustomerToFile();
-    }
+    cout << "Enter: ";
+    Obj_BankClerk.MenuMenageRegister(Number);
 }
 void UI::print_CurrencyType(){
     cout << "========= Money Exchange ========= " << endl;
@@ -214,4 +172,16 @@ void UI::transfer_firstPage(){
 		cin >> money;
 	}while(money > 50000);
 	cout << "===========================" << endl;
+}
+void UI::SvaeRegisterCustomer(string name,string citizenID,string birthDate,string phoneNumber,string typeAccount,int money){
+    Information Info_Customer;
+    Info_Customer.LoadFileRegisterCustomer();
+}
+void UI::SaveRegisterBankClerk(string name,string citizenID,string birthDate,string phoneNumber,string clerkID,string password){
+    Information Info_BankClerk;
+    Info_BankClerk.LoadFileBankClerk();
+}
+void UI::SaveInfoCustomerToBankAccount(string name,string accountNumber,string money,string username,string password){
+    Information Info_BankAccount;
+    Info_BankAccount.LoadFileRegisterCustomer();
 }

@@ -10,6 +10,7 @@ class BankAccount : public Information{
     private:
         BankAccount *Obj_BankAccount;
     public:
+        bool login(string username,string password);
         bool CheckTransfer_account(string accountNumber);
 
     

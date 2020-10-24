@@ -19,6 +19,9 @@ class UI{
         void print_MainMenu();
         void print_Login();
         void print_Register();
+        void SvaeRegisterCustomer(string name,string citizenID,string birthDate,string phoneNumber,string typeAccount,int money);
+        void SaveRegisterBankClerk(string name,string citizenID,string birthDate,string phoneNumber,string clerkID,string password);
+        void SaveInfoCustomerToBankAccount(string name,string accountNumber,string money,string username,string password);
         int Checklogin();
         //It has Funtion Check Username and Password
         void print_menuClerk();

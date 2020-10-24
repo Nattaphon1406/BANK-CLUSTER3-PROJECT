@@ -3,13 +3,20 @@
 #include <iostream>
 #include <string>
 #include "Information.h"
-#include "Customer.h"
-#include "BankAccount.h"
 using namespace std;
 class BankClerk : public Information{
     private:
-        BankClerk *Obj_BankClerk;
+        string Name,CitizenID,BirthDate,PhoneNumber,ClerkID,Password;
+        int Choice;
     public:
         bool login(string username,string password);
+        void AddName();
+        void AddCitizenID();
+        void AddBirthDate();
+        void AddPhoneNumber();
+        void AddClerkID();
+        void AddPassword();
+        void Registercustomer();
+        void MenuMenageRegister(int Number);
 };
 #endif
