@@ -17,7 +17,6 @@ bool BankAccount :: CheckAccount(string Account){
 			return true;
 		}
 	}	
-	return false;
 }
 
 void BankAccount :: Withdraw(int withdraw){

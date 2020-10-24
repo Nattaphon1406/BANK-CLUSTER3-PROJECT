@@ -199,9 +199,12 @@ void UI :: Withdraw(){
     int withdraw;
     Obj_BankAccount.LoadFileBankAccount();
     Obj_BankAccount.ShowBankAccount();
-    cout<<"Enter Account Number: ";
-    cin>>Account;
-    Obj_BankAccount.CheckAccount(Account);
+    do{
+        cout<<"Enter Account Number: ";
+        cin>>Account;
+       // Obj_BankAccount.CheckAccount(Account);
+    }while(!Obj_BankAccount.CheckAccount(Account));
+    
     do{
         cout<<"Enter Withdraw Amount: ";
     cin>>withdraw;
