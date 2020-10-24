@@ -9,7 +9,6 @@ int main(){
     UI Obj_UI;
     MoneyExchange Obj_MoneyExchange;
     MainMenu:
-    do{
         Obj_UI.print_MainMenu();
         cin >> Choice;
         if(Choice == 1){
@@ -21,7 +20,6 @@ int main(){
             else if(Obj_UI.Checklogin() == 2){
                 do{
                     Obj_UI.print_menuClerk();
-                    cout << "Enter: ";
                     cin >> Choice;
                     if(Choice == 1){ //Deposition
 
@@ -84,7 +82,6 @@ int main(){
                     }
                     else if(Choice == 7){ //MenageRegister
                         Obj_UI.printInfoFromFileRegister();
-                        cout << "Enter: ";
                         cin >> Choice;
                         Obj_UI.MenageRegister(Choice);
                     }
@@ -92,9 +89,19 @@ int main(){
             }
         }
         else if(Choice == 2){
-            Obj_UI.printmenuRegister_customer();
+            Obj_UI.print_Register();
+            cin >> Choice;
+            if(Choice == 1){
+                Obj_UI.printmenuRegister_Customer();
+            }
+            else if(Choice == 2){
+                Obj_UI.printmenuRegister_BankClerk();
+            }
+            goto MainMenu;
         }
-    }while(Choice != 3); // check menu login
+        else{
+            return 0;
+        }
 
     return 0;
 }

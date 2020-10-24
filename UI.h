@@ -18,12 +18,13 @@ class UI{
         ~UI();
         void print_MainMenu();
         void print_Login();
+        void print_Register();
         int Checklogin();
         //It has Funtion Check Username and Password
         void print_menuClerk();
         void print_menuCustomer();
-        void printmenuRegister_customer();
-        void printmenuRegister_bankClerk();
+        void printmenuRegister_Customer();
+        void printmenuRegister_BankClerk();
         void printInfoFromFileRegister();
         void MenageRegister(int Number);
         void print_CurrencyType();

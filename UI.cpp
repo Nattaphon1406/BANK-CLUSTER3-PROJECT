@@ -35,6 +35,14 @@ void UI::print_Login(){
     cin >> password;
     cout << "===============================" << endl;
 }
+void UI::print_Register(){
+    cout << "=========== Register ==========" << endl;
+    cout << "1. Register Customer" << endl;
+    cout << "2. Register BankClerk" << endl;
+    cout << "3. Back" << endl;
+    cout << "===============================" << endl;
+    cout << "Enter: ";
+}
 int UI::Checklogin(){
     if(Obj_Customer.login(username,password)){
         return 1;
@@ -45,7 +53,7 @@ int UI::Checklogin(){
     //It has Funtion Check Username and Password
     return 3;
 }
-void UI::printmenuRegister_customer(){
+void UI::printmenuRegister_Customer(){
     Information Info_Customer;
     stringstream ss;
     string Money;
@@ -92,11 +100,12 @@ void UI::printmenuRegister_customer(){
     Info_Customer.SaveInfoRegisterCustomerToFile();
     cout << "===============================" << endl;
 }
-void UI::printmenuRegister_bankClerk(){
+void UI::printmenuRegister_BankClerk(){
     Information Info_BankClerk;
     cout << "====== Register BankClerk =====" << endl;
     cout << "Name: ";
-    cin >> name;
+    cin.ignore();
+    getline(cin,name);
     cout << "CitizenID: ";
     cin >> citizenID;
     cout << "BirthDate: ";
@@ -107,6 +116,7 @@ void UI::printmenuRegister_bankClerk(){
     cin >> username;
     cout << "Password: ";
     cin >> password;
+    Info_BankClerk.LoadFileBankClerk();
     Info_BankClerk.AddInfoBankClerk(name,citizenID,birthDate,phoneNumber,username,password);
     Info_BankClerk.SaveInfoBankClerkToFile();
     cout << "===============================" << endl;
@@ -120,16 +130,18 @@ void UI::print_menuClerk(){
     cout << "5. Money Exchange" << endl;
     cout << "6. Statement" << endl;
     cout << "7. MenageRegister" << endl;
-    cout << "8. Return to Login" << endl;
+    cout << "8. Logout" << endl;
     cout << "==============================================" << endl;
-    
+    cout << "Enter: ";
 }
 void UI::print_menuCustomer(){
     cout << "==================== MENU ====================" << endl;
     cout << "1. Transfer" << endl;
     cout << "2. Pay Bill" << endl;
     cout << "3. Statement" << endl;
+    cout << "4. Logout" << endl;
     cout << "==============================================" << endl;
+    cout << "Enter: ";
 }
 void UI::printInfoFromFileRegister(){
     Information Info_Customer;
@@ -138,6 +150,7 @@ void UI::printInfoFromFileRegister(){
     cout << "==============================================" << endl;
     Info_Customer.ShowRegistercustomer();
     cout << "==============================================" << endl;
+    cout << "Enter: ";
 }
 void UI::MenageRegister(int Number){
     Information Info_Customer;
@@ -168,6 +181,7 @@ void UI::print_CurrencyType(){
 	cout << "6. EUR(Euro)" << endl;
 	cout << "7. EXIT " << endl;
 	cout << "---------------------------- " << endl;
+    cout << "Enter: ";
 }
 void UI::print_PaymentType(){
     cout << "------- Payment Type ------- " << endl;
@@ -175,6 +189,7 @@ void UI::print_PaymentType(){
 	cout << "2. Bank Account " << endl;
 	cout << "3. Return to choose new Currency or Exit" << endl;
 	cout << "---------------------------- " << endl;
+    cout << "Enter: ";
 }
 void UI::transfer_firstPage(){
     Obj_BankAccount.LoadFileBankAccount();
