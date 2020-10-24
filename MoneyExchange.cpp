@@ -118,4 +118,11 @@ void MoneyExchange :: WriteFileCash(){
 	}//open to write file
      CashFile.close(); 
 }
-
+bool MoneyExchange :: CheckAccount(){
+	temp=HeadInfo_BankAccount;
+	for(temp=HeadInfo_BankAccount;temp!=NULL ;temp=temp->link){
+		if(temp->AccountNumber==Account){
+			return true;
+		}
+	}	
+}
