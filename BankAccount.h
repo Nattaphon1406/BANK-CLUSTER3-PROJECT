@@ -6,6 +6,7 @@
 #include "Information.h"
 #include "Customer.h"
 #include "BankClerk.h"
+#include <ctime>
 using namespace std;
 class BankAccount : public Information{
     private:
@@ -14,6 +15,7 @@ class BankAccount : public Information{
     public:
         bool CheckTransfer_account(string accountNumber);
         string getMoneyAccount(string username);
+        string setDateandTime();
         void payBill(string group, string username, double moneyAccount, double amount);
         void chengceDataFile();
     

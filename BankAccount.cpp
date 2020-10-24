@@ -18,9 +18,22 @@ string BankAccount :: getMoneyAccount(string username){
     } 
 	return money;
 }
+string BankAccount :: setDateandTime(){
+    string Date,Time;
+	time_t 	   now = time(0);
+	struct tm  tstruct;
+	char       date[80],time[80];
+	tstruct = *localtime(&now);
+	strftime(date, sizeof(date), "%Y-%m-%d", &tstruct);
+	strftime(time, sizeof(time), "%X", &tstruct);
+
+    Date = date;
+    Time = time;
+    return Date+","+Time;
+}
 void BankAccount :: payBill(string group, string username,double moneyAccount, double amount){
     double balance=0,fee=0;
-    string TypeBill, Balance;
+    string TypeBill, Balance, date, time;
 
     if(group=="1"){
         TypeBill = "Water bill";
@@ -42,17 +55,14 @@ void BankAccount :: payBill(string group, string username,double moneyAccount, d
     }
 	cout << "*********Bill********" << endl;
     //setTime
-	time_t 	   now = time(0);
-	struct tm  tstruct;
-	char       Date[80],Time[80];
-	tstruct = *localtime(&now);
-	strftime(Date, sizeof(Date), "%Y-%m-%d", &tstruct);
-	strftime(Time, sizeof(Time), "%X", &tstruct);
+	date=setDateandTime();
+    time=date.substr((date.find(",")+1),date.find(" "));
+    date=date.substr(0,date.find(","));
 
     cout << "TypeBill: " << TypeBill << endl;
     cout << "Fee: " << fee << " baht"<< endl;
     cout << "Balance: " <<  balance << " baht" << endl;
-    cout << "Date: " << Date << " : " << Time << endl;
+    cout << "Date: " << date << " : " << time << endl;
     
     //ChangData at File Account
     stringstream ss; 
