@@ -9,7 +9,7 @@
   # the build target executable:
   TARGET = BankCluster3
   FILEMAIN = main.cpp
-  CLASS = Information.cpp BankAccount.cpp BankClerk.cpp Customer.cpp
+  CLASS = Information.cpp BankAccount.cpp BankClerk.cpp Customer.cpp UI.cpp MoneyExchange.cpp
 
   all: 
 	$(CC) $(FILEMAIN) $(CLASS) $(CFLAGS) -o $(TARGET)

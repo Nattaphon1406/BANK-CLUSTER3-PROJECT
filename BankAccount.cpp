@@ -1,31 +1,42 @@
 #include "BankAccount.h"
-BankAccount :: BankAccount(){
-    Name = "";
-    AccountNumber = "";
-    Money = "";
-    Username = "";
-    Password = "";
+bool BankAccount ::CheckTransfer_account(string accountNumber){
+    string name;
+	for(HeadInfo_BankAccount = HeadInfo_BankAccount;HeadInfo_BankAccount != NULL; HeadInfo_BankAccount = HeadInfo_BankAccount->link){
+        if(accountNumber == HeadInfo_BankAccount->AccountNumber){
+			name = HeadInfo_BankAccount->Name;
+			return true;
+		}
+		HeadInfo_BankAccount = HeadInfo_BankAccount->link;
+	}
+	return false;
 }
-void BankAccount :: SetInfoBankAccount(string name,string accountNumber,string money,string username,string password){
-    Name = name;
-    AccountNumber = accountNumber;
-    Money = money;
-    Username = username;
-    Password = password;
+bool BankAccount :: CheckAccount(string Account){
+	temp=HeadInfo_BankAccount;
+	for(temp=HeadInfo_BankAccount;temp!=NULL ;temp=temp->link){
+		if(temp->AccountNumber==Account){
+			return true;
+		}
+	}	
+	return false;
 }
-string BankAccount :: getName(){
-    return Name;
+
+void BankAccount :: Withdraw(int withdraw){
+    double m;
+    stringstream tmp;
+    tmp<<temp->Money;
+    tmp>>m;
+    tmp.clear();
+    m=m-withdraw;
+    tmp<<m;
+    tmp>>temp->Money;
+    tmp.clear();
 }
-string BankAccount :: getAccountNumber(){
-    return AccountNumber;
+
+double BankAccount :: getMoney(){
+	double m;
+	stringstream money;
+	money<<temp->Money;
+	money>>m;
+	money.clear();
+	return m;
 }
-string BankAccount :: getMoney(){
-    return Money;
-}
-string BankAccount :: getUsername(){
-    return Username;
-}
-string BankAccount :: getPassword(){
-    return Password;
-}
-        //Save Info Of BankAccount
