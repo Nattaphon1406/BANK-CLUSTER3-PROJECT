@@ -8,6 +8,7 @@ UI::UI(){
     birthDate = "";
     phoneNumber = "";
     money = 0;
+    Recipient_account = "";
 }
 UI::~UI(){
     username = " ";
@@ -170,30 +171,7 @@ void UI::MenageRegister(int Number){
         Info_Customer.SaveInfoRegisterCustomerToFile();
     }
 }
-void UI::transfer_firstPage(){
-    Obj_BankAccount.LoadFileBankAccount();
-    string Recipient_account;
-    back:
-    cout << "=========Transfer=========" << endl;
-	cout << "Transferor account : ";
-	cin >> accountNumber;
-    if(Obj_BankAccount.CheckTransfer_account(accountNumber)){
-        goto next;
-    }
-    else{
-        goto back;
-    }
-    next:
-	do{
-		cout << "Recipient account : ";
-		cin >> Recipient_account;
-	}while(Recipient_account.length() != 10);
-	do{
-		cout << "Amount : ";
-		cin >> money;
-	}while(money > 50000);
-	cout << "===========================" << endl;
-}
+
 void UI::print_MoneyExchange(){
     int PaymentType,CurrencyType;
     float MoneyAmountForeign,MoneyAmountBaht;
@@ -423,5 +401,133 @@ void UI::PayBill(){
         }while(chooseGroup!="1"&&chooseGroup!="2"&&chooseGroup!="3");
         cout << "Amount to pay the bill: ";
         cin >> amount;
+    }
+}
+void UI::transfer_firstPage(){
+    Obj_BankAccount.LoadFileBankAccount();
+    back1:
+    cout << "=========Transfer=========" << endl;
+    back:
+	cout << "Transferor account : ";
+	cin >> accountNumber;
+    if(Obj_BankAccount.CheckTransfer_Account(accountNumber) == true){
+        goto next;
+    }
+    else{
+        goto back;
+    }
+    next:
+	do{
+		cout << "Recipient account : ";
+		cin >> Recipient_account;
+	}while(Recipient_account.length() != 10);
+	do{
+		cout << "Amount : ";
+		cin >> money;
+	}while(money > 50000); 
+	cout << "===========================" << endl;
+}    
+bool UI::NotEnough_moneyBankClerk(){
+    if((Obj_BankAccount.CheckTransfer_AccountMoneyBankClerk(money,accountNumber) == false)){
+        return true;
+    }    
+}
+void UI::Ready_transfer(){
+    cout << "===========================" << endl;
+	cout << "Ready to transfer" << endl;
+	cout << "1.Confirm" << endl;
+	cout << "2.Modify"<< endl;
+	cout << "3.Cancal"<< endl;
+	cout << "===========================" << endl;
+	cout << "Enter : ";
+}
+void UI::Bill_BankClerk(){
+    if(Obj_BankAccount.Check_RecipientAccount(Recipient_account) == true){
+        Obj_BankAccount.CheckTransfer_DeductMoneyBankclerk(money,accountNumber);
+        Obj_BankAccount.CheckTransfer_AddMoney(money,Recipient_account);
+        cout << "======================Success=======================" << endl;
+        cout << "   Form                                             " << endl;
+        cout << "      name : " << Obj_BankAccount.getname_TransferorBC(accountNumber) << endl;
+        cout << "      Account number : " << accountNumber << endl;
+        cout << "   To                                               " << endl;
+        cout << "      name : " << Obj_BankAccount.getname_recipient(Recipient_account) << endl;
+        cout << "      Account number : " << Recipient_account << endl;
+        cout << "  ------------------------------------------------  " << endl;
+        cout << "   Amount : " << money << endl;
+        cout << "   Service charge : " << "0" << endl;
+        cout << "   Balance : " << Obj_BankAccount.getmoneyBC(accountNumber) << endl;
+        cout << "   Transaction date : " << Obj_BankAccount.setDateandTimeTransfer() << endl;
+        cout << "====================================================" << endl;
+    }
+    else if(Obj_BankAccount.Check_RecipientAccount(Recipient_account) == false){
+        Obj_BankAccount.CheckTransfer_DeductMoneyBankOtherBC(money,accountNumber);
+        cout << "======================Success=======================" << endl;
+        cout << "   Form                                             " << endl;
+        cout << "      name : " << Obj_BankAccount.getname_TransferorBC(accountNumber) << endl;
+        cout << "      Account number : " << accountNumber << endl;
+        cout << "   To                                               " << endl;
+        cout << "      name : " << "-" << endl;
+        cout << "      Account number : " << Recipient_account << endl;
+        cout << "  ------------------------------------------------  " << endl;
+        cout << "   Amount : " << money << endl;
+        cout << "   Service charge : " << "10" << endl;
+        cout << "   Balance : " << Obj_BankAccount.getmoneyBC(accountNumber) << endl;
+        cout << "   Transaction date : " << Obj_BankAccount.setDateandTimeTransfer() << endl;
+        cout << "====================================================" << endl;
+    }
+}
+void UI::transfer_FirstPage(){
+    Obj_BankAccount.LoadFileBankAccount();
+    back1:
+    cout << "=========Transfer=========" << endl;
+    do{
+		cout << "Recipient account : ";
+		cin >> Recipient_account;
+	}while(Recipient_account.length() != 10);
+    do{
+		cout << "Amount : ";
+		cin >> money;
+	}while(money > 50000);
+    cout << "===========================" << endl;
+} 
+bool UI::NotEnough_moneyCustomer(){
+    if((Obj_BankAccount.CheckTransfer_AccountMoneyCustomer(money,username) == false)){
+        cout << "======Not enough money======" << endl;
+        return true;
+    }    
+}
+void UI::Bill_Customer(){
+    if(Obj_BankAccount.Check_RecipientAccount(Recipient_account) == true){
+        Obj_BankAccount.CheckTransfer_DeductMoneyCustomer(money,username);
+        Obj_BankAccount.CheckTransfer_AddMoney(money,Recipient_account);
+        cout << "======================Success=======================" << endl;
+        cout << "   Form                                             " << endl;
+        cout << "      name : " << Obj_BankAccount.getname_TransferorCT(username) << endl;
+        cout << "      Account number : " << Obj_BankAccount.getAccountNumber(username) << endl;
+        cout << "   To                                               " << endl;
+        cout << "      name : " << Obj_BankAccount.getname_recipient(Recipient_account) << endl;
+        cout << "      Account number : " << Recipient_account << endl;
+        cout << "  ------------------------------------------------  " << endl;
+        cout << "   Amount : " << money << endl;
+        cout << "   Service charge : " << "0" << endl;
+        cout << "   Balance : " << Obj_BankAccount.getmoneyCT(username) << endl;
+        cout << "   Transaction date : " << Obj_BankAccount.setDateandTimeTransfer() << endl;
+        cout << "====================================================" << endl;
+    }
+    else if(Obj_BankAccount.Check_RecipientAccount(Recipient_account) == false){
+        Obj_BankAccount.CheckTransfer_DeductMoneyBankOtherCT(money,username);
+        cout << "======================Success=======================" << endl;
+        cout << "   Form                                             " << endl;
+        cout << "      name : " << Obj_BankAccount.getname_TransferorCT(username) << endl;
+        cout << "      Account number : " << Obj_BankAccount.getAccountNumber(username) << endl;
+        cout << "   To                                               " << endl;
+        cout << "      name : " << "-" << endl;
+        cout << "      Account number : " << Recipient_account << endl;
+        cout << "  ------------------------------------------------  " << endl;
+        cout << "   Amount : " << money << endl;
+        cout << "   Service charge : " << "10" << endl;
+        cout << "   Balance : " << Obj_BankAccount.getmoneyCT(username) << endl;
+        cout << "   Transaction date : " << Obj_BankAccount.setDateandTimeTransfer() << endl;
+        cout << "====================================================" << endl;
     }
 }

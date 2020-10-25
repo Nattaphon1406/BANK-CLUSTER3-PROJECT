@@ -13,10 +13,32 @@ int main(){
         if(Choice == 1){
             Obj_UI.print_Login();
             if(Obj_UI.Checklogin() == 1){
+                CustomerMenu:
                 Obj_UI.print_menuCustomer();
                 cin >> Choice;
                 if(Choice == 1){ //Transfer
-                    Obj_UI.transfer_firstPage();
+                    back2:
+                    Obj_UI.transfer_FirstPage();
+                    if(Obj_UI.NotEnough_moneyCustomer() == true){
+                        cout << "======Not enough money======" << endl;
+                        goto CustomerMenu;
+                    }
+                    backmenu2:
+                    Obj_UI.Ready_transfer();
+                    cin >> Choice;
+                    if(Choice == 1){
+                        Obj_UI.Bill_Customer();
+                        goto CustomerMenu;
+                    }
+                    else if(Choice == 2){
+                        goto back2;
+                    }
+                    else if(Choice == 3){
+                        return 0;
+                    }
+                    else{
+                        goto backmenu2;
+                    }
                 }
                 else if(Choice == 2){//Pay Bill
                     Obj_UI.PayBill();
@@ -37,7 +59,28 @@ int main(){
                         Obj_UI.Withdraw();
                     }
                     else if(Choice == 3){ //Transfer
+                        back:
                         Obj_UI.transfer_firstPage();
+                        if(Obj_UI.NotEnough_moneyBankClerk() == true){
+                            cout << "======Not enough money======" << endl;
+                            goto ClerkMemu;
+                        }
+                        backmenu:
+                        Obj_UI.Ready_transfer();
+                        cin >> Choice;
+                        if(Choice == 1){
+                            Obj_UI.Bill_BankClerk();
+                            goto ClerkMemu;
+                        }
+                        else if(Choice == 2){
+                            goto back;
+                        }
+                        else if(Choice == 3){
+                            return 0;
+                        }
+                        else{
+                            goto backmenu;
+                        }
                     }
                     else if(Choice == 4){ //Pay Bill
                         Obj_UI.PayBill();

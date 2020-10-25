@@ -62,5 +62,21 @@ class BankAccount : public Information{
         void payBill(string type,string group, string accountNumber, long double amount);
         void WriteStatement();    
         void WriteStatementBankclerk();
+        bool CheckTransfer_DeductMoneyBankclerk(int money,string accountNumber);
+        bool CheckTransfer_DeductMoneyCustomer(int money,string username);
+        string getname_TransferorBC(string accountNumber);
+        string getname_TransferorCT(string username);
+        string getname_recipient(string Recipient_account);
+        string getmoneyBC(string accountNumber);
+        string getmoneyCT(string username);
+        bool Check_RecipientAccount(string Recipient_account);
+        bool CheckTransfer_AddMoney(int money,string Recipient_account);
+        bool CheckTransfer_AccountMoneyCustomer(int money,string accountNumber);
+        bool CheckTransfer_DeductMoneyBankOtherBC(int money,string accountNumber);
+        bool CheckTransfer_DeductMoneyBankOtherCT(int money,string username);
+        bool CheckTransfer_Account(string accountNumber);
+        bool CheckTransfer_AccountMoneyBankClerk(int money,string accountNumber);
+        string getAccountNumber(string username);
+        string setDateandTimeTransfer();
 };
 #endif

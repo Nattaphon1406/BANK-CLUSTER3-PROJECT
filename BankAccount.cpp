@@ -112,17 +112,6 @@ bool BankAccount :: CheckAccount(string Account){
 	}
     return false;	
 }
-bool BankAccount :: CheckTransfer_account(string accountNumber){
-    string name;
-	for(HeadInfo_BankAccount = HeadInfo_BankAccount;HeadInfo_BankAccount != NULL; HeadInfo_BankAccount = HeadInfo_BankAccount->link){
-        if(accountNumber == HeadInfo_BankAccount->AccountNumber){
-			name = HeadInfo_BankAccount->Name;
-			return true;
-		}
-		HeadInfo_BankAccount = HeadInfo_BankAccount->link;
-	}
-	return false;
-}
 void BankAccount :: Withdraw(unsigned long int withdraw){
     double m;
     stringstream tmp;
@@ -343,5 +332,236 @@ void BankAccount :: WriteStatementBankclerk(){
 		tempBillBankclerk = tempBillBankclerk->linkBillBankclerk;
 	}
 	myfile.close();
+}
+bool BankAccount :: CheckTransfer_Account(string accountNumber){
+	for(temp = HeadInfo_BankAccount ; temp != NULL ; temp = temp->link){
+        if(accountNumber == temp->AccountNumber){	
+			return true;
+	    } 
+    } 
+    return false; 
+} 
+bool BankAccount :: CheckTransfer_AccountMoneyBankClerk(int money,string accountNumber){
+    int Moneyint;
+    stringstream ss;
+    for(temp = HeadInfo_BankAccount ; temp != NULL ; temp = temp->link){ 
+        if(accountNumber == temp->AccountNumber){
+            ss << temp->Money; 
+            ss >> Moneyint; 
+            ss.clear(); 
+            if(Moneyint >= money){
+                return true;    
+            }
+            else{
+                return false;
+            }
+        }    
+    }
+}
+string BankAccount :: getname_TransferorBC(string accountNumber){
+    for(temp = HeadInfo_BankAccount ; temp != NULL ; temp = temp->link){ 
+        if(accountNumber == temp->AccountNumber){
+            return temp->Name;
+        } 
+    }       
+}
+string BankAccount :: getname_TransferorCT(string username){
+    for(temp = HeadInfo_BankAccount ; temp != NULL ; temp = temp->link){ 
+        if(username == temp->Username){
+            return temp->Name;
+        } 
+    }       
+}
+string BankAccount :: getname_recipient(string Recipient_account){
+    for(temp = HeadInfo_BankAccount ; temp != NULL ; temp = temp->link){ 
+        if(Recipient_account == temp->AccountNumber){
+            return temp->Name;
+        } 
+    }       
+}
+string BankAccount :: getmoneyBC(string accountNumber){
+    for(temp = HeadInfo_BankAccount ; temp != NULL ; temp = temp->link){ 
+        if(accountNumber == temp->AccountNumber){
+            return temp->Money;
+        } 
+    }       
+}
+string BankAccount :: getmoneyCT(string username){
+    for(temp = HeadInfo_BankAccount ; temp != NULL ; temp = temp->link){ 
+        if(username == temp->Username){
+            return temp->Money;
+        } 
+    }       
+}
+string BankAccount :: getAccountNumber(string username){
+    for(temp = HeadInfo_BankAccount ; temp != NULL ; temp = temp->link){ 
+        if(username == temp->Username){
+            return temp->AccountNumber;
+        } 
+    }       
+}
+bool BankAccount :: Check_RecipientAccount(string Recipient_account){
+    for(temp = HeadInfo_BankAccount ; temp != NULL ; temp = temp->link){
+        if(Recipient_account == temp->AccountNumber){	
+			return true;
+	    } 
+    } 
+    return false; 
+} 
+bool BankAccount :: CheckTransfer_AddMoney(int money,string Recipient_account){
+    LoadFileBankAccount();
+    int Moneyint;
+    string Moneystring;
+    ofstream myfile("BankAccount.dat");
+    stringstream ss,aa;
+    for(temp = HeadInfo_BankAccount ; temp != NULL ; temp = temp->link){ 
+        if(Recipient_account == temp->AccountNumber){
+            ss << temp->Money; 
+            ss >> Moneyint; 
+            ss.clear(); 
+            Moneyint = Moneyint + money; 
+            aa << Moneyint;
+            aa >> Moneystring;
+            aa.clear();   
+            temp->Money = Moneystring; 
+            SaveInfoCustomerToFile();
+            return true;    
+        }
+    }
+    return false;    
+}
+bool BankAccount :: CheckTransfer_DeductMoneyBankclerk(int money,string accountNumber){
+    LoadFileBankAccount();
+    int Moneyint;
+    string Moneystring;
+    ofstream myfile("BankAccount.dat");
+    stringstream ss,aa;
+    for(temp = HeadInfo_BankAccount ; temp != NULL ; temp = temp->link){ 
+        if(accountNumber == temp->AccountNumber){
+            ss << temp->Money; 
+            ss >> Moneyint; 
+            ss.clear(); 
+            if(Moneyint >= money){
+                Moneyint = Moneyint - money; 
+                aa << Moneyint;
+                aa >> Moneystring;
+                aa.clear();   
+                temp->Money = Moneystring; 
+                SaveInfoCustomerToFile();
+                return true;    
+            }
+            else{
+                return false;
+            }
+        }    
+    }
+}
+bool BankAccount :: CheckTransfer_DeductMoneyBankOtherBC(int money,string accountNumber){
+    LoadFileBankAccount();
+    int Moneyint;
+    string Moneystring;
+    ofstream myfile("BankAccount.dat");
+    stringstream ss,aa;
+    for(temp = HeadInfo_BankAccount ; temp != NULL ; temp = temp->link){ 
+        if(accountNumber == temp->AccountNumber){
+            ss << temp->Money; 
+            ss >> Moneyint; 
+            ss.clear(); 
+            if(Moneyint >= money){
+                Moneyint = Moneyint - money - 10; 
+                aa << Moneyint;
+                aa >> Moneystring;
+                aa.clear();   
+                temp->Money = Moneystring; 
+                SaveInfoCustomerToFile();
+                return true;    
+            }
+            else{
+                return false;
+            }
+        }    
+    }
+}
+bool BankAccount :: CheckTransfer_DeductMoneyBankOtherCT(int money,string username){
+    LoadFileBankAccount();
+    int Moneyint;
+    string Moneystring;
+    ofstream myfile("BankAccount.dat");
+    stringstream ss,aa;
+    for(temp = HeadInfo_BankAccount ; temp != NULL ; temp = temp->link){ 
+        if(username == temp->Username){
+            ss << temp->Money; 
+            ss >> Moneyint; 
+            ss.clear(); 
+            if(Moneyint >= money){
+                Moneyint = Moneyint - money - 10; 
+                aa << Moneyint;
+                aa >> Moneystring;
+                aa.clear();   
+                temp->Money = Moneystring; 
+                SaveInfoCustomerToFile();
+                return true;    
+            }
+            else{
+                return false;
+            }
+        }    
+    }
+}
+bool BankAccount :: CheckTransfer_AccountMoneyCustomer(int money,string username){
+    int Moneyint;
+    stringstream ss;
+    for(temp = HeadInfo_BankAccount ; temp != NULL ; temp = temp->link){ 
+        if(username == temp->Username){
+            ss << temp->Money; 
+            ss >> Moneyint; 
+            ss.clear(); 
+            if(Moneyint >= money){
+                return true;    
+            }
+            else{
+                return false;
+            }
+        }    
+    }
+}
+bool BankAccount :: CheckTransfer_DeductMoneyCustomer(int money,string username){
+    LoadFileBankAccount();
+    int Moneyint;
+    string Moneystring;
+    ofstream myfile("BankAccount.dat");
+    stringstream ss,aa;
+    for(temp = HeadInfo_BankAccount ; temp != NULL ; temp = temp->link){ 
+        if(username == temp->Username){
+            ss << temp->Money; 
+            ss >> Moneyint; 
+            ss.clear(); 
+            if(Moneyint >= money){
+                Moneyint = Moneyint - money; 
+                aa << Moneyint;
+                aa >> Moneystring;
+                aa.clear();   
+                temp->Money = Moneystring; 
+                SaveInfoCustomerToFile();
+                return true;    
+            }
+            else{
+                return false;
+            }
+        }    
+    }
+}
+string BankAccount :: setDateandTimeTransfer(){
+    string Date,Time;
+	time_t 	   now = time(0);
+	struct tm  tstruct;
+	char       date[80],time[80];
+	tstruct = *localtime(&now);
+	strftime(date, sizeof(date), "%Y-%m-%d", &tstruct);
+	strftime(time, sizeof(time), "%X", &tstruct);
+
+    Date = date;
+    Time = time;
+    return Date+","+Time;
 }
 

@@ -14,7 +14,7 @@ class UI{
         BankClerk Obj_BankClerk;
         BankAccount Obj_BankAccount;
         MoneyExchange Obj_MoneyExchange;
-        string username,password,accountNumber,name,citizenID,birthDate,phoneNumber,typeAccount;
+        string username,password,accountNumber,name,citizenID,birthDate,phoneNumber,typeAccount,Recipient_account;
         unsigned long int money;
     public:
         UI();
@@ -38,5 +38,11 @@ class UI{
         void Withdraw();
         void print_getDeposit();
         void PayBill();
+        void Ready_transfer();
+        void Bill_BankClerk();
+        void Bill_Customer();
+        void transfer_FirstPage();
+        bool NotEnough_moneyCustomer();
+        bool NotEnough_moneyBankClerk();
 };
 #endif
