@@ -118,9 +118,9 @@ void Information :: LoadFileBankAccount(){
 void Information :: LoadFileBankClerk(){
       string Name,CitizenID,BirthDate,PhoneNumber,ClerkID,Password,Line;
       ifstream Write;
-      Count_Customer = 0;
-      HeadInfo_Customer = NULL;
-      TailInfo_Customer = NULL;
+      Count_BankClerk = 0;
+      HeadInfo_BankClerk = NULL;
+      TailInfo_BankClerk = NULL;
       Write.open("BankClerk.dat");
       if(Write.fail()){
         cout << "Can not Write File 'BankClerk.dat' " << endl;
@@ -302,6 +302,7 @@ string Information :: GeneratePassword(int number){
       return password;
 }
 void Information :: SaveInfoRegisterToFileBankAccount(int number){
+      LoadFileRegisterCustomer();
       Info_Customer *Data_Customer;
       Data_Customer = HeadInfo_Customer;
       ofstream Write("BankAccount.dat",ios::app);
@@ -325,6 +326,7 @@ void Information :: SaveInfoBankClerkToFile(){
       Write.close();
 }
 void Information :: ShowRegistercustomer(){
+      LoadFileRegisterCustomer();
       int count = 1;
       for(Info_Customer *i = HeadInfo_Customer; i != NULL; i = i->link){
             cout << count++ << "." << "\t" << i->Name << endl;

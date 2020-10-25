@@ -10,5 +10,6 @@ class BankClerk : public Information{
     private:
         BankClerk *Obj_BankClerk;
     public:
+        bool login(string username,string password);
 };
 #endif

@@ -1,3 +1,4 @@
+#ifndef MONEYEXCHANGE_H
 #define MONEYEXCHANGE_H
 #include<iostream>
 #include<fstream>
@@ -6,11 +7,12 @@
 #include<iomanip>
 #include<string>
 #include<time.h>
-#include "BankAccount.h"
+#include "BankClerk.h"
 using namespace std;
-class MoneyExchange{
-	private:
-		//BankAccount B;
+class MoneyExchange : public BankAccount{
+	protected:
+		BankAccount *Obj_BankAccount;
+		Info_BankAccount *temp;
 		string CurrencyType;
 		float MoneyAmount;
 		string PaymentType;
@@ -26,4 +28,6 @@ class MoneyExchange{
 		void SetAccount(string account);
 		void ShowBillAccount();
 		void WriteFileCash();
+		bool CheckAccount();
 };
+#endif

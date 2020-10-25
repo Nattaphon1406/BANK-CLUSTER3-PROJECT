@@ -8,5 +8,7 @@ class Customer : public Information{
     private:
         Customer *Obj_Customer;
         //Save Info Of Customer
+    public:
+        bool login(string username,string password);
 };
 #endif
