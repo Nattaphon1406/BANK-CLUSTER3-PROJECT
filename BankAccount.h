@@ -22,19 +22,30 @@ class BankAccount : public Information{
                 statementBillBankclerk *linkBillBankclerk;
                 statementBillBankclerk(string type,string money,string date,string time);
         };
+        class statementDeposit{
+            public:
+                string Name,AccountNumber,Money,Date,Time,Balance;
+                statementDeposit *link;
+                statementDeposit(string name,string accountNumber,string money,string balance,string date,string time);
+        };
         statementBill *headBill, *tailBill, *tempBill;
         statementBillBankclerk *headBillBankclerk, *tailBillBankclerk, *tempBillBankclerk;
         BankAccount *Obj_BankAccount;
         Info_BankAccount *temp;
+        statementDeposit *head_deposit,*tail_deposit;
         string Name, Account_number, Money;
         unsigned long moneyAccount,Balance,Cash;
         string Day,Month,Year,Hours,Minute,Second;
-        int countStatment, coutBillBankclerk;
+        int countStatment, coutBillBankclerk,count_deposit;
     public:
         BankAccount();
         bool login(string username,string password);
-        void AddStatementBill(string name,string accountNumber,string money,string date,string time);//add data in node
-        void AddStatementBillBankclerk(string type,string money,string date,string time);//add data in node statementBill by Bankclerk
+        //add data in node
+        void AddStatementBill(string name,string accountNumber,string money,string date,string time);
+        //add data in node statementBill by Bankclerk
+        void AddStatementBillBankclerk(string type,string money,string date,string time);
+        //Add data deposition
+        void AddStatementBill_deposit(string name,string account,string money,string balance,string date,string time);
         //name of customer
         void setName();
         //set balance money of account customer
@@ -54,7 +65,7 @@ class BankAccount : public Information{
         //update money after deposit to in file BankAccount
         void updateMoney_to_BankAccount();
         // save history of deposit 
-        //void saveStatement_deposit();
+        void WriteStatement_deposit();
         // print bill for deposit
         void printBill_of_deposit(string amount);
         unsigned long int getMoneyAccount(string username);

@@ -14,6 +14,15 @@ BankAccount :: statementBillBankclerk :: statementBillBankclerk(string type,stri
     Time = time;
     linkBillBankclerk = NULL;
 }
+BankAccount :: statementDeposit :: statementDeposit(string name,string account,string money,string balance,string date,string time){
+    this->Name = name;
+    this->AccountNumber = account;
+    this->Money = money;
+    this->Balance = balance;
+    this->Date = date;
+    this->Time = time;
+    link = NULL;
+}
 BankAccount::BankAccount()
 {
     Name = "";
@@ -37,6 +46,9 @@ BankAccount::BankAccount()
     this->tailBillBankclerk = NULL;
     this->tempBillBankclerk = NULL;
 	coutBillBankclerk = 0;
+    count_deposit = 0;
+    head_deposit = NULL;
+    tail_deposit = NULL;
 }
 void BankAccount :: AddStatementBill(string name,string accountNumber,string money,string date,string time){
      statementBill *bill = new statementBill(name,accountNumber,money,date,time);
@@ -61,6 +73,19 @@ void BankAccount :: AddStatementBillBankclerk(string type,string money,string da
                 tempBillBankclerk = next;
             }
             coutBillBankclerk++;
+}
+void BankAccount :: AddStatementBill_deposit(string name,string account,string money,string balance,string date,string time){
+     statementDeposit *NewNode = new statementDeposit(name,account,money,balance,date,time);
+            if(headBill == NULL){
+                head_deposit = NewNode;
+                tail_deposit = NewNode;
+            }
+            else{
+                statementDeposit *temp = NewNode;
+                tail_deposit->link = NewNode;  
+                temp = NewNode;
+            }
+            count_deposit++;
 }
 bool BankAccount :: login(string username,string password){
 	LoadFileBankAccount();
@@ -190,8 +215,9 @@ void BankAccount::AddMoney()
             ss >> NewBalance;
             ss.clear();
             temp->Money = NewBalance;
+            setName();
+            printBill_of_deposit(NewBalance);
 			updateMoney_to_BankAccount();
-			printBill_of_deposit(NewBalance);
         }
     }   
 }
@@ -199,8 +225,26 @@ void BankAccount::updateMoney_to_BankAccount()
 {
     SaveInfoCustomerToFile();
 }
+void BankAccount :: WriteStatement_deposit(){
+    statementDeposit *temp;
+    string fileName,data;
+    fstream myfile;
+    fileName = "StatemenDeposit.dat";
+    myfile.open(fileName.c_str(),std::ios::app);
+    temp = head_deposit;
+    while(temp!=NULL){
+        myfile << temp->Name << "," << temp->AccountNumber << "," << temp->Money << "," << temp->Balance << "," << temp->Date << "," << temp->Time << endl;
+		temp = temp->link;
+	}
+	myfile.close();
+}
 void BankAccount::printBill_of_deposit(string amount)
 {
+    stringstream ss;
+    string money;
+    string Date,Time;
+    Date = Day + "-" + Month + "-" + Year;
+    Time =  Hours + ":" + Minute + ":" + Second;
     cout << "===================== Bill ===================" << endl;
     cout << "Name customer: " << Name << endl;
     cout << "Account number: " << Account_number << endl;
@@ -211,6 +255,11 @@ void BankAccount::printBill_of_deposit(string amount)
     cout << "Add : " << Cash << endl;
     cout << "Balance : " << amount << endl;
     cout << "==============================================" << endl;
+    ss << Cash;
+    ss >> money;
+    ss.clear();
+    AddStatementBill_deposit(Name,Account_number,money,amount,Date,Time);
+    WriteStatement_deposit();
 }
 string BankAccount :: setDateandTime(){
     string Date,Time;

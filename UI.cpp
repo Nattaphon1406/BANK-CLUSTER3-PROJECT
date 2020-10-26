@@ -264,10 +264,6 @@ void UI::print_getDeposit(){
         cout << "Please enter account number" << endl;
         cout << "Enter: ";
         cin >> accountNumber;
-        cout << "money amount of deposition" << endl;
-        cout << "Enter: ";
-        cin >> money;
-        cout << "=======================================================================" << endl;
         Obj_BankAccount.setData_deposit(accountNumber,money);
         check_account = Obj_BankAccount.CheckAccount(accountNumber);
         if(check_account == true)
@@ -277,30 +273,37 @@ void UI::print_getDeposit(){
             if(accountNumber[0] == '1'){
                 cout << "Type account: Savings account" << endl;
                 do{
+                    cout << "money amount of deposition" << endl;
+                    cout << "Enter: ";
+                    cin >> money;
+                    Obj_BankAccount.setData_deposit(accountNumber,money);
+                    cout << "=======================================================================" << endl;
                     if(money > 0){
                         Obj_BankAccount.AddMoney(); 
                     }
                     else{
                         system("cls");
                         cout << "amount of deposition incoorect!!" << endl;
-                        cout << "money amount of deposition" << endl;
-                        cout << "Enter: ";
-                            cin >> money;
+                        
                     }
                 }while(money == 0);
             }
             else if(accountNumber[0] == '2'){
                 cout << "Type account: fixed deposit account" << endl;
                 do{
+                    cout << "money amount of deposition" << endl;
+                    cout << "Enter: ";
+                    cin >> money;
+                    Obj_BankAccount.setData_deposit(accountNumber,money);
+                    cout << "=======================================================================" << endl;
+
                     if(money == 30000){
                         Obj_BankAccount.AddMoney();
                     }
                     else{
                         system("cls");
                         cout << "amount of deposition incoorect!!" << endl;
-                        cout << "money amount of deposition" << endl;
-                        cout << "Enter: ";
-                        cin >> money;
+                       
                     }
                 }while(money != 30000);
             }
