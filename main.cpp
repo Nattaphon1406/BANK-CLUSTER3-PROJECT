@@ -20,9 +20,11 @@ int main(){
                     back2:
                     Obj_UI.transfer_FirstPage();
                     if(Obj_UI.NotEnough_moneyCustomer() == true){
-                        cout << "======Not enough money======" << endl;
-                        goto CustomerMenu;
-                    }
+                            goto backmenu2; 
+                        }
+                        else{
+                            goto CustomerMenu;
+                        }
                     backmenu2:
                     Obj_UI.Ready_transfer();
                     cin >> Choice;
@@ -62,7 +64,9 @@ int main(){
                         back:
                         Obj_UI.transfer_firstPage();
                         if(Obj_UI.NotEnough_moneyBankClerk() == true){
-                            cout << "======Not enough money======" << endl;
+                            goto backmenu; 
+                        }
+                        else{
                             goto ClerkMemu;
                         }
                         backmenu:

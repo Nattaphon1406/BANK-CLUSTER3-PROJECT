@@ -7,6 +7,7 @@
 #include "Customer.h"
 #include "BankClerk.h"
 #include <time.h>
+#include <fstream>
 using namespace std;
 class BankAccount : public Information{
     private:
@@ -74,20 +75,36 @@ class BankAccount : public Information{
         void WriteStatement();    
         void WriteStatementBankclerk();
         bool CheckTransfer_DeductMoneyBankclerk(int money,string accountNumber);
+        // Update money in file 
         bool CheckTransfer_DeductMoneyCustomer(int money,string username);
+        // Update money in file
         string getname_TransferorBC(string accountNumber);
         string getname_TransferorCT(string username);
         string getname_recipient(string Recipient_account);
         string getmoneyBC(string accountNumber);
         string getmoneyCT(string username);
+        string getAccountNumber(string username);
+        string getDateandTimeTransfer();
         bool Check_RecipientAccount(string Recipient_account);
         bool CheckTransfer_AddMoney(int money,string Recipient_account);
+        // Add money to the recipient account
         bool CheckTransfer_AccountMoneyCustomer(int money,string accountNumber);
+        // Checking account funds
         bool CheckTransfer_DeductMoneyBankOtherBC(int money,string accountNumber);
+        // Update money in file
         bool CheckTransfer_DeductMoneyBankOtherCT(int money,string username);
+        // Update money in file
         bool CheckTransfer_Account(string accountNumber);
+        // Make sure you have information in file Bankaccout
         bool CheckTransfer_AccountMoneyBankClerk(int money,string accountNumber);
-        string getAccountNumber(string username);
-        string setDateandTimeTransfer();
+        // Checking account funds
+        void statementTransfer_customer(string transferor,string recipient,string money_file,string Service_charge,string date);
+        // Write history to file
+        bool CheckTransfer_AccountMoneyCustomerOther(int money,string username);
+        // Checking account funds
+        bool CheckTransfer_AccountMoneyBankClerkOther(int money,string accountNumber);
+        // Checking account funds
+        bool CheckTransfer_AccountMoneyOther(string Recipient_account);
+        // Checking account funds
 };
 #endif

@@ -390,23 +390,7 @@ bool BankAccount :: CheckTransfer_Account(string accountNumber){
     } 
     return false; 
 } 
-bool BankAccount :: CheckTransfer_AccountMoneyBankClerk(int money,string accountNumber){
-    int Moneyint;
-    stringstream ss;
-    for(temp = HeadInfo_BankAccount ; temp != NULL ; temp = temp->link){ 
-        if(accountNumber == temp->AccountNumber){
-            ss << temp->Money; 
-            ss >> Moneyint; 
-            ss.clear(); 
-            if(Moneyint >= money){
-                return true;    
-            }
-            else{
-                return false;
-            }
-        }    
-    }
-}
+
 string BankAccount :: getname_TransferorBC(string accountNumber){
     for(temp = HeadInfo_BankAccount ; temp != NULL ; temp = temp->link){ 
         if(accountNumber == temp->AccountNumber){
@@ -557,23 +541,7 @@ bool BankAccount :: CheckTransfer_DeductMoneyBankOtherCT(int money,string userna
         }    
     }
 }
-bool BankAccount :: CheckTransfer_AccountMoneyCustomer(int money,string username){
-    int Moneyint;
-    stringstream ss;
-    for(temp = HeadInfo_BankAccount ; temp != NULL ; temp = temp->link){ 
-        if(username == temp->Username){
-            ss << temp->Money; 
-            ss >> Moneyint; 
-            ss.clear(); 
-            if(Moneyint >= money){
-                return true;    
-            }
-            else{
-                return false;
-            }
-        }    
-    }
-}
+
 bool BankAccount :: CheckTransfer_DeductMoneyCustomer(int money,string username){
     LoadFileBankAccount();
     int Moneyint;
@@ -600,7 +568,7 @@ bool BankAccount :: CheckTransfer_DeductMoneyCustomer(int money,string username)
         }    
     }
 }
-string BankAccount :: setDateandTimeTransfer(){
+string BankAccount :: getDateandTimeTransfer(){
     string Date,Time;
 	time_t 	   now = time(0);
 	struct tm  tstruct;
@@ -613,4 +581,87 @@ string BankAccount :: setDateandTimeTransfer(){
     Time = time;
     return Date+","+Time;
 }
+void BankAccount :: statementTransfer_customer(string transferor,string recipient,string money_file,string Service_charge,string date){
+    std::fstream myfile;
+    myfile.open("StatementTransfer.dat", std::ios::out | std::ios::app);
+    myfile << transferor << "," << recipient << "," << money_file << "," << Service_charge << "," << date << endl;
+    myfile.close();
+}
+bool BankAccount :: CheckTransfer_AccountMoneyCustomerOther(int money,string username){
+    int Moneyint;
+    stringstream ss;
+    for(temp = HeadInfo_BankAccount ; temp != NULL ; temp = temp->link){ 
+        if(username == temp->Username){
+            ss << temp->Money; 
+            ss >> Moneyint; 
+            ss.clear(); 
+            if(Moneyint >= (money+10)){
+                return true;
+            }
+            else{
+                return false;
+            }
+        }    
+    }
+}
+bool BankAccount :: CheckTransfer_AccountMoneyBankClerkOther(int money,string accountNumber){
+    int Moneyint;
+    stringstream ss;
+    for(temp = HeadInfo_BankAccount ; temp != NULL ; temp = temp->link){ 
+        if(accountNumber == temp->AccountNumber){
+            ss << temp->Money; 
+            ss >> Moneyint; 
+            ss.clear(); 
+            if(Moneyint >= (money+10)){
+                return true;    
+            }
+            else{
+                return false;
+            }
+        }    
+    }
+}
+bool BankAccount :: CheckTransfer_AccountMoneyCustomer(int money,string username){
+    int Moneyint;
+    stringstream ss;
+    for(temp = HeadInfo_BankAccount ; temp != NULL ; temp = temp->link){ 
+        if(username == temp->Username){
+            ss << temp->Money; 
+            ss >> Moneyint; 
+            ss.clear(); 
+            if(Moneyint >= money){
+                return true;    
+            }
+            else{
+                return false;
+            }
+        }    
+    }
+}
+bool BankAccount :: CheckTransfer_AccountMoneyBankClerk(int money,string accountNumber){
+    int Moneyint;
+    stringstream ss;
+    for(temp = HeadInfo_BankAccount ; temp != NULL ; temp = temp->link){ 
+        if(accountNumber == temp->AccountNumber){
+            ss << temp->Money; 
+            ss >> Moneyint; 
+            ss.clear(); 
+            if(Moneyint >= money){
+                return true;    
+            }
+            else{
+                return false;
+            }
+        }    
+    }
+}
+bool BankAccount :: CheckTransfer_AccountMoneyOther(string Recipient_account){
+    for(temp = HeadInfo_BankAccount ; temp != NULL ; temp = temp->link){ 
+        if(Recipient_account == temp->AccountNumber){
+            return true;
+        }
+    }
+    return false;
+}
+
 
