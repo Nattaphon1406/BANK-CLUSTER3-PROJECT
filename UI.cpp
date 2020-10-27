@@ -224,7 +224,7 @@ void UI::print_MoneyExchange(){
 }
 void UI :: Withdraw(){
     string Account;
-    int withdraw;
+    unsigned long int withdraw;
     Obj_BankAccount.LoadFileBankAccount();
     //Obj_BankAccount.ShowBankAccount();
     do{
@@ -243,7 +243,7 @@ void UI :: Withdraw(){
         cout<<"Can't Withdraw"<<endl;
         goto b1;
     }
-    }while (withdraw%100!=0 || withdraw<100 || withdraw>Obj_BankAccount.getMoney());
+    }while (withdraw%100!=0 || withdraw<100 || withdraw > Obj_BankAccount.getMoney());
     Obj_BankAccount.Withdraw(withdraw);
     Obj_BankAccount.WithdrawBill(withdraw);
     b1:
@@ -465,7 +465,6 @@ void UI::Bill_BankClerk(){
 }
 bool UI::transfer_FirstPage(){
     Obj_BankAccount.LoadFileBankAccount();
-    back1:
     cout << "=========Transfer=========" << endl;
     do{
 		cout << "Recipient account : ";
@@ -476,6 +475,7 @@ bool UI::transfer_FirstPage(){
 		cin >> money;
 	}while(money > 50000);
     cout << "===========================" << endl;
+    return true;
 } 
 void UI::Bill_Customer(){
     if(Obj_BankAccount.Check_RecipientAccount(Recipient_account) == true){
@@ -551,6 +551,7 @@ bool UI::NotEnough_moneyCustomer(){
             return false;
         }
     }   
+    return false;
 }
 bool UI::NotEnough_moneyBankClerk(){
     if(Obj_BankAccount.CheckTransfer_AccountMoneyOther(Recipient_account) == true){
@@ -571,8 +572,9 @@ bool UI::NotEnough_moneyBankClerk(){
             return false;
         }
     }   
+    return false;
 }
-int UI::printMenu_statement(){
+void UI::printMenu_statement(){
     Statement s;
     string number;
     BankAccount tempState;

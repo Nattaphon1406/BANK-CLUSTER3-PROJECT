@@ -134,6 +134,7 @@ bool Statement::ReadFile_deposit(){
 			return true;
 		}//else
 		infile.close();
+		return false;
 }//Readfiledeposit
 void Statement::printName(string number){
 	for(Deposit *i = head_deposit;i!=NULL;i=i->link){
@@ -201,6 +202,7 @@ bool Statement::Readfile_withdraw(){
 			return true;
 		}//else
 		infile.close();
+		return false;
 }//Readfile for withdraw
 void Statement::printName_withdraw(string number){
 	for(withdraw *i = head_withdraw;i!=NULL;i=i->link){
@@ -270,6 +272,7 @@ bool Statement::Readfile_moneyExchange(){
 			return true;
 		}//else
 		infile.close();
+		return false;
 }//Readfaile
 void Statement::printName_moneyExchange(string number){
 			for(MoneyExchange *i = head_moneyExchange;i!=NULL;i=i->link){
@@ -336,11 +339,12 @@ bool Statement::Readfile_PlayBill(){
 			return true;
 		}//else
 		infile.close();
+		return false;
 }//Readfile
 void Statement::printName_PlayBill(string number){
 		for(PlayBill *i = head_playBill;i!=NULL;i=i->link){
 			if(i->AccountNumber == number){
-				cout<<i->Name << endl;	
+				cout<<i->Name << endl;
 			}//if
 		}//for
 }//printname
@@ -391,6 +395,7 @@ bool Statement::Readfile_PlayBillBankclerk(){
 			return true;
 		}//else
 		infile.close();
+		return false;
 }
 void Statement::printstatement_PlayBillBankclerk(){
 	cout<<"======================================= Statement PlayBillBankclerk ==========================================================================================="<<endl;
@@ -438,6 +443,7 @@ bool Statement::Readfile_Transfer(){
 			return true;
 		}//else
 		infile.close();
+		return false;
 }
 void Statement::printName_Transfer(string number){
 	for(Transfer *i = head_Transfer;i!=NULL;i=i->link){
@@ -451,7 +457,7 @@ void Statement::printData_Transfer(string number){
 	cout<<"======================================= Statement Transfer ==========================================================="<<endl;
 	/*cout<<"Account:";
 	printName_Transfer(number);*/
-	cout<<"Amountmoney"<<"\t\t"<<"Balance"<<"\t\t"<<"Date"<<"\t\t\t"<<"Time"<<endl;
+	cout<<"Amountmoney"<<"\t\t"<<"Service charge"<<"\t\t"<<"Date"<<"\t\t\t"<<"Time"<<endl;
 		for(Transfer *i = head_Transfer;i!=NULL;i=i->link){
 			if(i->AccountNumberT == number){
 				cout<<i->Amountmoney<<"\t\t\t"<<i->Balance<<"\t\t"<<i->Date<<"\t\t"<<i->Time<<endl;
@@ -462,7 +468,7 @@ void Statement::printData_Transfer(string number){
 }
 void Statement::printstatement_Transfer(){
 	cout<<"======================================= Statement Transfer ==================================================================================================="<<endl;
-	cout<<"AccountTransferor"<<"\t"<<"AccountRecipient"<<"\t"<<"AmountMoney"<<"\t"<<"Balance"<<"\t\t"<<"Date"<<"\t\t\t"<<"Time"<<endl;
+	cout<<"AccountTransferor"<<"\t"<<"AccountRecipient"<<"\t"<<"AmountMoney"<<"\t"<<"Service charge"<<"\t\t"<<"Date"<<"\t\t\t"<<"Time"<<endl;
 		for(Transfer *i = head_Transfer;i!=NULL;i=i->link){
 			cout<<i->AccountNumberT<<"\t\t"<<i->AccountNumberR<<"\t\t"<<i->Amountmoney<<"\t\t"<<i->Balance<<"\t\t"<<i->Date<<"\t\t"<<i->Time<<endl;
 		}//for

@@ -47,6 +47,6 @@ class UI{
         bool transfer_FirstPage();
         bool NotEnough_moneyCustomer();
         bool NotEnough_moneyBankClerk();
-        int printMenu_statement();
+        void printMenu_statement();
 };
 #endif
