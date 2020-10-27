@@ -82,9 +82,8 @@ void BankAccount :: AddStatementBill_deposit(string name,string account,string m
                 tail_deposit = NewNode;
             }
             else{
-                statementDeposit *temp = NewNode;
-                tail_deposit->link = NewNode;  
-                temp = NewNode;
+                tail_deposit = NewNode;
+                tail_deposit->link = NewNode;
             }
             count_deposit++;
 }
@@ -132,15 +131,16 @@ void BankAccount::setBalance()
 string BankAccount::getBalance(string Account)
 {
     Info_BankAccount *temp;
+    string NewBalance= "";
     for(temp=HeadInfo_BankAccount;temp!=NULL;temp=temp->link)
     {
         if(temp->AccountNumber == Account)
         {
-			string NewBalance= "";
 			NewBalance = temp->Money;
-			return NewBalance;
+			//return NewBalance;
         }
     }
+    return NewBalance;
 }
 bool BankAccount :: CheckAccount(string Account){
 	temp=HeadInfo_BankAccount;
@@ -426,42 +426,48 @@ string BankAccount :: getname_TransferorBC(string accountNumber){
         if(accountNumber == temp->AccountNumber){
             return temp->Name;
         } 
-    }       
+    }
+    return temp->Name;  
 }
 string BankAccount :: getname_TransferorCT(string username){
     for(temp = HeadInfo_BankAccount ; temp != NULL ; temp = temp->link){ 
         if(username == temp->Username){
             return temp->Name;
         } 
-    }       
+    }
+    return temp->Name;
 }
 string BankAccount :: getname_recipient(string Recipient_account){
     for(temp = HeadInfo_BankAccount ; temp != NULL ; temp = temp->link){ 
         if(Recipient_account == temp->AccountNumber){
             return temp->Name;
         } 
-    }       
+    }
+    return temp->Name;       
 }
 string BankAccount :: getmoneyBC(string accountNumber){
     for(temp = HeadInfo_BankAccount ; temp != NULL ; temp = temp->link){ 
         if(accountNumber == temp->AccountNumber){
             return temp->Money;
         } 
-    }       
+    }
+    return temp->Money;      
 }
 string BankAccount :: getmoneyCT(string username){
     for(temp = HeadInfo_BankAccount ; temp != NULL ; temp = temp->link){ 
         if(username == temp->Username){
             return temp->Money;
         } 
-    }       
+    }  
+    return temp->Money;     
 }
 string BankAccount :: getAccountNumber(string username){
     for(temp = HeadInfo_BankAccount ; temp != NULL ; temp = temp->link){ 
         if(username == temp->Username){
             return temp->AccountNumber;
         } 
-    }       
+    } 
+    return temp->AccountNumber;      
 }
 bool BankAccount :: Check_RecipientAccount(string Recipient_account){
     for(temp = HeadInfo_BankAccount ; temp != NULL ; temp = temp->link){
@@ -513,11 +519,9 @@ bool BankAccount :: CheckTransfer_DeductMoneyBankclerk(int money,string accountN
                 SaveInfoCustomerToFile();
                 return true;    
             }
-            else{
-                return false;
-            }
         }    
     }
+    return false;
 }
 bool BankAccount :: CheckTransfer_DeductMoneyBankOtherBC(int money,string accountNumber){
     LoadFileBankAccount();
@@ -539,11 +543,9 @@ bool BankAccount :: CheckTransfer_DeductMoneyBankOtherBC(int money,string accoun
                 SaveInfoCustomerToFile();
                 return true;    
             }
-            else{
-                return false;
-            }
         }    
     }
+    return false;
 }
 bool BankAccount :: CheckTransfer_DeductMoneyBankOtherCT(int money,string username){
     LoadFileBankAccount();
@@ -565,11 +567,9 @@ bool BankAccount :: CheckTransfer_DeductMoneyBankOtherCT(int money,string userna
                 SaveInfoCustomerToFile();
                 return true;    
             }
-            else{
-                return false;
-            }
         }    
     }
+    return false;
 }
 
 bool BankAccount :: CheckTransfer_DeductMoneyCustomer(int money,string username){
@@ -592,11 +592,9 @@ bool BankAccount :: CheckTransfer_DeductMoneyCustomer(int money,string username)
                 SaveInfoCustomerToFile();
                 return true;    
             }
-            else{
-                return false;
-            }
         }    
     }
+    return false;
 }
 string BankAccount :: getDateandTimeTransfer(){
     string Date,Time;
@@ -628,11 +626,9 @@ bool BankAccount :: CheckTransfer_AccountMoneyCustomerOther(int money,string use
             if(Moneyint >= (money+10)){
                 return true;
             }
-            else{
-                return false;
-            }
         }    
     }
+    return false;
 }
 bool BankAccount :: CheckTransfer_AccountMoneyBankClerkOther(int money,string accountNumber){
     int Moneyint;
@@ -645,11 +641,9 @@ bool BankAccount :: CheckTransfer_AccountMoneyBankClerkOther(int money,string ac
             if(Moneyint >= (money+10)){
                 return true;    
             }
-            else{
-                return false;
-            }
         }    
     }
+    return false;
 }
 bool BankAccount :: CheckTransfer_AccountMoneyCustomer(int money,string username){
     int Moneyint;
@@ -662,11 +656,9 @@ bool BankAccount :: CheckTransfer_AccountMoneyCustomer(int money,string username
             if(Moneyint >= money){
                 return true;    
             }
-            else{
-                return false;
-            }
         }    
     }
+    return false;
 }
 bool BankAccount :: CheckTransfer_AccountMoneyBankClerk(int money,string accountNumber){
     int Moneyint;
@@ -679,11 +671,9 @@ bool BankAccount :: CheckTransfer_AccountMoneyBankClerk(int money,string account
             if(Moneyint >= money){
                 return true;    
             }
-            else{
-                return false;
-            }
         }    
     }
+    return false;
 }
 bool BankAccount :: CheckTransfer_AccountMoneyOther(string Recipient_account){
     for(temp = HeadInfo_BankAccount ; temp != NULL ; temp = temp->link){ 
