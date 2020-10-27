@@ -104,7 +104,8 @@ void UI::print_menuClerk(){
     cout << "5. Money Exchange" << endl;
     cout << "6. Statement" << endl;
     cout << "7. MenageRegister" << endl;
-    cout << "8. Logout" << endl;
+    cout << "8. RemovedAccount" << endl;
+    cout << "9. Logout" << endl;
     cout << "==============================================" << endl;
     cout << "Enter: ";
 }
@@ -131,6 +132,23 @@ void UI::MenageRegister(int Number){
     cout << "2.RemoveRegister" << endl;
     cout << "Enter: ";
     Obj_BankClerk.MenuMenageRegister(Number);
+}
+void UI::RemoveBankAccount(){
+        Information Info_Customer;
+        string AccountNumber;
+        Info_Customer.LoadFileBankAccount();
+        RemovedAgain : 
+        cout << "Enter Account Number : ";
+        cin >> AccountNumber;
+        
+        if(Info_Customer.RemoveInfoBankAccount(AccountNumber)==true){
+            Info_Customer.SaveInfoCustomerToFile();
+        }
+        else if(Info_Customer.RemoveInfoBankAccount(AccountNumber)==false){
+            cout << "ACCOUNT NOT FOUND" << endl;
+            goto RemovedAgain;
+        } 
+        
 }
 
 void UI::print_MoneyExchange(){

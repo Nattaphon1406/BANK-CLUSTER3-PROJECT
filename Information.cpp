@@ -197,23 +197,47 @@ void Information :: RemoveInfoRegisterCustomer(int Number){
 	      temp = temp->link; 
       }
 }
-void Information :: RemoveInfoBankAccount(string AccountNumber){
-      Info_BankAccount *temp,*ptemp;
-      temp = HeadInfo_BankAccount;
-      for(Info_BankAccount *i = HeadInfo_BankAccount; i != NULL; i = i->link){
-            if(i->AccountNumber == AccountNumber){
-                  if(i == HeadInfo_BankAccount){
-                        HeadInfo_BankAccount = temp->link;
+bool Information :: RemoveInfoBankAccount(string AccountNumber){
+      Info_BankAccount *temp = HeadInfo_BankAccount;
+      Info_BankAccount *ptemp = HeadInfo_BankAccount;
+      int i = 1;
+      for(i = 1; i <= Count_BankAccount; i++){
+            if(temp->AccountNumber == AccountNumber){
+                   cout << "THIS ACCOUNT NUMBER : " << AccountNumber << "  NAME : " << temp->Name << "  WAS REMOVED" << endl;
+                   break;;
+            }
+            temp = temp->link;
+      } 
+      if(i==1){
+            ptemp = temp->link;
+            HeadInfo_BankAccount = ptemp;
+            delete temp;
+            Count_BankAccount--;
+            return true;
+      }
+      else if(i>1){ 
+            if(i==Count_BankAccount){ 
+                  for(int j = 1; j < Count_BankAccount; j++){
+                        ptemp = ptemp->link;
                   }
-                  else{
-                        ptemp->link = temp->link;
-                  }
+                  TailInfo_BankAccount = ptemp;
+                  TailInfo_BankAccount -> link = NULL;
                   Count_BankAccount--;
                   delete temp;
+                  return true;
+            }else if( i > 1 && i < Count_BankAccount){ 
+                  for(int j = 1; j <= Count_BankAccount; j++){
+                        if(j < i-1 ){ 
+                              ptemp = ptemp->link;
+                              }
+                        }
+                  ptemp->link = temp->link;
+                  Count_BankAccount--;
+                  delete temp;
+                  return true;
             }
-            ptemp = temp;
-	      temp = temp->link; 
       }
+      return false;
 }
 void Information :: RemoveInfoBankClerk(int Number){
       Info_BankClerk *temp,*ptemp;

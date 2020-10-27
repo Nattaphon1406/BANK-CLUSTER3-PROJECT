@@ -33,6 +33,7 @@ class UI{
         void printmenuRegister_BankClerk();
         void printInfoFromFileRegister();
         void MenageRegister(int Number);
+        void RemoveBankAccount();
         void transfer_firstPage();
         void print_MoneyExchange();
         void Withdraw();
