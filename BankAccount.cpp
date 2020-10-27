@@ -24,6 +24,15 @@ BankAccount :: statementDeposit :: statementDeposit(string name,string account,s
     this->Time = time;
     link = NULL;
 }
+BankAccount :: statementWithdraw :: statementWithdraw(string name,string account,string money,string balance,string date,string time){
+    this->Name = name;
+    this->AccountNumber = account;
+    this->Money = money;
+    this->Balance = balance;
+    this->Date = date;
+    this->Time = time;
+    Withdrawlink = NULL;
+}
 BankAccount::BankAccount()
 {
     Name = "";
@@ -40,6 +49,8 @@ BankAccount::BankAccount()
     this->headBill = NULL;
     this->tailBill = NULL;
     this->tempBill = NULL;
+    this->Withdrawhead=NULL;
+    this->Withdrawtail=NULL;
     countStatment = 0;
     this->Obj_BankAccount = NULL;
     this->temp = NULL;
@@ -62,6 +73,18 @@ void BankAccount :: AddStatementBillCustoment(string name,string accountNumber,s
                 tailBill = bill;
             }
             Count_Customer++;
+}
+void BankAccount :: AddStatementWithdraw(string name,string accountNumber,string money,string balance,string date,string time){
+    statementWithdraw *newnode = new statementWithdraw(name,accountNumber,money,balance,date,time);
+            if(Withdrawhead == NULL){
+                Withdrawhead = newnode;
+                Withdrawtail = newnode;
+            }
+            else{
+                Withdrawtail->Withdrawlink = newnode;
+                Withdrawtail = newnode;
+            }
+            
 }
 void BankAccount :: AddStatementBillBankclerk(string type,string money,string date,string time){
      statementBillBankclerk *next = new statementBillBankclerk(type,money,date,time);
@@ -420,7 +443,39 @@ bool BankAccount :: CheckTransfer_Account(string accountNumber){
     } 
     return false; 
 } 
+string BankAccount::getName(){
+    return temp->Name;
+}
+void BankAccount :: WithdrawBill(int withdraw){
+    string w,date, time;
 
+    //setTime
+    date=setDateandTime();
+    time=date.substr((date.find(",")+1),date.find(" "));
+    date=date.substr(0,date.find(","));
+    //cout<<date<<"==============="<<time<<endl;
+    stringstream ss;
+    ss<<withdraw;
+    ss>>w;
+    ss.clear();
+    SaveInfoCustomerToFile();
+    AddStatementWithdraw(temp->Money,time,date,w,temp->AccountNumber,temp->Name);
+    WriteStatementWithdraw();
+}
+void BankAccount :: WriteStatementWithdraw(){
+    statementWithdraw *newn;
+    ofstream myfile("WithdrawStatement.dat",ios::app);
+    if(myfile.is_open()){
+        //temp = Withdrawhead;
+        //while(temp!=NULL){
+            //cout<< newn->Name << "," << newn->AccountNumber << "," << newn->Money << "," << newn->Balance << "," << newn->Date << "," << newn->Time << endl;
+            myfile << newn->Name << "," << newn->AccountNumber << "," << newn->Money << "," << newn->Balance << "," << newn->Date << "," << newn->Time << endl;
+            newn = newn->Withdrawlink;
+        //}
+        myfile.close();
+    }
+    
+}
 string BankAccount :: getname_TransferorBC(string accountNumber){
     for(temp = HeadInfo_BankAccount ; temp != NULL ; temp = temp->link){ 
         if(accountNumber == temp->AccountNumber){

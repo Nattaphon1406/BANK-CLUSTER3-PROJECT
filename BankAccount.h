@@ -29,6 +29,13 @@ class BankAccount : public Information{
                 statementDeposit *link;
                 statementDeposit(string name,string accountNumber,string money,string balance,string date,string time);
         };
+        class statementWithdraw{
+            public:
+                string Name,AccountNumber,Money,Date,Time,Balance;
+                statementWithdraw *Withdrawlink;
+                statementWithdraw(string name,string accountNumber,string money,string balance,string date,string time);
+        };
+        statementWithdraw *Withdrawhead,*Withdrawtail,*Withtemp;
         statementBill *headBill, *tailBill, *tempBill;
         statementBillBankclerk *headBillBankclerk, *tailBillBankclerk, *tempBillBankclerk;
         BankAccount *Obj_BankAccount;
@@ -40,6 +47,7 @@ class BankAccount : public Information{
         int countStatment, coutBillBankclerk,count_deposit;
     public:
         BankAccount();
+        void AddStatementWithdraw(string name,string accountNumber,string money,string balance,string date,string time);
         bool login(string username,string password);
         //add data in node
         void AddStatementBillCustoment(string name,string accountNumber,string type,string money,string date,string time);//add data in node by cudtomer
@@ -64,6 +72,9 @@ class BankAccount : public Information{
         // check user customer or bankclerk
         void Withdraw(unsigned long int withdraw);
         unsigned long getMoney();
+        string getName();
+        void WithdrawBill(int withdraw);
+        void WriteStatementWithdraw();
         /* method for menu deposit */
         //add money to account of customer
         void AddMoney();

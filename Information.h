@@ -48,7 +48,7 @@ class Information{
     //Add Info to Info(BankClerk Data)
     void RemoveInfoRegisterCustomer(int Number);
     //Remove Info's Account at File "RegisterCustomer.dat"
-    bool RemoveInfoBankAccount(string AccountNumber)
+    bool RemoveInfoBankAccount(string AccountNumber);
     //Remove Info's Account at File "RegisterBankAccount.dat"
     void RemoveInfoBankClerk(int Number);
     //Remove Info's Account at File "RegisterBankClerk.dat"

@@ -224,22 +224,32 @@ void UI::print_MoneyExchange(){
 }
 void UI :: Withdraw(){
     string Account;
-    unsigned long int withdraw;
+    int withdraw;
     Obj_BankAccount.LoadFileBankAccount();
     //Obj_BankAccount.ShowBankAccount();
     do{
-        cout<<"=================== Withdraw ======================"<<endl
+        cout<<"========= Withdraw ========="<<endl
             <<"Enter Account Number: ";
         cin>>Account;
-       // Obj_BankAccount.CheckAccount(Account);
+        cout<<"============================"<<endl;
     }while(!Obj_BankAccount.CheckAccount(Account));
     
     do{
-        cout<<"Enter Withdraw Amount: ";
+        cout<<"========= Withdraw ========="<<endl
+            <<"Owner Name: "<<Obj_BankAccount.getName()<<endl
+            <<"Enter Withdraw Amount: ";
     cin>>withdraw;
+    if(Obj_BankAccount.getMoney()<=100){
+        cout<<"Can't Withdraw"<<endl;
+        goto b1;
+    }
     }while (withdraw%100!=0 || withdraw<100 || withdraw>Obj_BankAccount.getMoney());
     Obj_BankAccount.Withdraw(withdraw);
-    Obj_BankAccount.SaveInfoCustomerToFile();
+    Obj_BankAccount.WithdrawBill(withdraw);
+    b1:
+    cout<<"Account Balance :"<<Obj_BankAccount.getMoney()<<endl;
+    //Obj_BankAccount.SaveInfoCustomerToFile();
+    system("pause");
 }
 void UI::print_getDeposit(){
     bool check_account;
