@@ -7,6 +7,7 @@ UI::UI(){
     citizenID = "";
     birthDate = "";
     phoneNumber = "";
+    typeAccount = "";
     money = 0;
     Recipient_account = "";
 }
@@ -18,7 +19,9 @@ UI::~UI(){
     citizenID = "";
     birthDate = "";
     phoneNumber = "";
+    typeAccount = "";
     money = 0;
+    Recipient_account = "";
 }
 void UI::print_MainMenu(){
     cout << "============ Menu ============" << endl;
@@ -55,71 +58,41 @@ int UI::Checklogin(){
     return 3;
 }
 void UI::printmenuRegister_Customer(){
-    Information Info_Customer;
-    stringstream ss;
-    string Money;
     cout << "====== Register Customer ======" << endl;
     cout << "Name: ";
-    cin.ignore();
-    getline(cin,name);
+    Obj_Customer.AddName();
     cout << "CitizenID: ";
-    cin >> citizenID;
+    Obj_Customer.AddCitizenID();
     cout << "BirthDate: ";
-    cin >> birthDate;
+    Obj_Customer.AddBirthDate();
     cout << "Tel: ";
-    cin >> phoneNumber;
+    Obj_Customer.AddPhoneNumber();
     cout << "========= TypeAccount =========" << endl;
     cout << "1. DepositAccount [  500 Bath]" << endl;
     cout << "2. SavingAccount  [20000 Bath]" << endl;
+    cout << "===============================" << endl;
     cout << "TypeAccount: ";
-    cin >> typeAccount;
-    Info_Customer.LoadFileRegisterCustomer();
-    if(typeAccount == "1"){
-        EnterMoneyDepositAccount:
-        cout << "Money: ";
-        cin >> money;
-        if(money < 500){
-            goto EnterMoneyDepositAccount;
-        }
-        ss << money;
-        ss >> Money;
-        ss.clear();
-        Info_Customer.AddInfoRegisterCustomer(name,citizenID,birthDate,phoneNumber,"10",Money);
+    Obj_Customer.AddTypeAccount();
+    if(Obj_Customer.AddMoney()){
+        Obj_Customer.Registercustomer();
     }
-    else{
-        EnterMoneySavingAccount:
-        cout << "Money: ";
-        cin >> money;
-        if(money < 20000){
-            goto EnterMoneySavingAccount;
-        }
-        ss << money;
-        ss >> Money;
-        ss.clear();
-        Info_Customer.AddInfoRegisterCustomer(name,citizenID,birthDate,phoneNumber,"20",Money);
-    }
-    Info_Customer.SaveInfoRegisterCustomerToFile();
     cout << "===============================" << endl;
 }
 void UI::printmenuRegister_BankClerk(){
-    Information Info_BankClerk;
     cout << "====== Register BankClerk =====" << endl;
     cout << "Name: ";
-    cin.ignore();
-    getline(cin,name);
+    Obj_BankClerk.AddName();
     cout << "CitizenID: ";
-    cin >> citizenID;
+    Obj_BankClerk.AddCitizenID();
     cout << "BirthDate: ";
-    cin >> birthDate;
+    Obj_BankClerk.AddBirthDate();
     cout << "Tel: ";
-    cin >> phoneNumber;
+    Obj_BankClerk.AddPhoneNumber();
     cout << "Username: ";
-    cin >> username;
+    Obj_BankClerk.AddClerkID();
     cout << "Password: ";
-    cin >> password;
-    Info_BankClerk.LoadFileBankClerk();
-    Info_BankClerk.AddInfoBankClerk(name,citizenID,birthDate,phoneNumber,username,password);
-    Info_BankClerk.SaveInfoBankClerkToFile();
+    Obj_BankClerk.AddPassword();
+    Obj_BankClerk.Registercustomer();
     cout << "===============================" << endl;
 }
 void UI::print_menuClerk(){
@@ -145,31 +118,19 @@ void UI::print_menuCustomer(){
     cout << "Enter: ";
 }
 void UI::printInfoFromFileRegister(){
-    Information Info_Customer;
+    Obj_Customer.LoadFileRegisterCustomer();
     cout << "============ RegisterCustomerFile ============" << endl;
     cout << "No." << "\t" << "Name" << endl;
     cout << "==============================================" << endl;
-    Info_Customer.ShowRegistercustomer();
+    Obj_Customer.ShowRegistercustomer();
     cout << "==============================================" << endl;
     cout << "Enter: ";
 }
 void UI::MenageRegister(int Number){
-    Information Info_Customer;
-    Info_Customer.LoadFileRegisterCustomer();
-    int count;
     cout << "1.ConfirmRegister" << endl;
     cout << "2.RemoveRegister" << endl;
-    cout << "Enter: " << endl;
-    cin >> count;
-    if(count == 1){
-        Info_Customer.SaveInfoRegisterToFileBankAccount(Number);
-        Info_Customer.RemoveInfoRegisterCustomer(Number);
-        Info_Customer.SaveInfoRegisterCustomerToFile();
-    }
-    else if(count == 2){
-        Info_Customer.RemoveInfoRegisterCustomer(Number); 
-        Info_Customer.SaveInfoRegisterCustomerToFile();
-    }
+    cout << "Enter: ";
+    Obj_BankClerk.MenuMenageRegister(Number);
 }
 
 void UI::print_MoneyExchange(){
@@ -217,6 +178,7 @@ void UI::print_MoneyExchange(){
                     Obj_MoneyExchange.ShowBillCash(MoneyAmountBaht);
                 }
                 else if(PaymentType == 2){
+                    Obj_MoneyExchange.ShowPaymentMoney();
                     cout << endl;
                     cout << "------- Bank Account ------- " << endl;
                     cout << "Enter Account Number : ";
@@ -224,11 +186,16 @@ void UI::print_MoneyExchange(){
                     cout << "---------------------------- " << endl;
 
                     Obj_MoneyExchange.SetAccount(AccountNumber);
-                    if(!Obj_MoneyExchange.CheckAccount()){
-                       
+                    Obj_BankAccount.LoadFileBankAccount();
+                    if(Obj_BankAccount.CheckAccount(AccountNumber) == 1){
+                        string Balance,balance;
+                        Balance = Obj_BankAccount.getBalance(AccountNumber);
+                        balance = Obj_MoneyExchange.ShowBillAccount(Balance);
+                        
+                        Obj_BankAccount.updateExchangeMoney_to_BankAccount(balance,AccountNumber);
                     }
-                    else if(Obj_MoneyExchange.CheckAccount()){
-                        cout <<"Yes" <<endl;
+                    else if(Obj_BankAccount.CheckAccount(AccountNumber) == 0){
+                        cout <<"!!!!Invalid Account Number!!!!" <<endl;
                     }
 
                 } 
@@ -315,7 +282,7 @@ void UI::print_getDeposit(){
         }
     }while(check_account != true);
 }
-void UI::SvaeRegisterCustomer(string name,string citizenID,string birthDate,string phoneNumber,string typeAccount,int money){
+/*void UI::SvaeRegisterCustomer(string name,string citizenID,string birthDate,string phoneNumber,string typeAccount,int money){
     Information Info_Customer;
     Info_Customer.LoadFileRegisterCustomer();
 }
@@ -326,74 +293,42 @@ void UI::SaveRegisterBankClerk(string name,string citizenID,string birthDate,str
 void UI::SaveInfoCustomerToBankAccount(string name,string accountNumber,string money,string username,string password){
     Information Info_BankAccount;
     Info_BankAccount.LoadFileRegisterCustomer();
-}
+}*/
 void UI::PayBill(){
     Obj_BankAccount.LoadFileBankAccount();
     string type,chooseGroup, user;
-    unsigned long int amount,checkMoney, getMoney;
+    unsigned long int amount;
     int temp;
-    cout << "=========AccoutNumber=========" << endl;
-	cout << "Input account : ";
-	cin >> accountNumber;
-    temp = Obj_BankAccount.CheckAccount(accountNumber);
-    if(temp==true){
+    
+    temp = Obj_BankAccount.CheckUser(username);//check customer or bankclerk
+    if(temp==true){ 
         type = "customer";
-        do{
-            cout << "===================Customer====================" << endl << endl;
-            cout << "===================GroupBill===================" << endl;
-            cout << "1.Water bill" << endl;
-            cout << "2.Electricity bill" << endl;
-            cout << "3.Phone bill" << endl;
-            cout << "===============================================" << endl;	
-            cout << "Enter: ";
-            cin >> chooseGroup;
-        }while(chooseGroup!="1"&&chooseGroup!="2"&&chooseGroup!="3");
-        cout << "Amount to pay the bill: ";
-        cin >> amount;
-        
-        getMoney=Obj_BankAccount.getMoney();//get money in Account
-        //Check whether the amount is enough to include the fee.
-        if(chooseGroup=="1"){
-            checkMoney = amount*0.3;
-            checkMoney += amount;
-            //More money in the account
-            cout << getMoney<< " " << checkMoney << endl;
-            if(getMoney>checkMoney){
-                Obj_BankAccount.payBill(type,chooseGroup,accountNumber,amount);
-            }
-            else{
-                cout << "The amount is not enough" << endl;
-            }
-        }
-        else if(chooseGroup=="2"){
-            checkMoney = amount*0.4;
-            checkMoney += amount;
-            //More money in the account
-            cout << getMoney<< " " << checkMoney << endl;
-            if(getMoney>checkMoney){
-                Obj_BankAccount.payBill(type,chooseGroup,accountNumber,amount);
-            }
-            else{
-                cout << "The amount is not enough" << endl;
-            }
-        }
-        else if(chooseGroup=="3"){
-            checkMoney = amount*0.5;
-            checkMoney += amount;
-            //More money in the account
-            cout << "Get: "<< getMoney<< " " << checkMoney << endl;
-            if(getMoney>checkMoney){
-                Obj_BankAccount.payBill(type,chooseGroup,accountNumber,amount);
-            }
-            else{
-                cout << "The amount is not enough" << endl;
-            }
+        cout << "=========AccoutNumber=========" << endl;
+	    cout << "Input account : ";
+	    cin >> accountNumber;
+        temp = Obj_BankAccount.CheckAccount(accountNumber);
+        if(temp == true){
+            do{
+                cout << "===================Customer====================" << endl;
+                cout << "===================GroupBill===================" << endl;
+                cout << "1.Water bill" << endl;
+                cout << "2.Electricity bill" << endl;
+                cout << "3.Phone bill" << endl;
+                cout << "===============================================" << endl;	
+                cout << "Enter: ";
+                cin >> chooseGroup;
+            }while(chooseGroup!="1"&&chooseGroup!="2"&&chooseGroup!="3");
+            cout << "Amount to pay the bill: ";
+            cin >> amount;
+            Obj_BankAccount.payBill(type,chooseGroup,amount);
+        }else{
+            cout << "AccoutNumber Not found" << endl;
         }
     }
-    else{
+    else if(temp==false){
         type = "Bankclerk";
         do{
-            cout << "===================Bankclerkr==================" << endl << endl;
+            cout << "================== Bankclerkr ==================" << endl;
             cout << "===================GroupBill===================" << endl;
             cout << "1.Water bill" << endl;
             cout << "2.Electricity bill" << endl;
@@ -404,8 +339,10 @@ void UI::PayBill(){
         }while(chooseGroup!="1"&&chooseGroup!="2"&&chooseGroup!="3");
         cout << "Amount to pay the bill: ";
         cin >> amount;
+        Obj_BankAccount.payBill(type,chooseGroup,amount);
     }
 }
+
 void UI::transfer_firstPage(){
     Obj_BankAccount.LoadFileBankAccount();
     back1:

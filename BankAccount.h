@@ -13,9 +13,9 @@ class BankAccount : public Information{
     private:
         class statementBill{
             public:
-                string Name,AccountNumber,Money,Date,Time;
+                string Name,AccountNumber,Type,Money,Date,Time;
                 statementBill *linkBill;
-                statementBill(string name,string accountNumber,string money,string date,string time);
+                statementBill(string name,string accountNumber,string type,string money,string date,string time);
         };
         class statementBillBankclerk{
             public:
@@ -42,7 +42,7 @@ class BankAccount : public Information{
         BankAccount();
         bool login(string username,string password);
         //add data in node
-        void AddStatementBill(string name,string accountNumber,string money,string date,string time);
+        void AddStatementBillCustoment(string name,string accountNumber,string type,string money,string date,string time);//add data in node by cudtomer
         //add data in node statementBill by Bankclerk
         void AddStatementBillBankclerk(string type,string money,string date,string time);
         //Add data deposition
@@ -52,12 +52,16 @@ class BankAccount : public Information{
         //set balance money of account customer
         void setBalance();
         //set data for deposit
+        string getBalance(string Account);
+        //return data for use in moneyExchenge
         void setData_deposit(string account,unsigned long int money);
         //check account number it's have data bank if have return true
         bool CheckAccount(string Account);
         /* menu of tranfer */
         bool CheckTransfer_account(string accountNumber);
         /* menu of withdraw */
+        bool CheckUser(string user);
+        // check user customer or bankclerk
         void Withdraw(unsigned long int withdraw);
         unsigned long getMoney();
         /* method for menu deposit */
@@ -66,14 +70,16 @@ class BankAccount : public Information{
         //update money after deposit to in file BankAccount
         void updateMoney_to_BankAccount();
         // save history of deposit 
+        void updateExchangeMoney_to_BankAccount(string Balance,string Account);
+        // save balance from Exchange money to BankAccount file
         void WriteStatement_deposit();
         // print bill for deposit
         void printBill_of_deposit(string amount);
         unsigned long int getMoneyAccount(string username);
         string setDateandTime();
-        void payBill(string type,string group, string accountNumber, long double amount);
-        void WriteStatement();    
-        void WriteStatementBankclerk();
+        void payBill(string type,string group, long double amount);
+        void WriteStatementCustomer(string filename,string nameAc,string accountNumber,string TypeBill,string Amount,string date,string time);   
+        void WriteStatementBankclerk(string filename,string TypeBill,string Amount,string date,string time);
         bool CheckTransfer_DeductMoneyBankclerk(int money,string accountNumber);
         // Update money in file 
         bool CheckTransfer_DeductMoneyCustomer(int money,string username);

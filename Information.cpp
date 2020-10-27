@@ -251,6 +251,18 @@ void Information :: SaveInfoCustomerToFile(){
         }
       Write.close();
 }
+void Information :: SaveInfoBalanceToFile(string Balance,string Account){
+      ofstream Write("BankAccount.dat");
+        if(Write){
+            for(Info_BankAccount *i = HeadInfo_BankAccount; i != NULL; i = i->link){
+                  if(i->AccountNumber == Account){
+                        i->Money = Balance;
+                  }
+                Write << i->Name << "," << i->AccountNumber << "," << i->Money << "," << i->Username << "," << i->Password << endl;
+            }
+        }
+      Write.close();
+}
 string Information :: GenerateAccountNumber(int number){
       Info_Customer *generate = HeadInfo_Customer;
       string firstAccountNumber,strYear;
@@ -315,6 +327,10 @@ void Information :: SaveInfoRegisterToFileBankAccount(int number){
             }
         }
       Write.close();
+      cout << "AccountNumber : " << GenerateAccountNumber(number) << endl;
+      cout << "Username : " << GenerateUsername(number) << endl;
+      cout << "Password : " << GeneratePassword(number) << endl;
+      system("pause");
 }
 void Information :: SaveInfoBankClerkToFile(){
       ofstream Write("BankClerk.dat");

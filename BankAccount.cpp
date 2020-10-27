@@ -1,7 +1,8 @@
 #include "BankAccount.h"
-BankAccount :: statementBill :: statementBill(string name,string accountNumber,string money,string date,string time){
+BankAccount :: statementBill :: statementBill(string name,string accountNumber,string type,string money,string date,string time){
     Name = name;
     AccountNumber = accountNumber;
+    Type = type;
     Money = money;
     Date = date;
     Time = time;
@@ -50,8 +51,8 @@ BankAccount::BankAccount()
     head_deposit = NULL;
     tail_deposit = NULL;
 }
-void BankAccount :: AddStatementBill(string name,string accountNumber,string money,string date,string time){
-     statementBill *bill = new statementBill(name,accountNumber,money,date,time);
+void BankAccount :: AddStatementBillCustoment(string name,string accountNumber,string type,string money,string date,string time){
+     statementBill *bill = new statementBill(name,accountNumber,type,money,date,time);
             if(headBill == NULL){
                 headBill = bill;
                 tailBill = bill;
@@ -128,10 +129,26 @@ void BankAccount::setBalance()
         }
     }
 }
+string BankAccount::getBalance(string Account)
+{
+    Info_BankAccount *temp;
+    for(temp=HeadInfo_BankAccount;temp!=NULL;temp=temp->link)
+    {
+        if(temp->AccountNumber == Account)
+        {
+			string NewBalance= "";
+			NewBalance = temp->Money;
+			return NewBalance;
+        }
+    }
+}
 bool BankAccount :: CheckAccount(string Account){
 	temp=HeadInfo_BankAccount;
 	for(temp=HeadInfo_BankAccount;temp!=NULL ;temp=temp->link){
 		if(temp->AccountNumber==Account){
+            Account_number = Account;
+            Name = temp->Name;
+            Money = temp->Money;
 			return true;
 		}
 	}
@@ -225,6 +242,10 @@ void BankAccount::updateMoney_to_BankAccount()
 {
     SaveInfoCustomerToFile();
 }
+void BankAccount::updateExchangeMoney_to_BankAccount(string Balance,string Account)
+{
+    SaveInfoBalanceToFile(Balance,Account);
+}
 void BankAccount :: WriteStatement_deposit(){
     statementDeposit *temp;
     string fileName,data;
@@ -274,112 +295,121 @@ string BankAccount :: setDateandTime(){
     Time = time;
     return Date+","+Time;
 }
-void BankAccount :: payBill(string type,string group, string accountNumber, long double amount){
-    long double balance=0,fee=0;
-    string nameStat,TypeBill, Balance,Amount, date, time;
-
+bool BankAccount :: CheckUser(string user){
+	temp=HeadInfo_BankAccount;
+	for(temp=HeadInfo_BankAccount;temp!=NULL ;temp=temp->link){
+		if(temp->Username==user){
+			return true;
+		}
+	}
+    return false;	
+}
+void BankAccount :: payBill(string type,string group, long double amount){
+    unsigned long int getmoney,balance=0,fee=0;
+    string TypeBill = " ", chaengceMoney = " ", Amount = " ", date = " ", time = " ", namefile = " ";
+    stringstream ss; 
     //setTime
     date=setDateandTime();
     time=date.substr((date.find(",")+1),date.find(" "));
     date=date.substr(0,date.find(","));
 
     if(type == "customer"){//Customer
-        if(group=="1"){
-            TypeBill = "Water bill";
-            moneyAccount = moneyAccount - amount;
-            fee = amount*0.3;
-            balance = moneyAccount - fee;
-        }
-        else if(group=="2"){
-            TypeBill = "Electricity bill";
-            moneyAccount = moneyAccount - amount;
-            fee = amount*0.4;
-            balance = moneyAccount - fee;
-        }
-        else if(group=="3"){
-            TypeBill = "Phone bill";
-            moneyAccount = moneyAccount - amount;
-            fee = amount*0.5;
-            balance = moneyAccount - fee;
-        }
-        cout << "*********Bill********" << endl;
-        cout << "TypeBill: " << TypeBill << endl;
-        cout << "Fee: " << fee << " baht"<< endl;
-        cout << "Balance: " <<  balance << " baht" << endl;
-        cout << "Date: " << date << " : " << time << endl;
-        //ChangData at File Account
-        stringstream ss; 
-        ss << balance;
-        ss >> Balance;
+        ss << Money;
+        ss >> getmoney;
         ss.clear();
-		ss << amount;
-        ss >> Amount;
-        ss.clear();
-        //update money to account
-        for(temp = HeadInfo_BankAccount;temp !=NULL ; temp = temp->link){
-            if(accountNumber==temp->AccountNumber){
-                    nameStat = temp->Name;
-                    temp->Money = Balance;
+        //cout << "MoneyAc: " << moneyAccount << endl;
+        if(getmoney>amount){
+            if(group=="1"){
+                TypeBill = "Water bill";
+                getmoney = getmoney - amount;
+                fee = 5;
+                balance = getmoney - fee;
+                cout << balance << endl;
             }
+            else if(group=="2"){
+                TypeBill = "Electricity bill";
+                getmoney = getmoney - amount;
+                fee = 8;
+                balance = getmoney - fee;
+                cout << balance << endl;
+            }
+            else if(group=="3"){
+                TypeBill = "Phone bill";
+                getmoney = getmoney - amount;
+                fee = 10;
+                balance = getmoney - fee;
+                cout << balance << endl;
+            }
+            cout << "*********Bill********" << endl;
+            cout << "TypeBill: " << TypeBill << endl;
+            cout << "Fee: " << fee << " baht"<< endl;
+            cout << "Balance: " <<  balance << " baht" << endl;
+            cout << "Date: " << date << " : " << time << endl;
+            //ChangData at File Account
+            ss << balance;
+            ss >> chaengceMoney;
+            ss.clear();
+            ss << amount;
+            ss >> Amount;
+            ss.clear();
+            //update money to account
+            for(temp = HeadInfo_BankAccount;temp !=NULL ; temp = temp->link){
+                if(Account_number==temp->AccountNumber){
+                        temp->Money = chaengceMoney;
+                }
+            }
+  
+            SaveInfoCustomerToFile();//saveFile
+            AddStatementBillCustoment(Name,Account_number,TypeBill,Amount,date,time);//addNode
+            namefile = "StatementCustomerBill.dat";
+            WriteStatementCustomer(namefile,Name,Account_number,TypeBill,Amount,date,time);
         }
-        //username,accountNumber,amount,date,time;
-        cout << "*******Chengce******" << endl;
-        ShowBankAccount();//test
-        SaveInfoCustomerToFile();//saveFile
-        AddStatementBill(nameStat,accountNumber,Amount,date,time);
-        WriteStatement();
+        else{
+            cout << "The amount is not enough" << endl;
+        }
     }
-    else{//Bank clerk
-
+    else if(type == "Bankclerk"){//Bank clerk
         if(group=="1"){
 			TypeBill = "Water bill";
-            fee = amount*0.4;
-			balance = moneyAccount + fee;
+            fee = 5;
         }
         else if(group=="2"){
 			TypeBill = "Electricity bill";
-            fee = amount*0.5;
-			balance = moneyAccount + fee;
+            fee = 8;
         }
         else if(group=="3"){
 			TypeBill = "Phone bill";
-            fee = amount*0.6;
-			balance = moneyAccount + fee;
+            fee = 10;
         }
-        
+		ss << amount;
+        ss >> Amount;
+        ss.clear();
+
 		cout << "*********Bill********" << endl;
         cout << "TypeBill: " << TypeBill << endl;
         cout << "Fee: " << fee << " baht"<< endl;
-        cout << "Balance: " <<  balance << " baht" << endl;
+        cout << "Amonut: " <<  Amount << " baht" << endl;
         cout << "Date: " << date << " : " << time << endl;
 
-		AddStatementBillBankclerk(TypeBill, Balance ,date, time);
+        AddStatementBillBankclerk(TypeBill,Amount,date,time);
+        namefile = "StatementBankclerkBill.dat";
+        WriteStatementBankclerk(namefile,TypeBill,Amount,date,time);
     }
 }
-void BankAccount :: WriteStatement(){
-    string fac,num,fileName,data;
+void BankAccount :: WriteStatementCustomer(string filename,string nameAc,string accountNumber,string TypeBill,string Amount,string date,string time){
+    string fileName;
     fstream myfile;
-    fileName = "StatementBill.dat";
+    fileName = filename;
     myfile.open(fileName.c_str(),std::ios::app);
-
-    tempBill=headBill;
-    while(tempBill!=NULL){
-        myfile << tempBill->Name << "," << tempBill->AccountNumber << "," << tempBill->Money << "," << tempBill->Date << "," << tempBill->Time << endl;
-		tempBill = tempBill->linkBill;
-	}
+    myfile << nameAc << "," << accountNumber << "," << TypeBill << "," << Amount << "," << date << "," << time<< endl;
 	myfile.close();
 }
-void BankAccount :: WriteStatementBankclerk(){
-    string fac,num,fileName,data;
+void BankAccount :: WriteStatementBankclerk(string filename,string TypeBill,string Amount,string date,string time){
+    string fileName;
     fstream myfile;
-    fileName = "BankclerkBill.dat";
+    fileName = filename;
     myfile.open(fileName.c_str(),std::ios::app);
-
-    tempBillBankclerk=headBillBankclerk;
-    while(tempBill!=NULL){
-        myfile << tempBillBankclerk->Type << "," << tempBillBankclerk->Money << "," << tempBillBankclerk->Date<< "," << tempBillBankclerk->Time << endl;
-		tempBillBankclerk = tempBillBankclerk->linkBillBankclerk;
-	}
+    myfile << TypeBill << "," << Amount << "," << date << "," << time << endl;
 	myfile.close();
 }
 bool BankAccount :: CheckTransfer_Account(string accountNumber){
