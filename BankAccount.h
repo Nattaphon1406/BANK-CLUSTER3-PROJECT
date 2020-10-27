@@ -8,6 +8,7 @@
 #include "BankClerk.h"
 #include <time.h>
 #include <fstream>
+#include <iomanip>
 using namespace std;
 class BankAccount : public Information{
     private:
@@ -42,8 +43,8 @@ class BankAccount : public Information{
         Info_BankAccount *temp;
         statementDeposit *head_deposit,*tail_deposit;
         string Name, Account_number, Money;
-        unsigned long moneyAccount,Balance,Cash;
-        string Day,Month,Year,Hours,Minute,Second;
+        unsigned long moneyAccount,Balance,Cash,Interest;
+        string Date,Time;
         int countStatment, coutBillBankclerk,count_deposit;
     public:
         BankAccount();
@@ -56,8 +57,6 @@ class BankAccount : public Information{
         //Add data deposition
         void AddStatementBill_deposit(string name,string account,string money,string balance,string date,string time);
         //name of customer
-        void setName();
-        //set balance money of account customer
         void setBalance();
         //set data for deposit
         string getBalance(string Account);
@@ -123,5 +122,6 @@ class BankAccount : public Information{
         // Checking account funds
         bool CheckTransfer_AccountMoneyOther(string Recipient_account);
         // Checking account funds
+        void CalculateInterest(string account);
 };
 #endif

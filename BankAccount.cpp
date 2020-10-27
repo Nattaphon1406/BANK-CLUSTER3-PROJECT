@@ -40,12 +40,9 @@ BankAccount::BankAccount()
     Cash = 0;
     Balance = 0;
 	Money = "";
-    Day = "";
-    Month = "";
-    Year = "";
-    Hours = "";
-    Minute = "";
-    Second = "";
+    Date = "";
+    Time = "";
+    Interest = 0;
     this->headBill = NULL;
     this->tailBill = NULL;
     this->tempBill = NULL;
@@ -126,17 +123,7 @@ void BankAccount::setData_deposit(string account,unsigned long int cash)
     Account_number = account;
     Cash = cash;
 }
-void BankAccount::setName()
-{
-    Info_BankAccount *temp;
-    for(temp = HeadInfo_BankAccount;temp!=NULL;temp = temp->link)
-    {
-        if(temp->AccountNumber == Account_number)
-        {
-            Name = temp->Name;
-        }
-    }
-}
+
 void BankAccount::setBalance()
 {
     Info_BankAccount *temp;
@@ -199,8 +186,6 @@ unsigned long BankAccount :: getMoney(){
 }
 void BankAccount::AddMoney()
 {
-    setBalance();
-	int day,month,year,hour,minute,second;
 	unsigned long int sum = 0;
 	stringstream ss;
 	string NewBalance;
@@ -211,41 +196,7 @@ void BankAccount::AddMoney()
     ss >> Money;
     ss.clear();
     //save date ane time fo deposit
-    	// current date/time based on current system
-			time_t rawtime;
-			struct tm *local;
-			// Get current time
-			time(&rawtime);
-			// Convert to time structure
-			local = localtime(&rawtime);
-			year = local->tm_year;//years
- 			month = 1 + local->tm_mon;//month
-  			day = local->tm_mday;//day
-   			hour = local->tm_hour;//hours
-   			minute = local->tm_min;//minute
-   			second = local->tm_sec;//second
-        // tranfrom date and time type integer become to string 
-            ss << year;
-            ss >> Year;
-            ss.clear();
-            ss << month;
-            ss >> Month;
-            ss.clear();
-            ss << day;
-            ss >> Day;
-            ss.clear();
-            ss << day;
-            ss >> Day;
-            ss.clear();
-            ss << hour;
-            ss >> Hours;
-            ss.clear();
-            ss << minute;
-            ss >> Minute;
-            ss.clear();
-            ss << second;
-            ss >> Second;
-            ss.clear();
+    	setDateandTime();
     //update money to account
     for(Info_BankAccount *temp = HeadInfo_BankAccount;temp!=NULL;temp=temp->link)
     {
@@ -255,9 +206,8 @@ void BankAccount::AddMoney()
             ss >> NewBalance;
             ss.clear();
             temp->Money = NewBalance;
-            setName();
             printBill_of_deposit(NewBalance);
-			updateMoney_to_BankAccount();
+			SaveInfoCustomerToFile();
         }
     }   
 }
@@ -286,19 +236,16 @@ void BankAccount::printBill_of_deposit(string amount)
 {
     stringstream ss;
     string money;
-    string Date,Time;
-    Date = Day + "-" + Month + "-" + Year;
-    Time =  Hours + ":" + Minute + ":" + Second;
-    cout << "===================== Bill ===================" << endl;
-    cout << "Name customer: " << Name << endl;
+    cout << "========================== Bill Deposit =======================" << endl;
+    cout << "Name : " << Name << endl;
     cout << "Account number: " << Account_number << endl;
-    cout << "Date: " << Day << "-" << Month << "-" << Year << endl;
-    cout << "Time: " << Hours << ":" << Minute << ":" << Second << endl;
-    cout << "----------------------------------------------" << endl;
-    cout << "List of deposit" << endl;
-    cout << "Add : " << Cash << endl;
-    cout << "Balance : " << amount << endl;
-    cout << "==============================================" << endl;
+    cout << "Date: " << Date << endl;
+    cout << "Time: " << Time << endl;
+    cout << "---------------------------------------------------------------" << endl;
+    cout << "Deposit" << "\t\t" << "Balance" << "\t\t" << "Interest" << endl;
+    cout << "---------------------------------------------------------------" << endl;
+    cout << Cash << "\t " << setw(11) << amount << "\t" << setw(10)  << Interest << endl;
+    cout << "===============================================================" << endl;
     ss << Cash;
     ss >> money;
     ss.clear();
@@ -306,7 +253,6 @@ void BankAccount::printBill_of_deposit(string amount)
     WriteStatement_deposit();
 }
 string BankAccount :: setDateandTime(){
-    string Date,Time;
 	time_t 	   now = time(0);
 	struct tm  tstruct;
 	char       date[80],time[80];
@@ -747,6 +693,44 @@ bool BankAccount :: CheckTransfer_AccountMoneyOther(string Recipient_account){
         }
     }
     return false;
+}
+void BankAccount :: CalculateInterest(string account)
+{
+    string checkYear,checkType;
+    stringstream ss;
+    int tempYear = 0;
+    string tempA,tempB;
+
+    checkYear = account;
+    checkType = account;
+    tempA = checkYear.substr(2,2);
+    tempB = checkType.substr(0,2);
+    cout << tempB;
+    ss << tempA;
+    ss >> tempYear; 
+    tempYear += 2000; 
+    tempYear += 543;
+
+	// current date/time based on current system
+	time_t now = time(0);
+    tm *ltm = localtime(&now);
+  
+	// Get current time
+        if(tempYear < ltm->tm_year)
+        {
+            if(tempB == "10")
+            {
+                Interest = Balance*0.01;
+            }
+            else if(tempB == "20")
+            {
+                Interest = Balance*0.05;
+            }
+        }
+        else
+        {
+            Interest = 0;
+        }
 }
 
 

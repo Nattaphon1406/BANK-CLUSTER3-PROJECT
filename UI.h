@@ -36,7 +36,7 @@ class UI{
         void printInfoFromFileRegister();
         void MenageRegister(int Number);
         void RemoveBankAccount();
-        void transfer_firstPage();
+        bool transfer_firstPage();
         void print_MoneyExchange();
         void Withdraw();
         void print_getDeposit();
@@ -44,7 +44,7 @@ class UI{
         void Ready_transfer();
         void Bill_BankClerk();
         void Bill_Customer();
-        void transfer_FirstPage();
+        bool transfer_FirstPage();
         bool NotEnough_moneyCustomer();
         bool NotEnough_moneyBankClerk();
         int printMenu_statement();
