@@ -13,7 +13,31 @@ int main(){
         if(Choice == 1){
             Obj_UI.print_Login();
             if(Obj_UI.Checklogin() == 1){
-                cout << "Customer Menu" << endl;
+                CustomerMenu:
+                Obj_UI.print_menuCustomer();
+                cin >> Choice;
+                if(Choice == 1){ //Transfer
+                    Back1:
+                    if(Obj_UI.transfer_FirstPage()){
+                        if(Obj_UI.NotEnough_moneyCustomer()){
+                            Obj_UI.Ready_transfer();
+                            cin >> Choice;
+                            if(Choice == 1){
+                                Obj_UI.Bill_Customer();
+                            }
+                            else if(Choice == 2){
+                                goto Back1;
+                            }
+                        }
+                    }
+                    goto CustomerMenu;
+                }
+                else if(Choice == 2){//Pay Bill
+                    Obj_UI.PayBill();
+                }
+                else if(Choice == 3){//Statement 
+                    
+                }
                 goto MainMenu;
             }
             else if(Obj_UI.Checklogin() == 2){
@@ -26,11 +50,25 @@ int main(){
                     else if(Choice == 2){ //Withdraw
                         Obj_UI.Withdraw();
                     }
-                    else if(Choice == 3){ //Transfer
-                        Obj_UI.transfer_firstPage();
+                    else if(Choice == 3){
+                        Back:
+                        if(Obj_UI.transfer_firstPage()){
+                            if(Obj_UI.NotEnough_moneyBankClerk()){
+                                Obj_UI.Ready_transfer();
+                                cin >> Choice;
+                                if(Choice == 1){
+                                    Obj_UI.Bill_BankClerk();
+                                }
+                                else if(Choice == 2){
+                                    goto Back;
+                                }
+                            }
+                        }
+                        goto ClerkMemu;
                     }
+                    
                     else if(Choice == 4){ //Pay Bill
-                        
+                        Obj_UI.PayBill();
                     }
                     else if(Choice == 5){ //Money Exchange
                         Obj_UI.print_MoneyExchange();

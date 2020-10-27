@@ -14,20 +14,21 @@ class MoneyExchange : public BankAccount{
 		BankAccount *Obj_BankAccount;
 		Info_BankAccount *temp;
 		string CurrencyType;
-		float MoneyAmount;
+		unsigned long int MoneyAmount;
 		string PaymentType;
-		float PaymentMoney;
+		unsigned long int PaymentMoney;
 		string Account;
+		string balance;
 	public:
 		MoneyExchange();
-		void SetMoneyExchange(int c,float m,int p);
+		void SetMoneyExchange(int c,unsigned long int m,int p);
 		void ExchangeCalculate(int c);
 		string TimeBill();
-		void ShowBillCash(float cash);
+		void ShowBillCash(unsigned long int cash);
 		void ShowPaymentMoney();
 		void SetAccount(string account);
-		void ShowBillAccount();
+		string ShowBillAccount(string Balance);
 		void WriteFileCash();
-		bool CheckAccount();
+		void WriteFileAccount(string Balance);
 };
 #endif

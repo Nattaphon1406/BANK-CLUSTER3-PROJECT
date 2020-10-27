@@ -1,12 +1,15 @@
 #include "MoneyExchange.h"
-MoneyExchange :: MoneyExchange(){
+MoneyExchange :: MoneyExchange()
+{
 	CurrencyType = " ";
 	MoneyAmount = 0;
 	PaymentType = " ";
 	PaymentMoney = 0;
 	Account = " ";
+	balance = " ";
 }
-void MoneyExchange :: SetMoneyExchange(int c,float m,int p){
+void MoneyExchange :: SetMoneyExchange(int c,unsigned long int m,int p)
+{
 	if(c == 1){
 		CurrencyType = "YPY(Yen)";
 	}
@@ -35,7 +38,8 @@ void MoneyExchange :: SetMoneyExchange(int c,float m,int p){
 		PaymentType = "Account";
 	}	
 }
-void MoneyExchange :: ExchangeCalculate(int c){
+void MoneyExchange :: ExchangeCalculate(int c)
+{
 	if(c == 1){
 		PaymentMoney = MoneyAmount * 0.3;
 	}
@@ -55,7 +59,8 @@ void MoneyExchange :: ExchangeCalculate(int c){
 		PaymentMoney = MoneyAmount * 37.03;
 	}
 }
-string MoneyExchange :: TimeBill(){
+string MoneyExchange :: TimeBill()
+{
 	stringstream ss;
  	string Date,Time;
  	//function setTimeNow 
@@ -74,7 +79,8 @@ string MoneyExchange :: TimeBill(){
  	ss.clear(); 
  	return Date+"/"+Time;	
 }
-void MoneyExchange :: ShowBillCash(float cash){
+void MoneyExchange :: ShowBillCash(unsigned long int cash)
+{
 	cout<<"============ Bill Cash ============"<<endl;
 	cout<<"Payment Type: "<<PaymentType <<endl;
 	cout<<"Currency Type: "<<CurrencyType <<endl;
@@ -85,28 +91,52 @@ void MoneyExchange :: ShowBillCash(float cash){
 	cout<<"==================================="<<endl;
 	 WriteFileCash();
 }
-void MoneyExchange :: ShowPaymentMoney(){
+void MoneyExchange :: ShowPaymentMoney()
+{
 	cout<<"Money Amount Pay: " << PaymentMoney << " Baht" <<endl;
 }
-void MoneyExchange :: SetAccount(string account){
+void MoneyExchange :: SetAccount(string account)
+{
 	Account = account;
 }
-void MoneyExchange :: ShowBillAccount(){
-	cout<<"============ Bill Account ============"<<endl;
-	cout<<"Payment Type: "<<PaymentType <<endl;
-	cout<<"Account Number: "<<Account <<endl;
-	cout<<"Currency Type: "<<CurrencyType <<endl;
-	cout<<"Money Amount: "<<MoneyAmount << " " << CurrencyType.substr(0,CurrencyType.find("(")) <<endl;
-	cout<<"Money Deducted: "<<PaymentMoney << " Baht" <<endl;
-	//cout<<"Balance: "<<B.getMoney - PaymentMoney <<endl;
-	cout<<"Date: "<<TimeBill() <<endl;
-	cout<<"==================================="<<endl;
+string MoneyExchange :: ShowBillAccount(string getBalance)
+{
+	stringstream ss;
+	string Balance;
+	unsigned long int balance;
+	Balance = getBalance;
+	ss << Balance;
+	ss >> balance;
+	ss.clear();
+	if(balance > PaymentMoney){
+		balance = balance - PaymentMoney;
+		cout<<"============ Bill Account ============"<<endl;
+		cout<<"Payment Type: "<<PaymentType <<endl;
+		cout<<"Account Number: "<<Account <<endl;
+		cout<<"Currency Type: "<<CurrencyType <<endl;
+		cout<<"Money Amount: "<<MoneyAmount << " " << CurrencyType.substr(0,CurrencyType.find("(")) <<endl;
+		cout<<"Money Deducted: "<<PaymentMoney << " Baht" <<endl; //money for pay
+		cout<<"Balance: " << balance << " Baht"<<endl;
+		cout<<"Date: "<<TimeBill() <<endl;
+		cout<<"==================================="<<endl;
+		ss << balance;
+		ss >> Balance;
+		ss.clear();
+		WriteFileAccount(Balance);
+		return Balance;
+	} 
+	else{
+		cout << "!!!!Not enough account balance!!!!" << endl;
+	}
+	return Balance;
 }
-void MoneyExchange :: WriteFileCash(){
+void MoneyExchange :: WriteFileCash()
+{
 	string Date,Time;
     fstream CashFile;
     CashFile.open("MoneyExchangeCash.dat", ios::app);
-    if(CashFile.is_open()){
+    if(CashFile.is_open())
+	{
         Date = TimeBill();
         Date = Date.erase(0,Date.find(" ")+1);
         Date = Date.substr(0,Date.find("/"));
@@ -118,11 +148,21 @@ void MoneyExchange :: WriteFileCash(){
 	}//open to write file
      CashFile.close(); 
 }
-bool MoneyExchange :: CheckAccount(){
-	temp=HeadInfo_BankAccount;
-	for(temp=HeadInfo_BankAccount;temp!=NULL ;temp=temp->link){
-		if(temp->AccountNumber==Account){
-			return true;
-		}
-	}	
+void MoneyExchange :: WriteFileAccount(string Balance)
+{
+	string Date,Time;
+    fstream AccountFile;
+    AccountFile.open("MoneyExchangeAccount.dat", ios::app);
+    if(AccountFile.is_open())
+	{
+        Date = TimeBill();
+        Date = Date.erase(0,Date.find(" ")+1);
+        Date = Date.substr(0,Date.find("/"));
+        Time = TimeBill();
+        Time = Time.erase(0,Time.find(" ")+1);
+        Time = Time.erase(0,Time.find("/")+1);
+            	
+        AccountFile << Account << "," << CurrencyType << "," << MoneyAmount << "," << PaymentMoney << "," << Balance << "," << Date << "," << Time << endl; 
+	}//open to write file
+    AccountFile.close(); 
 }

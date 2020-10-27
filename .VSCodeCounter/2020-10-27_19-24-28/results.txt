@@ -1,0 +1,39 @@
+Date : 2020-10-27 19:24:28
+Directory : c:\Users\Lenovo\Documents\GitHub\BANK-CLUSTER3-PROJECT
+Total : 14 files,  2205 codes, 89 comments, 43 blanks, all 2337 lines
+
+Languages
++----------+------------+------------+------------+------------+------------+
+| language | files      | code       | comment    | blank      | total      |
++----------+------------+------------+------------+------------+------------+
+| C++      |         13 |      2,196 |         84 |         39 |      2,319 |
+| Makefile |          1 |          9 |          5 |          4 |         18 |
++----------+------------+------------+------------+------------+------------+
+
+Directories
++--------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| path                                                                     | files      | code       | comment    | blank      | total      |
++--------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| .                                                                        |         14 |      2,205 |         89 |         43 |      2,337 |
++--------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+
+Files
++--------------------------------------------------------------------------+----------+------------+------------+------------+------------+
+| filename                                                                 | language | code       | comment    | blank      | total      |
++--------------------------------------------------------------------------+----------+------------+------------+------------+------------+
+| c:\Users\Lenovo\Documents\GitHub\BANK-CLUSTER3-PROJECT\BankAccount.cpp   | C++      |        664 |         13 |         11 |        688 |
+| c:\Users\Lenovo\Documents\GitHub\BANK-CLUSTER3-PROJECT\BankAccount.h     | C++      |         87 |         29 |          0 |        116 |
+| c:\Users\Lenovo\Documents\GitHub\BANK-CLUSTER3-PROJECT\BankClerk.cpp     | C++      |         47 |          0 |          2 |         49 |
+| c:\Users\Lenovo\Documents\GitHub\BANK-CLUSTER3-PROJECT\BankClerk.h       | C++      |         24 |          0 |          0 |         24 |
+| c:\Users\Lenovo\Documents\GitHub\BANK-CLUSTER3-PROJECT\Customer.cpp      | C++      |         58 |          0 |          0 |         58 |
+| c:\Users\Lenovo\Documents\GitHub\BANK-CLUSTER3-PROJECT\Customer.h        | C++      |         24 |          1 |          0 |         25 |
+| c:\Users\Lenovo\Documents\GitHub\BANK-CLUSTER3-PROJECT\Information.cpp   | C++      |        358 |          5 |          0 |        363 |
+| c:\Users\Lenovo\Documents\GitHub\BANK-CLUSTER3-PROJECT\Information.h     | C++      |         57 |         15 |          0 |         72 |
+| c:\Users\Lenovo\Documents\GitHub\BANK-CLUSTER3-PROJECT\Makefile          | Makefile |          9 |          5 |          4 |         18 |
+| c:\Users\Lenovo\Documents\GitHub\BANK-CLUSTER3-PROJECT\MoneyExchange.cpp | C++      |        162 |          2 |          4 |        168 |
+| c:\Users\Lenovo\Documents\GitHub\BANK-CLUSTER3-PROJECT\MoneyExchange.h   | C++      |         34 |          0 |          1 |         35 |
+| c:\Users\Lenovo\Documents\GitHub\BANK-CLUSTER3-PROJECT\UI.cpp            | C++      |        512 |         15 |         17 |        544 |
+| c:\Users\Lenovo\Documents\GitHub\BANK-CLUSTER3-PROJECT\UI.h              | C++      |         44 |          4 |          1 |         49 |
+| c:\Users\Lenovo\Documents\GitHub\BANK-CLUSTER3-PROJECT\main.cpp          | C++      |        125 |          0 |          3 |        128 |
+| Total                                                                    |          |      2,205 |         89 |         43 |      2,337 |
++--------------------------------------------------------------------------+----------+------------+------------+------------+------------+
