@@ -330,70 +330,38 @@ void UI::SaveInfoCustomerToBankAccount(string name,string accountNumber,string m
 void UI::PayBill(){
     Obj_BankAccount.LoadFileBankAccount();
     string type,chooseGroup, user;
-    unsigned long int amount,checkMoney, getMoney;
+    unsigned long int amount;
     int temp;
-    cout << "=========AccoutNumber=========" << endl;
-	cout << "Input account : ";
-	cin >> accountNumber;
-    temp = Obj_BankAccount.CheckAccount(accountNumber);
-    if(temp==true){
+    
+    temp = Obj_BankAccount.CheckUser(username);//check customer or bankclerk
+    if(temp==true){ 
         type = "customer";
-        do{
-            cout << "===================Customer====================" << endl << endl;
-            cout << "===================GroupBill===================" << endl;
-            cout << "1.Water bill" << endl;
-            cout << "2.Electricity bill" << endl;
-            cout << "3.Phone bill" << endl;
-            cout << "===============================================" << endl;	
-            cout << "Enter: ";
-            cin >> chooseGroup;
-        }while(chooseGroup!="1"&&chooseGroup!="2"&&chooseGroup!="3");
-        cout << "Amount to pay the bill: ";
-        cin >> amount;
-        
-        getMoney=Obj_BankAccount.getMoney();//get money in Account
-        //Check whether the amount is enough to include the fee.
-        if(chooseGroup=="1"){
-            checkMoney = amount*0.3;
-            checkMoney += amount;
-            //More money in the account
-            cout << getMoney<< " " << checkMoney << endl;
-            if(getMoney>checkMoney){
-                Obj_BankAccount.payBill(type,chooseGroup,accountNumber,amount);
-            }
-            else{
-                cout << "The amount is not enough" << endl;
-            }
-        }
-        else if(chooseGroup=="2"){
-            checkMoney = amount*0.4;
-            checkMoney += amount;
-            //More money in the account
-            cout << getMoney<< " " << checkMoney << endl;
-            if(getMoney>checkMoney){
-                Obj_BankAccount.payBill(type,chooseGroup,accountNumber,amount);
-            }
-            else{
-                cout << "The amount is not enough" << endl;
-            }
-        }
-        else if(chooseGroup=="3"){
-            checkMoney = amount*0.5;
-            checkMoney += amount;
-            //More money in the account
-            cout << "Get: "<< getMoney<< " " << checkMoney << endl;
-            if(getMoney>checkMoney){
-                Obj_BankAccount.payBill(type,chooseGroup,accountNumber,amount);
-            }
-            else{
-                cout << "The amount is not enough" << endl;
-            }
+        cout << "=========AccoutNumber=========" << endl;
+	    cout << "Input account : ";
+	    cin >> accountNumber;
+        temp = Obj_BankAccount.CheckAccount(accountNumber);
+        if(temp == true){
+            do{
+                cout << "===================Customer====================" << endl;
+                cout << "===================GroupBill===================" << endl;
+                cout << "1.Water bill" << endl;
+                cout << "2.Electricity bill" << endl;
+                cout << "3.Phone bill" << endl;
+                cout << "===============================================" << endl;	
+                cout << "Enter: ";
+                cin >> chooseGroup;
+            }while(chooseGroup!="1"&&chooseGroup!="2"&&chooseGroup!="3");
+            cout << "Amount to pay the bill: ";
+            cin >> amount;
+            Obj_BankAccount.payBill(type,chooseGroup,amount);
+        }else{
+            cout << "AccoutNumber Not found" << endl;
         }
     }
-    else{
+    else if(temp==false){
         type = "Bankclerk";
         do{
-            cout << "===================Bankclerkr==================" << endl << endl;
+            cout << "================== Bankclerkr ==================" << endl;
             cout << "===================GroupBill===================" << endl;
             cout << "1.Water bill" << endl;
             cout << "2.Electricity bill" << endl;
@@ -404,8 +372,10 @@ void UI::PayBill(){
         }while(chooseGroup!="1"&&chooseGroup!="2"&&chooseGroup!="3");
         cout << "Amount to pay the bill: ";
         cin >> amount;
+        Obj_BankAccount.payBill(type,chooseGroup,amount);
     }
 }
+
 void UI::transfer_firstPage(){
     Obj_BankAccount.LoadFileBankAccount();
     back1:
