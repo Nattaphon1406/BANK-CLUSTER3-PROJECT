@@ -6,6 +6,7 @@
 #include "BankClerk.h"
 #include "BankAccount.h"
 #include "MoneyExchange.h"
+#include "Statement.h"
 using namespace std;
 class UI{
     private:
@@ -14,6 +15,7 @@ class UI{
         BankClerk Obj_BankClerk;
         BankAccount Obj_BankAccount;
         MoneyExchange Obj_MoneyExchange;
+        Statement Obj_Statement;
         string username,password,accountNumber,name,citizenID,birthDate,phoneNumber,typeAccount,Recipient_account;
         unsigned long int money;
     public:
@@ -45,5 +47,6 @@ class UI{
         void transfer_FirstPage();
         bool NotEnough_moneyCustomer();
         bool NotEnough_moneyBankClerk();
+        int printMenu_statement();
 };
 #endif

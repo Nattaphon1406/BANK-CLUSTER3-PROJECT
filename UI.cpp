@@ -569,3 +569,98 @@ bool UI::NotEnough_moneyBankClerk(){
         }
     }   
 }
+int UI::printMenu_statement(){
+    Statement s;
+    string number;
+    BankAccount tempState;
+    string tempAccountNumber;
+    int count;
+    int n;
+        n = Checklogin();
+        if(n==1){
+            do{
+                cout<<"=======Statement Customer==========="<<endl;
+                cout<<"1.Deposition"<<endl;
+                cout<<"2.Withdraw"<<endl;
+                cout<<"3.Transfer"<<endl;
+                cout<<"4.PlayBill"<<endl;
+                cout<<"5.MoneyExchangAccount"<<endl;
+                cout<<"6.Back"<<endl;
+                cout<<"==================================="<<endl;
+                cout<<endl; 
+                cout<<"Enter choice Number:";  
+                cin >>count;  
+
+                if(count == 1){
+                    tempState.LoadFileBankAccount();
+                    tempAccountNumber = tempState.getAccountNumber(username);
+                    s.ReadFile_deposit();
+                    s.printData_deposit(tempAccountNumber);
+                    s.~Statement();
+                    
+                }else if(count == 2){
+                    tempState.LoadFileBankAccount();
+                    tempAccountNumber = tempState.getAccountNumber(username);
+                    s.Readfile_withdraw();
+                    s.printData_withdraw(tempAccountNumber);
+                    s.~Statement();
+                }else if(count == 3){
+                    tempState.LoadFileBankAccount();
+                    tempAccountNumber = tempState.getAccountNumber(username);
+                    s.Readfile_Transfer();
+                    s.printData_Transfer(tempAccountNumber);
+                    s.~Statement();
+                }else if(count == 4){
+                     tempState.LoadFileBankAccount();
+                    tempAccountNumber = tempState.getAccountNumber(username);
+                    s.Readfile_PlayBill();
+                    s.printData_PlayBill(tempAccountNumber);
+                    s.~Statement();
+                }else if(count == 5){
+                    tempState.LoadFileBankAccount();
+                    tempAccountNumber = tempState.getAccountNumber(username);
+                    s.Readfile_moneyExchange();
+                    s.printData_moneyExchange(tempAccountNumber);
+                    s.~Statement();
+                }//else if
+
+            }while(count != 6);
+        }else if(n==2){
+            do{
+                cout<<"=======Statement Employees==========="<<endl;
+                cout<<"1.Deposition"<<endl;
+                cout<<"2.Withdraw"<<endl;
+                cout<<"3.Transfer"<<endl;
+                cout<<"4.PlayBill"<<endl;
+                cout<<"5.MoneyExchangAccount"<<endl;
+                cout<<"6.Back"<<endl;
+                cout<<"============================"<<endl;
+                cout<<endl; 
+                cout<<"Enter choice Number:";  
+                cin >>count;  
+
+                if(count == 1){
+                    s.ReadFile_deposit();
+                    s.printstatement_deposit();
+                    s.~Statement();
+                }else if(count == 2){
+                    s.Readfile_withdraw();
+                    s.printstatement_withdraw();
+                    s.~Statement();
+                }else if(count == 3){
+                    s.Readfile_Transfer();
+                    s.printstatement_Transfer();
+                    s.~Statement();
+                }else if(count == 4){
+                    s.Readfile_PlayBillBankclerk();
+                    s.printstatement_PlayBillBankclerk();
+                    s.~Statement();
+                }else if(count == 5){
+                    s.Readfile_moneyExchange();
+                    s.printstatement_momeyExchange();
+                    s.~Statement();
+                }
+
+            }while(count != 6);
+        } //else if 
+}

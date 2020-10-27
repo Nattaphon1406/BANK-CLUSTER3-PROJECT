@@ -46,7 +46,7 @@ int main(){
                     Obj_UI.PayBill();
                 }
                 else if(Choice == 3){//Statement 
-                    
+                    Obj_UI.printMenu_statement();
                 }
                 goto MainMenu;
             }
@@ -92,7 +92,7 @@ int main(){
                     else if(Choice == 5){ //Money Exchange
                         Obj_UI.print_MoneyExchange();
                     }else if(Choice == 6){ //Statement
-                        
+                        Obj_UI.printMenu_statement();
                     }
                     else if(Choice == 7){ //MenageRegister
                         Obj_UI.printInfoFromFileRegister();
@@ -100,6 +100,9 @@ int main(){
                         Obj_UI.MenageRegister(Choice);
                     }
                     else if(Choice == 8){
+                        Obj_UI.RemoveBankAccount();
+                    }
+                    else if(Choice==9){
                         goto MainMenu;
                     }
                     goto ClerkMemu;
