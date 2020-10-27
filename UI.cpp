@@ -363,7 +363,6 @@ void UI::PayBill(){
 
 void UI::transfer_firstPage(){
     Obj_BankAccount.LoadFileBankAccount();
-    back1:
     cout << "=========Transfer=========" << endl;
     back:
 	cout << "Transferor account : ";
@@ -452,7 +451,6 @@ void UI::Bill_BankClerk(){
 }
 void UI::transfer_FirstPage(){
     Obj_BankAccount.LoadFileBankAccount();
-    back1:
     cout << "=========Transfer=========" << endl;
     do{
 		cout << "Recipient account : ";
@@ -538,6 +536,7 @@ bool UI::NotEnough_moneyCustomer(){
             return false;
         }
     }   
+    return false;
 }
 bool UI::NotEnough_moneyBankClerk(){
     if(Obj_BankAccount.CheckTransfer_AccountMoneyOther(Recipient_account) == true){
@@ -557,5 +556,6 @@ bool UI::NotEnough_moneyBankClerk(){
             cout << "======Not enough money======" << endl;
             return false;
         }
-    }   
+    }
+    return false;
 }
