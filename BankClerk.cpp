@@ -1,36 +1,48 @@
 #include "BankClerk.h"
-BankClerk :: BankClerk(){
-    Name = "";
-    CitizenID = "";
-    BirthDate = "";
-    PhoneNumber = "";
-    ClerkID = "";
-    Password = "";;
+void BankClerk :: AddName(){
+    cin.ignore();
+    getline(cin,Name);
 }
-void BankClerk :: SetInfoBankClerk(string name,string citizenID,string birthDate,string phoneNumber,string clerkID,string password){
-    Name = name;
-    CitizenID = citizenID;
-    BirthDate = birthDate;
-    PhoneNumber = phoneNumber;
-    ClerkID = clerkID;
-    Password = password;
+void BankClerk :: AddCitizenID(){
+    cin >> CitizenID;
 }
-string BankClerk :: getName(){
-    return Name;
+void BankClerk :: AddBirthDate(){
+    cin >> BirthDate;
 }
-string BankClerk :: getCitizenID(){
-    return CitizenID;
+void BankClerk :: AddPhoneNumber(){
+    cin >> PhoneNumber;
 }
-string BankClerk :: getBirthDate(){
-    return BirthDate;
+void BankClerk :: AddClerkID(){
+    cin >> ClerkID;
 }
-string BankClerk :: getPhoneNumber(){
-    return PhoneNumber;
+void BankClerk :: AddPassword(){
+    cin >> Password;
 }
-string BankClerk :: getClerkID(){
-    return ClerkID;
+void BankClerk :: Registercustomer(){
+    LoadFileBankClerk();
+    AddInfoBankClerk(Name,CitizenID,BirthDate,PhoneNumber,ClerkID,Password);
+    SaveInfoBankClerkToFile();
 }
-string BankClerk :: getPassword(){
-    return Password;
+bool BankClerk :: login(string username,string password){
+    LoadFileBankClerk();
+    for(HeadInfo_BankClerk = HeadInfo_BankClerk; HeadInfo_BankClerk != NULL; HeadInfo_BankClerk = HeadInfo_BankClerk->link){
+        if((HeadInfo_BankClerk->ClerkID == username ) && (HeadInfo_BankClerk->Password == password)){
+            return true;
+        }
+    }
+    return false;
 }
-        //Save Info Of BankClerk
+void BankClerk :: MenuMenageRegister(int Number){
+    LoadFileRegisterCustomer();
+    cin >> Choice;
+    if(Choice == 1){
+        SaveInfoRegisterToFileBankAccount(Number);
+        RemoveInfoRegisterCustomer(Number);
+        SaveInfoRegisterCustomerToFile();
+    }
+    else if(Choice == 2){
+        RemoveInfoRegisterCustomer(Number); 
+        SaveInfoRegisterCustomerToFile();
+    }
+
+}

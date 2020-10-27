@@ -2,19 +2,23 @@
 #define BANKCLERK_H
 #include <iostream>
 #include <string>
+#include "Information.h"
+#include "Customer.h"
+#include "BankAccount.h"
 using namespace std;
-class BankClerk{
+class BankClerk : public Information{
     private:
         string Name,CitizenID,BirthDate,PhoneNumber,ClerkID,Password;
+        int Choice;
     public:
-        BankClerk();
-        void SetInfoBankClerk(string name,string citizenID,string birthDate,string phoneNumber,string clerkID,string password);
-        string getName();
-        string getCitizenID();
-        string getBirthDate();
-        string getPhoneNumber();
-        string getClerkID();
-        string getPassword();
-        //Save Info Of BankClerk
+        bool login(string username,string password);
+        void AddName();
+        void AddCitizenID();
+        void AddBirthDate();
+        void AddPhoneNumber();
+        void AddClerkID();
+        void AddPassword();
+        void Registercustomer();
+        void MenuMenageRegister(int Number);
 };
 #endif

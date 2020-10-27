@@ -2,19 +2,24 @@
 #define CUSTOMER_H
 #include <iostream>
 #include <string>
+#include "Information.h"
+#include "BankAccount.h"
 using namespace std;
-class Customer{
+class Customer : public Information{
     private:
-        string Name,CitizenID,BirthDate,PhoneNumber,TypeAccount,Money;
-    public:
-        Customer();
-        void SetInfoCustomer(string name,string citizenID,string birthDate,string phoneNumber,string typeAccount,string money);
-        string getName();
-        string getCitizenID();
-        string getBirthDate();
-        string getPhoneNumber();
-        string getTypeAccount();
-        string getMoney();
+        Customer *Obj_Customer;
+        stringstream ss;
+        string Name,CitizenID,BirthDate,PhoneNumber,money;
+        int Money,TypeAccount;
         //Save Info Of Customer
+    public:
+        bool login(string username,string password);
+        void AddName();
+        void AddCitizenID();
+        void AddBirthDate();
+        void AddPhoneNumber();
+        void AddTypeAccount();
+        bool AddMoney();
+        void Registercustomer();
 };
 #endif

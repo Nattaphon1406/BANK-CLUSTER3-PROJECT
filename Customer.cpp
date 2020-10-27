@@ -1,36 +1,58 @@
 #include "Customer.h"
-Customer :: Customer(){
-    Name = "";
-    CitizenID = "";
-    BirthDate = "";
-    PhoneNumber = "";
-    TypeAccount = "";
-    Money = "";
+void Customer :: AddName(){
+    cin.ignore();
+    getline(cin,Name);
 }
-void Customer :: SetInfoCustomer(string name,string citizenID,string birthDate,string phoneNumber,string typeAccount,string money){
-    Name = name;
-    CitizenID = citizenID;
-    BirthDate = birthDate;
-    PhoneNumber = phoneNumber;
-    TypeAccount = typeAccount;
-    Money = money;
+void Customer :: AddCitizenID(){
+    cin >> CitizenID;
 }
-string Customer :: getName(){
-    return Name;
+void Customer :: AddBirthDate(){
+    cin >> BirthDate;
 }
-string Customer :: getCitizenID(){
-    return CitizenID;
+void Customer :: AddPhoneNumber(){
+    cin >> PhoneNumber;
 }
-string Customer :: getBirthDate(){
-    return BirthDate;
+void Customer :: AddTypeAccount(){
+    cin >> TypeAccount;
 }
-string Customer :: getPhoneNumber(){
-    return PhoneNumber;
+bool Customer :: AddMoney(){
+    cout << "Money: ";
+    if(TypeAccount == 1){
+        cin >> Money;
+        if(Money < 500){
+            AddMoney();
+        }
+        else{
+            return true;
+        }
+    }
+    else if(TypeAccount == 2){
+        cin >> Money;
+        if(Money < 20000){
+            AddMoney();
+        }
+        else{
+            return true;
+        }
+    }
+    return false;
 }
-string Customer :: getTypeAccount(){
-    return TypeAccount;
+void Customer :: Registercustomer(){
+    LoadFileRegisterCustomer();
+    ss << Money;
+    ss >> money;
+    if(TypeAccount == 1){
+        AddInfoRegisterCustomer(Name,CitizenID,BirthDate,PhoneNumber,"10",money);
+    }
+    else if(TypeAccount == 2){
+        AddInfoRegisterCustomer(Name,CitizenID,BirthDate,PhoneNumber,"20",money);
+    }
+    SaveInfoRegisterCustomerToFile();
 }
-string Customer :: getMoney(){
-    return Money;
+bool Customer :: login(string username,string password){
+    BankAccount Account;
+    if(Account.login(username,password)){
+        return true;
+    }
+    return false;
 }
-        //Save Info Of Customer
