@@ -52,6 +52,8 @@ class BankAccount : public Information{
         //set balance money of account customer
         void setBalance();
         //set data for deposit
+        string getBalance(string Account);
+        //return data for use in moneyExchenge
         void setData_deposit(string account,unsigned long int money);
         //check account number it's have data bank if have return true
         bool CheckAccount(string Account);
@@ -68,6 +70,8 @@ class BankAccount : public Information{
         //update money after deposit to in file BankAccount
         void updateMoney_to_BankAccount();
         // save history of deposit 
+        void updateExchangeMoney_to_BankAccount(string Balance,string Account);
+        // save balance from Exchange money to BankAccount file
         void WriteStatement_deposit();
         // print bill for deposit
         void printBill_of_deposit(string amount);

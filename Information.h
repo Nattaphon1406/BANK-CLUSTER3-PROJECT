@@ -56,6 +56,8 @@ class Information{
     //Save Info to File "RegisterBankAccount.dat"
     void SaveInfoCustomerToFile();
     //Save Info to File "BankAccount.dat"
+    void SaveInfoBalanceToFile(string Balance,string Account);
+    //Save Info balance to File "BankAccount.dat"
     void SaveInfoRegisterToFileBankAccount(int number);
     string GenerateAccountNumber(int number);
     string GenerateUsername(int number);

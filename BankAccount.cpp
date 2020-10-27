@@ -129,6 +129,19 @@ void BankAccount::setBalance()
         }
     }
 }
+string BankAccount::getBalance(string Account)
+{
+    Info_BankAccount *temp;
+    for(temp=HeadInfo_BankAccount;temp!=NULL;temp=temp->link)
+    {
+        if(temp->AccountNumber == Account)
+        {
+			string NewBalance= "";
+			NewBalance = temp->Money;
+			return NewBalance;
+        }
+    }
+}
 bool BankAccount :: CheckAccount(string Account){
 	temp=HeadInfo_BankAccount;
 	for(temp=HeadInfo_BankAccount;temp!=NULL ;temp=temp->link){
@@ -228,6 +241,10 @@ void BankAccount::AddMoney()
 void BankAccount::updateMoney_to_BankAccount()
 {
     SaveInfoCustomerToFile();
+}
+void BankAccount::updateExchangeMoney_to_BankAccount(string Balance,string Account)
+{
+    SaveInfoBalanceToFile(Balance,Account);
 }
 void BankAccount :: WriteStatement_deposit(){
     statementDeposit *temp;

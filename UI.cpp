@@ -217,6 +217,7 @@ void UI::print_MoneyExchange(){
                     Obj_MoneyExchange.ShowBillCash(MoneyAmountBaht);
                 }
                 else if(PaymentType == 2){
+                    Obj_MoneyExchange.ShowPaymentMoney();
                     cout << endl;
                     cout << "------- Bank Account ------- " << endl;
                     cout << "Enter Account Number : ";
@@ -224,11 +225,16 @@ void UI::print_MoneyExchange(){
                     cout << "---------------------------- " << endl;
 
                     Obj_MoneyExchange.SetAccount(AccountNumber);
-                    if(!Obj_MoneyExchange.CheckAccount()){
-                       
+                    Obj_BankAccount.LoadFileBankAccount();
+                    if(Obj_BankAccount.CheckAccount(AccountNumber) == 1){
+                        string Balance,balance;
+                        Balance = Obj_BankAccount.getBalance(AccountNumber);
+                        balance = Obj_MoneyExchange.ShowBillAccount(Balance);
+                        
+                        Obj_BankAccount.updateExchangeMoney_to_BankAccount(balance,AccountNumber);
                     }
-                    else if(Obj_MoneyExchange.CheckAccount()){
-                        cout <<"Yes" <<endl;
+                    else if(Obj_BankAccount.CheckAccount(AccountNumber) == 0){
+                        cout <<"!!!!Invalid Account Number!!!!" <<endl;
                     }
 
                 } 
