@@ -351,9 +351,9 @@ void Information :: SaveInfoRegisterToFileBankAccount(int number){
             }
         }
       Write.close();
-      cout << "AccountNumber : " << GenerateAccountNumber(number) << endl;
-      cout << "Username : " << GenerateUsername(number) << endl;
-      cout << "Password : " << GeneratePassword(number) << endl;
+      cout << setw(80) << " " << "AccountNumber : " << GenerateAccountNumber(number) << endl;
+      cout << setw(80) << " " << "Username : " << GenerateUsername(number) << endl;
+      cout << setw(80) << " " << "Password : " << GeneratePassword(number) << endl;
       system("pause");
 }
 void Information :: SaveInfoBankClerkToFile(){
@@ -369,7 +369,7 @@ void Information :: ShowRegistercustomer(){
       LoadFileRegisterCustomer();
       int count = 1;
       for(Info_Customer *i = HeadInfo_Customer; i != NULL; i = i->link){
-            cout << count++ << "." << "\t" << i->Name << endl;
+            cout << setw(80) << " " << count++ << "." << "\t" << i->Name << endl;
             //cout << i->Name << "," << i->CitizenID << "," << i->BirthDate << "," << i->PhoneNumber << "," << i->TypeAccount << "," << i->Money << endl;
             //cout << i->Name << "," << i->CitizenID << "," << i->BirthDate << "," << i->PhoneNumber << "," << i->ClerkID << "," << i->Password << endl;
             //cout << i->Name << "," << i->AccountNumber << "," << i->Money << "," << i->Username << "," << i->Password << endl;

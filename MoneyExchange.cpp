@@ -81,19 +81,19 @@ string MoneyExchange :: TimeBill()
 }
 void MoneyExchange :: ShowBillCash(unsigned long int cash)
 {
-	cout<<"============ Bill Cash ============"<<endl;
-	cout<<"Payment Type: "<<PaymentType <<endl;
-	cout<<"Currency Type: "<<CurrencyType <<endl;
-	cout<<"Money Amount: "<<MoneyAmount << " " << CurrencyType.substr(0,CurrencyType.find("(")) <<endl;
-	cout<<"Money Received: "<<cash << " Baht" <<endl;
-	cout<<"Change: "<<cash - PaymentMoney << " Baht"<<endl;
-	cout<<"Date: "<<TimeBill() <<endl; 
-	cout<<"==================================="<<endl;
+	cout<< left << setw(80) << " " <<"============ Bill Cash ============"<<endl;
+	cout<< left << setw(80) << " " <<"Payment Type: "<<PaymentType <<endl;
+	cout<< left << setw(80) << " " <<"Currency Type: "<<CurrencyType <<endl;
+	cout<< left << setw(80) << " " <<"Money Amount: "<<MoneyAmount << " " << CurrencyType.substr(0,CurrencyType.find("(")) <<endl;
+	cout<< left << setw(80) << " " <<"Money Received: "<<cash << " Baht" <<endl;
+	cout<< left << setw(80) << " " <<"Change: "<<cash - PaymentMoney << " Baht"<<endl;
+	cout<< left << setw(80) << " " <<"Date: "<<TimeBill() <<endl; 
+	cout<< left << setw(80) << " " <<"==================================="<<endl;
 	 WriteFileCash();
 }
 void MoneyExchange :: ShowPaymentMoney()
 {
-	cout<<"Money Amount Pay: " << PaymentMoney << " Baht" <<endl;
+	cout<< left << setw(80) << " " <<"Money Amount Pay: " << PaymentMoney << " Baht" <<endl;
 }
 void MoneyExchange :: SetAccount(string account)
 {
@@ -110,15 +110,15 @@ string MoneyExchange :: ShowBillAccount(string getBalance)
 	ss.clear();
 	if(balance > PaymentMoney){
 		balance = balance - PaymentMoney;
-		cout<<"============ Bill Account ============"<<endl;
-		cout<<"Payment Type: "<<PaymentType <<endl;
-		cout<<"Account Number: "<<Account <<endl;
-		cout<<"Currency Type: "<<CurrencyType <<endl;
-		cout<<"Money Amount: "<<MoneyAmount << " " << CurrencyType.substr(0,CurrencyType.find("(")) <<endl;
-		cout<<"Money Deducted: "<<PaymentMoney << " Baht" <<endl; //money for pay
-		cout<<"Balance: " << balance << " Baht"<<endl;
-		cout<<"Date: "<<TimeBill() <<endl;
-		cout<<"==================================="<<endl;
+		cout<< left << setw(80) << " " <<"============ Bill Account ============"<<endl;
+		cout<< left << setw(80) << " " <<"Payment Type: "<<PaymentType <<endl;
+		cout<< left << setw(80) << " " <<"Account Number: "<<Account <<endl;
+		cout<< left << setw(80) << " " <<"Currency Type: "<<CurrencyType <<endl;
+		cout<< left << setw(80) << " " <<"Money Amount: "<<MoneyAmount << " " << CurrencyType.substr(0,CurrencyType.find("(")) <<endl;
+		cout<< left << setw(80) << " " <<"Money Deducted: "<<PaymentMoney << " Baht" <<endl; //money for pay
+		cout<< left << setw(80) << " " <<"Balance: " << balance << " Baht"<<endl;
+		cout<< left << setw(80) << " " <<"Date: "<<TimeBill() <<endl;
+		cout<< left << setw(80) << " " <<"==================================="<<endl;
 		ss << balance;
 		ss >> Balance;
 		ss.clear();
@@ -126,7 +126,7 @@ string MoneyExchange :: ShowBillAccount(string getBalance)
 		return Balance;
 	} 
 	else{
-		cout << "!!!!Not enough account balance!!!!" << endl;
+		cout << left << setw(80) << " " << "!!!!Not enough account balance!!!!" << endl;
 	}
 	return Balance;
 }

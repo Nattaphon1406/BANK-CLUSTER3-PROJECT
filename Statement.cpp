@@ -215,7 +215,7 @@ void Statement::printData_withdraw(string number){
 	cout<<"======================================= Statement Withdraw ==========================================================="<<endl;
 	cout<<"Name:";
 	printName_withdraw(number); 
-	cout<<"AmountMoney"<<"\t\t"<<"Balance"<<"\t\t"<<"Date"<<"\t\t\t"<<"Time"<<endl;
+	cout<<"Withdraw"<<"\t\t"<<"Balance"<<"\t\t"<<"Date"<<"\t\t\t"<<"Time"<<endl;
 		for(withdraw *i = head_withdraw;i!=NULL;i=i->link){
 			if(i->AccountNumber == number){
 				cout<<i->AmountMoney <<"\t\t\t"<<i->Balance<<"\t\t"<<i->date<<"\t\t"<<i->time<<endl;
@@ -225,7 +225,7 @@ void Statement::printData_withdraw(string number){
 }//printData for withdraw
 void Statement::printstatement_withdraw(){
 	cout<<"======================================= Statement Withdraw ==========================================================="<<endl;
-	cout<<"Name"<<setw(33)<<"\t"<<"AccountNumber"<<"\t\t"<<"AmountMoney"<<"\t\t"<<"Balance"<<"\t\t"<<"Date"<<"\t\t"<<"Time"<<endl;
+	cout<<"Name"<<setw(33)<<"\t"<<"AccountNumber"<<"\t\t"<<"Withdraw"<<"\t\t"<<"Balance"<<"\t\t"<<"Date"<<"\t\t"<<"Time"<<endl;
 	//cout<<"Name"<<setw(34)<<"AccountNumber"<<"\t\t"<<"AmountMoney"<<"\t\t"<<"Balance"<<"\t\t"<<"Date"<<"\t\t"<<"Time"<<endl;
 		for(withdraw *i = head_withdraw;i!=NULL;i=i->link){
 			cout<<setw(25)<<left<<i->Name<<setw(9)<<"\t"<<i->AccountNumber<<"\t\t"<<i->AmountMoney<<"\t\t\t"<<i->Balance<<"\t\t"<<i->date<<"\t"<<i->time<<endl;

@@ -234,18 +234,19 @@ void BankAccount :: WriteStatement_deposit(){
 }
 void BankAccount::printBill_of_deposit(string amount)
 {
+    
     stringstream ss;
     string money;
-    cout << "========================== Bill Deposit =======================" << endl;
-    cout << "Name : " << Name << endl;
-    cout << "Account number: " << Account_number << endl;
-    cout << "Date: " << Date << endl;
-    cout << "Time: " << Time << endl;
-    cout << "---------------------------------------------------------------" << endl;
-    cout << "Deposit" << "\t\t" << "Balance" << "\t\t" << "Interest" << endl;
-    cout << "---------------------------------------------------------------" << endl;
-    cout << Cash << "\t " << setw(11) << amount << "\t" << setw(10)  << Interest << endl;
-    cout << "===============================================================" << endl;
+    cout << setw(58) << " "  << "========================== Bill Deposit =======================" << endl;
+    cout << setw(58) << " "  << "Name : " << Name << endl;
+    cout << setw(58) << " "  << "Account number: " << Account_number << endl;
+    cout << setw(58) << " "  << "Date: " << Date << endl;
+    cout << setw(58) << " "  << "Time: " << Time << endl;
+    cout << setw(58) << " " << "---------------------------------------------------------------" << endl;
+    cout << setw(58) << " "  << "Deposit" << "\t\t" << "Balance" << "\t\t" << "Interest" << endl;
+    cout << setw(58) << " "  << "---------------------------------------------------------------" << endl;
+    cout << setw(58) << " " << Cash << "\t " << setw(11) << amount << "\t" << setw(10)  << Interest << endl;
+    cout << setw(58) << " "  << "===============================================================" << endl;
     ss << Cash;
     ss >> money;
     ss.clear();
@@ -274,6 +275,7 @@ bool BankAccount :: CheckUser(string user){
     return false;	
 }
 void BankAccount :: payBill(string type,string group, long double amount){
+    
     unsigned long int getmoney,balance=0,fee=0;
     string TypeBill = " ", chaengceMoney = " ", Amount = " ", date = " ", time = " ", namefile = " ";
     stringstream ss; 
@@ -309,11 +311,11 @@ void BankAccount :: payBill(string type,string group, long double amount){
                 balance = getmoney - fee;
                 cout << balance << endl;
             }
-            cout << "*********Bill********" << endl;
-            cout << "TypeBill: " << TypeBill << endl;
-            cout << "Fee: " << fee << " baht"<< endl;
-            cout << "Balance: " <<  balance << " baht" << endl;
-            cout << "Date: " << date << " : " << time << endl;
+            cout << setw(80) << " " << "*********Bill********" << endl;
+            cout << setw(80) << " " << "TypeBill: " << TypeBill << endl;
+            cout << setw(80) << " " << "Fee: " << fee << " baht"<< endl;
+            cout << setw(80) << " " << "Balance: " <<  balance << " baht" << endl;
+            cout << setw(80) << " " << "Date: " << date << " : " << time << endl;
             //ChangData at File Account
             ss << balance;
             ss >> chaengceMoney;
@@ -334,7 +336,7 @@ void BankAccount :: payBill(string type,string group, long double amount){
             WriteStatementCustomer(namefile,Name,Account_number,TypeBill,Amount,date,time);
         }
         else{
-            cout << "The amount is not enough" << endl;
+            cout << setw(80) << " " << "The amount is not enough" << endl;
         }
     }
     else if(type == "Bankclerk"){//Bank clerk
@@ -354,11 +356,11 @@ void BankAccount :: payBill(string type,string group, long double amount){
         ss >> Amount;
         ss.clear();
 
-		cout << "*********Bill********" << endl;
-        cout << "TypeBill: " << TypeBill << endl;
-        cout << "Fee: " << fee << " baht"<< endl;
-        cout << "Amonut: " <<  Amount << " baht" << endl;
-        cout << "Date: " << date << " : " << time << endl;
+		cout << setw(80) << " " << "*********Bill********" << endl;
+        cout << setw(80) << " " << "TypeBill: " << TypeBill << endl;
+        cout << setw(80) << " " << "Fee: " << fee << " baht"<< endl;
+        cout << setw(80) << " " << "Amonut: " <<  Amount << " baht" << endl;
+        cout << setw(80) << " " << "Date: " << date << " : " << time << endl;
 
         AddStatementBillBankclerk(TypeBill,Amount,date,time);
         namefile = "StatementBankclerkBill.dat";

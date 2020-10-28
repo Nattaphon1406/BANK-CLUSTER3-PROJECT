@@ -1,0 +1,41 @@
+Date : 2020-10-28 04:34:36
+Directory : c:\Users\Lenovo\Documents\GitHub\BANK-CLUSTER3-PROJECT
+Total : 16 files,  2974 codes, 98 comments, 58 blanks, all 3130 lines
+
+Languages
++----------+------------+------------+------------+------------+------------+
+| language | files      | code       | comment    | blank      | total      |
++----------+------------+------------+------------+------------+------------+
+| C++      |         15 |      2,965 |         93 |         54 |      3,112 |
+| Makefile |          1 |          9 |          5 |          4 |         18 |
++----------+------------+------------+------------+------------+------------+
+
+Directories
++--------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| path                                                                     | files      | code       | comment    | blank      | total      |
++--------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| .                                                                        |         16 |      2,974 |         98 |         58 |      3,130 |
++--------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+
+Files
++--------------------------------------------------------------------------+----------+------------+------------+------------+------------+
+| filename                                                                 | language | code       | comment    | blank      | total      |
++--------------------------------------------------------------------------+----------+------------+------------+------------+------------+
+| c:\Users\Lenovo\Documents\GitHub\BANK-CLUSTER3-PROJECT\BankAccount.cpp   | C++      |        694 |         16 |         18 |        728 |
+| c:\Users\Lenovo\Documents\GitHub\BANK-CLUSTER3-PROJECT\BankAccount.h     | C++      |         99 |         28 |          0 |        127 |
+| c:\Users\Lenovo\Documents\GitHub\BANK-CLUSTER3-PROJECT\BankClerk.cpp     | C++      |         47 |          0 |          2 |         49 |
+| c:\Users\Lenovo\Documents\GitHub\BANK-CLUSTER3-PROJECT\BankClerk.h       | C++      |         24 |          0 |          0 |         24 |
+| c:\Users\Lenovo\Documents\GitHub\BANK-CLUSTER3-PROJECT\Customer.cpp      | C++      |         58 |          0 |          0 |         58 |
+| c:\Users\Lenovo\Documents\GitHub\BANK-CLUSTER3-PROJECT\Customer.h        | C++      |         24 |          1 |          0 |         25 |
+| c:\Users\Lenovo\Documents\GitHub\BANK-CLUSTER3-PROJECT\Information.cpp   | C++      |        382 |          5 |          0 |        387 |
+| c:\Users\Lenovo\Documents\GitHub\BANK-CLUSTER3-PROJECT\Information.h     | C++      |         57 |         15 |          0 |         72 |
+| c:\Users\Lenovo\Documents\GitHub\BANK-CLUSTER3-PROJECT\Makefile          | Makefile |          9 |          5 |          4 |         18 |
+| c:\Users\Lenovo\Documents\GitHub\BANK-CLUSTER3-PROJECT\MoneyExchange.cpp | C++      |        162 |          2 |          4 |        168 |
+| c:\Users\Lenovo\Documents\GitHub\BANK-CLUSTER3-PROJECT\MoneyExchange.h   | C++      |         34 |          0 |          1 |         35 |
+| c:\Users\Lenovo\Documents\GitHub\BANK-CLUSTER3-PROJECT\Statement.cpp     | C++      |        467 |          5 |          4 |        476 |
+| c:\Users\Lenovo\Documents\GitHub\BANK-CLUSTER3-PROJECT\Statement.h       | C++      |        126 |          1 |          1 |        128 |
+| c:\Users\Lenovo\Documents\GitHub\BANK-CLUSTER3-PROJECT\UI.cpp            | C++      |        633 |         16 |         22 |        671 |
+| c:\Users\Lenovo\Documents\GitHub\BANK-CLUSTER3-PROJECT\UI.h              | C++      |         48 |          4 |          1 |         53 |
+| c:\Users\Lenovo\Documents\GitHub\BANK-CLUSTER3-PROJECT\main.cpp          | C++      |        110 |          0 |          1 |        111 |
+| Total                                                                    |          |      2,974 |         98 |         58 |      3,130 |
++--------------------------------------------------------------------------+----------+------------+------------+------------+------------+
