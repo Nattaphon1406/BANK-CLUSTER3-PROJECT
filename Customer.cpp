@@ -16,7 +16,7 @@ void Customer :: AddTypeAccount(){
     cin >> TypeAccount;
 }
 bool Customer :: AddMoney(){
-    cout << "Money: ";
+    cout << setw(80) << " " << "Money: ";
     if(TypeAccount == 1){
         cin >> Money;
         if(Money < 500){
@@ -28,7 +28,7 @@ bool Customer :: AddMoney(){
     }
     else if(TypeAccount == 2){
         cin >> Money;
-        if(Money < 20000){
+        if(Money < 30000){
             AddMoney();
         }
         else{

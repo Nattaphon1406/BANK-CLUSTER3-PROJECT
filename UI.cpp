@@ -105,7 +105,7 @@ void UI::printmenuRegister_Customer(){
     Obj_Customer.AddPhoneNumber();
     cout << setw(80) << " "  << "========= TypeAccount =========" << endl;
     cout << setw(80) << " " << "1. DepositAccount [  500 Bath]" << endl;
-    cout << setw(80) << " " << "2. SavingAccount  [20000 Bath]" << endl;
+    cout << setw(80) << " " << "2. SavingAccount  [30000 Bath]" << endl;
     cout << setw(80) << " " << "===============================" << endl;
     cout << setw(80) << " " << "TypeAccount: ";
     Obj_Customer.AddTypeAccount();
@@ -121,7 +121,7 @@ void UI::printmenuRegister_BankClerk(){
 	cout << "\n\n" << endl;
 	myfile.open("Interface/RegisterBankClerk.txt");
 	while(getline(myfile,line)){
-		cout  << left << setw(83) << " "<< line << endl;
+		cout  << left << setw(40) << " "<< line << endl;
 	}
     cout << endl << endl << endl << endl;
     cout << setw(80) << " " << "====== Register BankClerk =====" << endl;
@@ -482,7 +482,7 @@ void UI::PayBill(){
                 cin >> chooseGroup;
                 system("cls");
             }while(chooseGroup!="1"&&chooseGroup!="2"&&chooseGroup!="3"&&chooseGroup!="4");
-            if(chooseGroup == "4"){
+            if(chooseGroup != "4"){
                 cout << "Amount to pay the bill: ";
                 cin >> amount;
                 Obj_BankAccount.payBill(type,chooseGroup,amount);
@@ -740,17 +740,17 @@ void UI::printMenu_statement(){
                     cout << setw(65) << " "<< line << endl;
                 }
                 myfile.close();
-                cout<<setw(80)<<"========Statement Customer========"<<endl;
-                cout<<setw(80)<<"1.Deposition"<<endl;
-                cout<<setw(80)<<"2.Withdraw"<<endl;
-                cout<<setw(80)<<"3.Transfer"<<endl;
-                cout<<setw(80)<<"4.Pay Bill"<<endl;
-                cout<<setw(80)<<"5.MoneyExchangAccount"<<endl;
-                cout<<setw(80)<<"6.Back"<<endl;
-                cout<<setw(80)<<"==================================="<<endl;
+                cout<<setw(80) << " " << "========Statement Customer========"<<endl;
+                cout<<setw(80) << " " <<"1.Deposition"<<endl;
+                cout<<setw(80) << " " <<"2.Withdraw"<<endl;
+                cout<<setw(80) << " " <<"3.Transfer"<<endl;
+                cout<<setw(80) << " " <<"4.Pay Bill"<<endl;
+                cout<<setw(80) << " " <<"5.MoneyExchangAccount"<<endl;
+                cout<<setw(80) << " " <<"6.Back"<<endl;
+                cout<<setw(80) << " " <<"==================================="<<endl;
                 cout<<endl; 
-                cout<<setw(80)<<"Enter choice Number:";  
-                cin>>setw(80)>>count;  
+                cout<<setw(80) << " " <<"Enter choice Number:";  
+                cin>>count;  
 
                 if(count == 1){
                     tempState.LoadFileBankAccount();

@@ -38,7 +38,10 @@ int main(){
                 else if(Choice == 3){//Statement 
                     Obj_UI.printMenu_statement();
                 }
-                goto MainMenu;
+                else if(Choice == 4){
+                    goto MainMenu;
+                }
+                goto CustomerMenu;
             }
             else if(Obj_UI.Checklogin() == 2){
                     ClerkMemu:
