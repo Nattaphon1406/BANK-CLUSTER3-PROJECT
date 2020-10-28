@@ -183,6 +183,14 @@ void UI::print_menuCustomer(){
 }
 void UI::printInfoFromFileRegister(){
     system("cls");
+    fstream myfile;
+	string line;
+	cout << "\n\n" << endl;
+	myfile.open("Interface/ManageRegister.txt");
+	while(getline(myfile,line)){
+		cout  << left << setw(50) << " "<< line << endl;
+	}
+    cout << endl << endl << endl << endl;
     Obj_Customer.LoadFileRegisterCustomer();
     cout << setw(80) << " " << "============ RegisterCustomerFile ============" << endl;
     cout << setw(80) << " " << "No." << "\t" << "Name" << endl;
@@ -308,12 +316,20 @@ void UI::print_MoneyExchange(){
     }while(CurrencyType != 7);//check menu CurrencyType
 }
 void UI :: Withdraw(){
+        system("cls");
     string Account;
     unsigned long int withdraw;
     Obj_BankAccount.LoadFileBankAccount();
     //Obj_BankAccount.ShowBankAccount();
+    fstream myfile;
+	string line;
+	cout << "\n\n" << endl;
+	myfile.open("Interface/withdraw.txt");
+	while(getline(myfile,line)){
+		cout  << left << setw(60) << " "<< line << endl;
+	}
+    cout << endl << endl << endl << endl;
     do{
-        system("cls");
         cout<<setw(80)<<" "<<"========= Withdraw ========="<<endl
             <<setw(80)<<left<<" "<<"Enter Account Number: ";
         cin>>Account;
@@ -321,7 +337,7 @@ void UI :: Withdraw(){
     }while(!Obj_BankAccount.CheckAccount(Account));
     
     do{
-        system("cls");
+        
         cout<<setw(80)<<left<<" "<<"========= Withdraw ========="<<endl
             <<setw(80)<<left<<" "<<"Owner Name: "<<Obj_BankAccount.getName()<<endl
             <<setw(80)<<left<<" "<<"Enter Withdraw Amount: ";
@@ -433,6 +449,14 @@ void UI::SaveInfoCustomerToBankAccount(string name,string accountNumber,string m
 }*/
 void UI::PayBill(){
     system("cls");
+    fstream myfile;
+	string line;
+	cout << "\n\n" << endl;
+	myfile.open("Interface/paybill.txt");
+	while(getline(myfile,line)){
+		cout  << left << setw(75) << " "<< line << endl;
+	}
+    cout << endl << endl << endl << endl;
     Obj_BankAccount.LoadFileBankAccount();
     string type,chooseGroup, user;
     unsigned long int amount;
@@ -491,6 +515,14 @@ void UI::PayBill(){
 
 bool UI::transfer_firstPage(){
     system("cls");
+    fstream myfile;
+	string line;
+	cout << "\n\n" << endl;
+	myfile.open("Interface/Transfer.txt");
+	while(getline(myfile,line)){
+		cout  << left << setw(60) << " "<< line << endl;
+	}
+    cout << endl << endl << endl << endl;
     Obj_BankAccount.LoadFileBankAccount();
     cout << setw(80)<< " " <<"===============Transfer================" << endl;
 	cout << setw(80)<< " " <<"Transferor account : ";
@@ -694,12 +726,20 @@ void UI::printMenu_statement(){
     string number;
     BankAccount tempState;
     string tempAccountNumber;
+     fstream myfile;
+    string line;
     int count;
     int n;
         n = Checklogin();
         if(n==1){
             do{
                 system("cls");
+               
+                myfile.open("Interface/Statement.txt");
+                while(getline(myfile,line)){
+                    cout << setw(65) << " "<< line << endl;
+                }
+                myfile.close();
                 cout<<setw(80)<<"========Statement Customer========"<<endl;
                 cout<<setw(80)<<"1.Deposition"<<endl;
                 cout<<setw(80)<<"2.Withdraw"<<endl;
@@ -753,6 +793,10 @@ void UI::printMenu_statement(){
         }else if(n==2){
             do{
                 system("cls");
+                myfile.open("Interface/Statement.txt");
+                while(getline(myfile,line)){
+                    cout << setw(65) << " "<< line << endl;
+                }
                 cout<<setw(80) << " " <<"========Statement Employees========"<<endl;
                 cout<<setw(80) << " " <<"1.Deposition"<<endl;
                 cout<<setw(80) << " " <<"2.Withdraw"<<endl;
